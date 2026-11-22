@@ -1,1011 +1,2894 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark scroll-smooth">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MD ABUTOHA BISWAS | Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <title>TOHA — The Cinematic Digital Universe | MD ABUTOHA BISWAS</title>
 
-  <!-- Google Fonts: Inter & Instrument Serif -->
+  <!-- Google Fonts: Syne (Display), Space Grotesk / Inter (Body), JetBrains Mono (Technical HUD) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap"
-    rel="stylesheet"
-  />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet" />
 
-  <!-- Tailwind CSS CDN -->
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- React 18 & ReactDOM -->
-  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-
-  <!-- Babel Standalone (for JSX in-browser execution) -->
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-
-  <!-- Framer Motion -->
-  <script src="https://unpkg.com/framer-motion@11.11.17/dist/framer-motion.js"></script>
-
-  <!-- GSAP & ScrollTrigger -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-
-  <!-- HLS.js for Streaming Video -->
-  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-
-  <!-- Tailwind Configuration -->
   <script>
     tailwind.config = {
+      darkMode: 'class',
       theme: {
         extend: {
           colors: {
-            bg: "hsl(var(--bg) / <alpha-value>)",
-            surface: "hsl(var(--surface) / <alpha-value>)",
-            "text-primary": "hsl(var(--text) / <alpha-value>)",
-            muted: "hsl(var(--muted) / <alpha-value>)",
-            stroke: "hsl(var(--stroke) / <alpha-value>)",
+            void: '#030305',
+            charcoal: '#0a0a0f',
+            obsidian: '#11111a',
+            lavender: '#aa88ff',
+            violetGlow: '#7c4dff',
+            iceBlue: '#64d2ff',
+            softWhite: '#f4f4f8',
           },
           fontFamily: {
-            body: ["var(--font-body)", "sans-serif"],
-            display: ["var(--font-display)", "serif"],
+            display: ['Syne', 'sans-serif'],
+            sans: ['Space Grotesk', 'Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
           },
         },
       },
     };
   </script>
 
-  <!-- Custom Styles & Animations -->
+  <!-- Three.js (r128) & HLS.js for Mux Stream Playback -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.7/dist/hls.min.js"></script>
+
   <style>
     :root {
-      --font-body: 'Inter', sans-serif;
-      --font-display: 'Instrument Serif', serif;
-
-      --bg: 0 0% 4%;
-      --surface: 0 0% 8%;
-      --text: 0 0% 96%;
-      --muted: 0 0% 53%;
-      --stroke: 0 0% 12%;
-      --accent: 0 0% 96%;
+      --bg-void: #030305;
+      --bg-charcoal: #0a0a0f;
+      --accent-lavender: #aa88ff;
+      --accent-blue: #64d2ff;
+      --text-main: #f4f4f8;
     }
 
-    html {
-      scroll-behavior: smooth;
+    * {
+      box-sizing: border-box;
     }
 
-    body {
-      background-color: hsl(var(--bg));
-      color: hsl(var(--text));
-      font-family: var(--font-body);
-      overflow-x: hidden;
+    html, body {
       margin: 0;
       padding: 0;
+      background-color: #030305;
+      color: #f4f4f8;
+      font-family: 'Space Grotesk', 'Inter', sans-serif;
+      overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
     }
 
-    /* Gradients & Borders */
-    .accent-gradient {
-      background: linear-gradient(90deg, #89AACC 0%, #4E85BF 100%);
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #030305;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(170, 136, 255, 0.35);
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(170, 136, 255, 0.65);
     }
 
-    .accent-gradient-border {
-      position: relative;
+    /* Thin scrollbar for left AXON video column */
+    .axon-scroll::-webkit-scrollbar {
+      width: 3px;
+    }
+    .axon-scroll::-webkit-scrollbar-thumb {
+      background: rgba(170, 136, 255, 0.4);
+      border-radius: 9999px;
     }
 
-    .accent-gradient-border::before {
-      content: '';
-      position: absolute;
-      inset: -1.5px;
-      background: linear-gradient(90deg, #89AACC 0%, #4E85BF 100%);
-      background-size: 200% 200%;
-      border-radius: inherit;
-      z-index: -1;
-      animation: gradient-shift 6s ease infinite;
+    /* Glassmorphism Utilities */
+    .glass-panel {
+      background: rgba(10, 10, 16, 0.62);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(170, 136, 255, 0.16);
     }
 
-    /* Animations */
-    @keyframes scroll-down {
-      0% { transform: translateY(-100%); }
-      100% { transform: translateY(200%); }
+    .glass-panel-strong {
+      background: rgba(8, 8, 13, 0.84);
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+      border: 1px solid rgba(170, 136, 255, 0.24);
     }
 
-    .animate-scroll-down {
-      animation: scroll-down 1.5s ease-in-out infinite;
+    /* Subtle Ambient Grid */
+    .bg-cosmic-grid {
+      background-size: 48px 48px;
+      background-image:
+        linear-gradient(to right, rgba(170, 136, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(170, 136, 255, 0.04) 1px, transparent 1px);
     }
 
-    @keyframes role-fade-in {
-      0% { opacity: 0; transform: translateY(8px); }
-      100% { opacity: 1; transform: translateY(0); }
+    /* Cinematic Scanline Overlay */
+    .scanlines {
+      background: linear-gradient(
+        rgba(18, 16, 16, 0) 50%,
+        rgba(0, 0, 0, 0.28) 50%
+      );
+      background-size: 100% 4px;
     }
 
-    .animate-role-fade-in {
-      animation: role-fade-in 0.4s ease-out forwards;
+    /* Reveal Animations */
+    .reveal-up {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal-up.is-visible {
+      opacity: 1;
+      transform: translateY(0);
     }
 
-    @keyframes gradient-shift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+    /* MILO Floating & Soundwave Animations */
+    @keyframes miloFloat {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-8px) rotate(1.5deg); }
+    }
+    .milo-float {
+      animation: miloFloat 3.6s ease-in-out infinite;
     }
 
-    .halftone-overlay {
-      background-image: radial-gradient(circle, #000 1px, transparent 1px);
-      background-size: 4px 4px;
+    @keyframes miloBounce {
+      0%, 100% { transform: scale(1) translateY(0); }
+      35% { transform: scale(1.12, 0.92) translateY(3px); }
+      65% { transform: scale(0.95, 1.08) translateY(-12px); }
+    }
+    .milo-bounce {
+      animation: miloBounce 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
-    .text-stroke-title {
-      -webkit-text-stroke: 1px hsl(var(--stroke));
-      color: transparent;
+    @keyframes wavePulse {
+      0%, 100% { height: 4px; }
+      50% { height: 18px; }
+    }
+    .sound-bar {
+      animation: wavePulse 0.65s ease-in-out infinite;
+    }
+    .sound-bar:nth-child(2) { animation-delay: 0.12s; }
+    .sound-bar:nth-child(3) { animation-delay: 0.24s; }
+    .sound-bar:nth-child(4) { animation-delay: 0.36s; }
+    .sound-bar:nth-child(5) { animation-delay: 0.18s; }
+
+    /* Headlight Beam Fallback Animation for Car Intro */
+    @keyframes headlightSweep {
+      0% { opacity: 0.15; transform: scale(0.92); }
+      30% { opacity: 0.95; transform: scale(1.04); }
+      100% { opacity: 0.75; transform: scale(1.18); }
+    }
+    .headlight-beam {
+      animation: headlightSweep 5.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    /* Reduced Motion Support */
+    @media (prefers-reduced-motion: reduce) {
+      .milo-float, .sound-bar, .headlight-beam {
+        animation: none !important;
+      }
+      .reveal-up {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+      }
     }
   </style>
 </head>
-<body>
-  <div id="root"></div>
+<body class="bg-void text-softWhite selection:bg-lavender/30 selection:text-white">
 
-  <script type="text/babel">
-    const { useState, useEffect, useRef } = React;
-    const { motion, AnimatePresence } = window.Motion;
+  <!-- ===================================================================== -->
+  <!-- GLOBAL FLOATING AUDIO CONTROL BAR (TOP-RIGHT)                         -->
+  <!-- ===================================================================== -->
+  <div id="global-audio-bar" class="fixed top-4 right-4 z-50 flex items-center gap-2 glass-panel-strong rounded-full px-3.5 py-2 shadow-lg shadow-black/60 transition-all duration-300">
+    <button id="btn-audio-toggle" type="button" aria-label="Toggle Sound" class="flex items-center gap-2 text-xs font-mono tracking-wider text-softWhite hover:text-lavender transition-colors px-1.5 py-1 rounded-full">
+      <span id="audio-status-dot" class="w-2 h-2 rounded-full bg-zinc-500 transition-colors"></span>
+      <span id="audio-status-label">SOUND OFF</span>
+    </button>
 
-    gsap.registerPlugin(ScrollTrigger);
+    <div class="hidden sm:flex items-center gap-1.5 pl-1 border-l border-white/10">
+      <input id="audio-volume-slider" type="range" min="0" max="1" step="0.05" value="0.65" aria-label="Master Volume"
+        class="w-16 h-1 bg-white/15 rounded-lg appearance-none cursor-pointer accent-[#aa88ff]" />
+    </div>
 
-    const VIDEO_URL = "https://stream.mux.com/Aa02T7oM1wH5Mk5EEVDYhbZ1ChcdhRsS2m1NYyx4Ua1g.m3u8";
-    const ROLES = ["Data Analyst", "BCA Scholar", "Cyber Security Explorer", "C Programmer"];
-    const LOADING_WORDS = ["Analyze", "Structure", "Secure"];
+    <button id="btn-milo-voice-toggle" type="button" title="Toggle MILO Voice" aria-label="Toggle MILO Voice"
+      class="flex items-center gap-1 text-[11px] font-mono px-2 py-1 rounded-full bg-lavender/15 text-lavender border border-lavender/30 hover:bg-lavender/25 transition-all">
+      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+        <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+        <line x1="12" y1="19" x2="12" y2="23"></line>
+      </svg>
+      <span id="milo-voice-label" class="hidden md:inline">VOICE ON</span>
+    </button>
+  </div>
 
-    /* ----------------- Sub-Component: HLS Video Background ----------------- */
-    const HlsVideo = ({ src, flipped = false }) => {
-      const videoRef = useRef(null);
+  <!-- ===================================================================== -->
+  <!-- SEQUENCE 1: COUNTDOWN INTRO OVERLAY                                   -->
+  <!-- ===================================================================== -->
+  <section id="seq-countdown" class="fixed inset-0 z-40 bg-void flex flex-col items-center justify-center p-6 select-none transition-opacity duration-700">
+    <!-- Subtle radial glow -->
+    <div class="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_center,rgba(170,136,255,0.12)_0%,rgba(3,3,5,0.96)_65%)]"></div>
+    <div class="absolute inset-0 scanlines pointer-events-none opacity-40"></div>
 
-      useEffect(() => {
-        const video = videoRef.current;
-        if (!video) return;
+    <!-- Corner HUD Brackets -->
+    <div class="absolute top-6 left-6 font-mono text-[11px] tracking-[0.25em] text-zinc-400 uppercase">
+      <span class="text-lavender">SYS //</span> TOHA_UNIVERSE_BOOT
+    </div>
+    <div class="absolute bottom-6 left-6 font-mono text-[11px] tracking-widest text-zinc-500">
+      NODE: SILIGURI_IN // BCA_DS
+    </div>
 
-        let hls = null;
-        if (window.Hls && window.Hls.isSupported()) {
-          hls = new window.Hls({ autoStartLoad: true });
-          hls.loadSource(src);
-          hls.attachMedia(video);
-          hls.on(window.Hls.Events.MANIFEST_PARSED, () => {
-            video.play().catch(() => {});
-          });
-        } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
-          video.src = src;
-          video.addEventListener("loadedmetadata", () => {
-            video.play().catch(() => {});
-          });
-        }
+    <!-- Central Countdown Ring -->
+    <div class="relative flex items-center justify-center w-64 h-64 sm:w-72 sm:h-72">
+      <svg class="w-full h-full -rotate-90" viewBox="0 0 200 200">
+        <circle cx="100" cy="100" r="88" stroke="rgba(170,136,255,0.14)" stroke-width="1.5" fill="none" />
+        <circle id="countdown-ring-progress" cx="100" cy="100" r="88" stroke="#aa88ff" stroke-width="2.5"
+          stroke-dasharray="552.92" stroke-dashoffset="0" stroke-linecap="round" fill="none"
+          class="transition-all duration-700 ease-out" />
+        <circle cx="100" cy="100" r="74" stroke="rgba(100,210,255,0.12)" stroke-width="1" stroke-dasharray="4 6" fill="none" />
+      </svg>
 
-        return () => {
-          if (hls) hls.destroy();
-        };
-      }, [src]);
+      <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
+        <span class="font-mono text-[10px] tracking-[0.35em] text-lavender/80 uppercase mb-2">INITIALIZING</span>
+        <div id="countdown-number" class="font-display text-7xl sm:text-8xl font-extrabold tracking-tighter text-softWhite drop-shadow-[0_0_24px_rgba(170,136,255,0.45)]">
+          03
+        </div>
+        <span id="countdown-substatus" class="font-mono text-[11px] tracking-widest text-zinc-400 mt-2">
+          CALIBRATING OPTICS
+        </span>
+      </div>
+    </div>
 
-      return (
-        <video
-          ref={videoRef}
-          autoPlay
-          muted
-          loop
-          playsInline
-          className={`absolute top-1/2 left-1/2 min-w-full min-h-full object-cover -translate-x-1/2 -translate-y-1/2 pointer-events-none ${
-            flipped ? "scale-y-[-1]" : ""
-          }`}
-        />
-      );
-    };
+    <!-- Audio Opt-In & Skip Controls -->
+    <div class="relative z-10 mt-10 flex flex-wrap items-center justify-center gap-3">
+      <button id="btn-countdown-sound" type="button"
+        class="px-5 py-2.5 rounded-full bg-lavender/20 hover:bg-lavender/30 border border-lavender/50 text-softWhite font-mono text-xs tracking-wider uppercase transition-all flex items-center gap-2 shadow-[0_0_25px_rgba(170,136,255,0.2)]">
+        <svg class="w-4 h-4 text-lavender" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+          <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+        </svg>
+        <span>Enable Cinematic Audio</span>
+      </button>
 
-    /* ----------------- Sub-Component: Loading Screen ----------------- */
-    const LoadingScreen = ({ onComplete }) => {
-      const [count, setCount] = useState(0);
-      const [wordIdx, setWordIdx] = useState(0);
+      <button id="btn-skip-all-intro" type="button"
+        class="px-5 py-2.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/15 text-zinc-300 hover:text-white font-mono text-xs tracking-wider uppercase transition-all">
+        Skip Intro &rarr;
+      </button>
+    </div>
+  </section>
 
-      useEffect(() => {
-        let startTimestamp = null;
-        const duration = 2700;
+  <!-- ===================================================================== -->
+  <!-- SEQUENCE 2: CINEMATIC CAR INTRO (MUX HLS STREAM + ENGINE SYNTH)       -->
+  <!-- ===================================================================== -->
+  <section id="seq-car-intro" class="fixed inset-0 z-30 bg-void hidden opacity-0 transition-opacity duration-700 overflow-hidden">
+    <!-- Mux HLS Video Element -->
+    <video id="car-intro-video" class="w-full h-full object-cover opacity-0 transition-opacity duration-1000" playsinline muted preload="auto"></video>
 
-        const step = (timestamp) => {
-          if (!startTimestamp) startTimestamp = timestamp;
-          const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-          setCount(Math.floor(progress * 100));
+    <!-- Atmospheric Dark Vignette & Headlight Ignition Fallback Layer -->
+    <div id="car-fallback-visual" class="absolute inset-0 pointer-events-none flex items-center justify-center bg-[radial-gradient(ellipse_at_center,rgba(20,18,35,0.45)_0%,#030305_80%)]">
+      <!-- Dual Volumetric Headlights -->
+      <div class="headlight-beam relative w-full max-w-4xl h-64 flex items-center justify-between px-12 sm:px-24">
+        <div class="w-36 h-16 sm:w-56 sm:h-24 rounded-full bg-gradient-to-r from-iceBlue/60 via-lavender/50 to-transparent blur-2xl"></div>
+        <div class="w-36 h-16 sm:w-56 sm:h-24 rounded-full bg-gradient-to-l from-iceBlue/60 via-lavender/50 to-transparent blur-2xl"></div>
+      </div>
+    </div>
 
-          if (progress < 1) {
-            requestAnimationFrame(step);
-          } else {
-            setTimeout(onComplete, 400);
-          }
-        };
+    <!-- Dark Cinematic Letterbox Bars & HUD -->
+    <div class="absolute inset-0 pointer-events-none bg-gradient-to-t from-void via-transparent to-void/80"></div>
 
-        requestAnimationFrame(step);
+    <div class="absolute top-6 left-6 z-20 flex flex-col gap-1">
+      <span class="font-mono text-[11px] tracking-[0.28em] text-lavender uppercase">SEQUENCE 02 // IGNITION</span>
+      <span id="car-telemetry-text" class="font-mono text-xs text-zinc-400">ENGINE IDLE // TELEMETRY SYNCED</span>
+    </div>
 
-        const wordInterval = setInterval(() => {
-          setWordIdx((prev) => (prev + 1) % LOADING_WORDS.length);
-        }, 900);
+    <!-- Bottom Controls & Progress Bar -->
+    <div class="absolute bottom-8 inset-x-6 sm:inset-x-12 z-20 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="w-full sm:w-80">
+        <div class="flex justify-between font-mono text-[10px] tracking-widest text-zinc-400 mb-1.5">
+          <span>STREAM // MUX_HLS</span>
+          <span id="car-phase-label">HEADLIGHTS &amp; IGNITION</span>
+        </div>
+        <div class="w-full h-1 bg-white/10 rounded-full overflow-hidden">
+          <div id="car-progress-bar" class="h-full bg-gradient-to-r from-lavender to-iceBlue w-0 transition-all duration-200"></div>
+        </div>
+      </div>
 
-        return () => clearInterval(wordInterval);
-      }, [onComplete]);
+      <div class="flex items-center gap-3">
+        <button id="btn-car-enable-sound" type="button"
+          class="px-4 py-2 rounded-full glass-panel text-xs font-mono tracking-wider text-lavender hover:bg-lavender/20 transition-all">
+          Unmute Engine
+        </button>
+        <button id="btn-skip-car" type="button"
+          class="px-5 py-2 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white font-mono text-xs tracking-wider uppercase transition-all">
+          Skip Intro &rarr;
+        </button>
+      </div>
+    </div>
+  </section>
 
-      return (
-        <motion.div
-          exit={{ opacity: 0, y: -20 }}
-          transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
-          className="fixed inset-0 z-[9999] bg-bg flex flex-col justify-between p-8 md:p-14 select-none pointer-events-none"
-        >
-          <motion.div
-            initial={{ y: -20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.6 }}
-            className="text-xs text-muted uppercase tracking-[0.3em]"
-          >
-            MD ABUTOHA BISWAS · PORTFOLIO
-          </motion.div>
+  <!-- ===================================================================== -->
+  <!-- MAIN PORTFOLIO UNIVERSE (UNLOCKED AFTER INTRO SEQUENCE)               -->
+  <!-- ===================================================================== -->
+  <main id="main-universe" class="relative z-10 opacity-0 transition-opacity duration-1000">
 
-          <div className="absolute inset-0 flex items-center justify-center">
-            <AnimatePresence mode="wait">
-              <motion.span
-                key={LOADING_WORDS[wordIdx]}
-                initial={{ y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 0.8 }}
-                exit={{ y: -20, opacity: 0 }}
-                transition={{ duration: 0.4 }}
-                className="text-4xl md:text-6xl lg:text-7xl font-display italic text-text-primary/80"
-              >
-                {LOADING_WORDS[wordIdx]}
-              </motion.span>
-            </AnimatePresence>
-          </div>
+    <!-- =================================================================== -->
+    <!-- SEQUENCE 3: MAIN HERO — AXON-INSPIRED PARTICLE UNIVERSE             -->
+    <!-- =================================================================== -->
+    <section id="hero-axon" class="relative w-full min-h-screen lg:h-screen overflow-hidden bg-void flex flex-col justify-between">
+      <!-- Interactive WebGL Particle Canvas -->
+      <canvas id="axon-particle-canvas" class="absolute inset-0 w-full h-full block z-0"></canvas>
 
-          <div className="flex flex-col items-end gap-6 w-full">
-            <div className="text-6xl md:text-8xl lg:text-9xl font-display text-text-primary tabular-nums">
-              {String(count).padStart(3, "0")}
-            </div>
+      <!-- Subtle Radial Contrast Vignette so text stays effortlessly crisp -->
+      <div class="absolute inset-0 pointer-events-none z-0 bg-[radial-gradient(circle_at_50%_50%,transparent_28%,rgba(3,3,5,0.78)_100%)]"></div>
 
-            <div className="w-full h-[3px] bg-stroke/50 relative overflow-hidden">
-              <div
-                className="accent-gradient h-full origin-left transition-transform duration-75"
-                style={{
-                  transform: `scaleX(${count / 100})`,
-                  boxShadow: "0 0 8px rgba(137, 170, 204, 0.35)",
-                }}
-              />
-            </div>
-          </div>
-        </motion.div>
-      );
-    };
+      <!-- AXON HUD Grid Overlay -->
+      <div class="relative z-10 w-full max-w-[1600px] mx-auto px-5 sm:px-8 pt-6 pb-8 flex-1 flex flex-col justify-between pointer-events-none">
 
-    /* ----------------- Sub-Component: Parallax Gallery ----------------- */
-    const Explorations = () => {
-      const containerRef = useRef(null);
-      const pinnedRef = useRef(null);
-      const colLeftRef = useRef(null);
-      const colRightRef = useRef(null);
-
-      const gallery = [
-        { id: 1, title: "Spreadsheet Analytics", img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80", rot: "-6deg" },
-        { id: 2, title: "Cybersecurity Terminals", img: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&q=80", rot: "8deg" },
-        { id: 3, title: "Algorithmic Logic", img: "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=800&q=80", rot: "-4deg" },
-        { id: 4, title: "Relational Structures", img: "https://images.unsplash.com/photo-1544383835-bda2bc66a55d?w=800&q=80", rot: "5deg" },
-        { id: 5, title: "System Diagnostics", img: "https://images.unsplash.com/photo-1504639725590-34d0984388bd?w=800&q=80", rot: "-7deg" },
-        { id: 6, title: "Web Interfaces", img: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=800&q=80", rot: "6deg" },
-      ];
-
-      useEffect(() => {
-        const ctx = gsap.context(() => {
-          ScrollTrigger.create({
-            trigger: containerRef.current,
-            start: "top top",
-            end: "bottom bottom",
-            pin: pinnedRef.current,
-            pinSpacing: false,
-          });
-
-          if (colLeftRef.current && colRightRef.current) {
-            gsap.fromTo(
-              colLeftRef.current,
-              { y: 120 },
-              {
-                y: -240,
-                ease: "none",
-                scrollTrigger: {
-                  trigger: containerRef.current,
-                  start: "top bottom",
-                  end: "bottom top",
-                  scrub: 1.2,
-                },
-              }
-            );
-
-            gsap.fromTo(
-              colRightRef.current,
-              { y: -80 },
-              {
-                y: 200,
-                ease: "none",
-                scrollTrigger: {
-                  trigger: containerRef.current,
-                  start: "top bottom",
-                  end: "bottom top",
-                  scrub: 0.8,
-                },
-              }
-            );
-          }
-        }, containerRef);
-
-        return () => ctx.revert();
-      }, []);
-
-      return (
-        <section ref={containerRef} className="relative min-h-[260vh] bg-bg overflow-hidden">
-          <div
-            ref={pinnedRef}
-            className="h-screen w-full flex flex-col justify-center items-center text-center px-6 z-10 pointer-events-none"
-          >
-            <div className="pointer-events-auto flex flex-col items-center">
-              <span className="text-xs text-muted uppercase tracking-[0.3em] mb-4">
-                Explorations
-              </span>
-              <h2 className="text-4xl md:text-6xl font-normal tracking-tight mb-4">
-                Visual <span className="font-display italic">playground</span>
-              </h2>
-              <p className="text-muted text-sm md:text-base max-w-sm mb-8">
-                Data workflows, command-line scripts, security fundamentals, and dashboard mockups.
-              </p>
-              <a
-                href="https://github.com"
-                target="_blank"
-                rel="noreferrer"
-                className="group relative inline-flex items-center rounded-full p-[1.5px] text-xs uppercase tracking-widest"
-              >
-                <span className="absolute inset-0 bg-gradient-to-r from-[#89AACC] to-[#4E85BF] rounded-full opacity-60 group-hover:opacity-100 transition-opacity" />
-                <span className="relative bg-surface px-6 py-2.5 rounded-full text-text-primary">
-                  View Repositories ↗
-                </span>
-              </a>
-            </div>
-          </div>
-
-          <div className="absolute inset-0 max-w-[1400px] mx-auto px-6 md:px-12 pointer-events-none z-20 flex justify-between">
-            <div ref={colLeftRef} className="w-[45%] md:w-[320px] flex flex-col gap-28 pt-40">
-              {gallery.slice(0, 3).map((item) => (
-                <div
-                  key={item.id}
-                  className="pointer-events-auto aspect-square rounded-2xl overflow-hidden border border-stroke bg-surface shadow-2xl transition-transform duration-500 hover:scale-105 group relative"
-                  style={{ transform: `rotate(${item.rot})` }}
-                >
-                  <img src={item.img} alt={item.title} className="w-full h-full object-cover" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-bg/90 via-transparent to-transparent flex items-end p-4">
-                    <span className="text-xs font-mono text-text-primary tracking-wide">{item.title}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <div ref={colRightRef} className="w-[45%] md:w-[320px] flex flex-col gap-28 pt-80">
-              {gallery.slice(3, 6).map((item) => (
-                <div
-                  key={item.id}
-                  className="pointer-events-auto aspect-square rounded-2xl overflow-hidden border border-stroke bg-surface shadow-2xl transition-transform duration-500 hover:scale-105 group relative"
-                  style={{ transform: `rotate(${item.rot})` }}
-                >
-                  <img src={item.img} alt={item.title} className="w-full h-full object-cover" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-bg/90 via-transparent to-transparent flex items-end p-4">
-                    <span className="text-xs font-mono text-text-primary tracking-wide">{item.title}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      );
-    };
-
-    /* ----------------- Main Landing App ----------------- */
-    function App() {
-      const [isLoading, setIsLoading] = useState(true);
-      const [roleIndex, setRoleIndex] = useState(0);
-      const [scrolled, setScrolled] = useState(false);
-      const [activeNav, setActiveNav] = useState("Home");
-
-      const heroRef = useRef(null);
-      const marqueeRef = useRef(null);
-
-      useEffect(() => {
-        const timer = setInterval(() => {
-          setRoleIndex((prev) => (prev + 1) % ROLES.length);
-        }, 2000);
-        return () => clearInterval(timer);
-      }, []);
-
-      useEffect(() => {
-        const handleScroll = () => setScrolled(window.scrollY > 100);
-        window.addEventListener("scroll", handleScroll);
-        return () => window.removeEventListener("scroll", handleScroll);
-      }, []);
-
-      useEffect(() => {
-        if (isLoading) return;
-
-        const ctx = gsap.context(() => {
-          const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
-
-          tl.fromTo(
-            ".name-reveal",
-            { opacity: 0, y: 50 },
-            { opacity: 1, y: 0, duration: 1.2, delay: 0.1 }
-          ).fromTo(
-            ".blur-in",
-            { opacity: 0, filter: "blur(10px)", y: 20 },
-            { opacity: 1, filter: "blur(0px)", y: 0, duration: 1, stagger: 0.1 },
-            "-=0.9"
-          );
-
-          if (marqueeRef.current) {
-            gsap.to(marqueeRef.current, {
-              xPercent: -50,
-              duration: 35,
-              ease: "none",
-              repeat: -1,
-            });
-          }
-        }, heroRef);
-
-        return () => ctx.revert();
-      }, [isLoading]);
-
-      const scrollTo = (id) => {
-        setActiveNav(id);
-        document.getElementById(id.toLowerCase())?.scrollIntoView({ behavior: "smooth" });
-      };
-
-      const skillsList = [
-        "Microsoft Excel",
-        "C Programming",
-        "HTML & CSS",
-        "Data Analysis",
-        "Data Cleaning",
-        "Cybersecurity Basics",
-        "Problem Solving",
-        "Git & GitHub",
-        "JavaScript"
-      ];
-
-      return (
-        <div className="relative bg-bg text-text-primary selection:bg-[#89AACC]/20 selection:text-text-primary">
-          <AnimatePresence>
-            {isLoading && <LoadingScreen onComplete={() => setIsLoading(false)} />}
-          </AnimatePresence>
-
-          {/* Floating Navbar */}
-          <header className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-4 md:pt-6 px-4 pointer-events-none">
-            <nav
-              className={`pointer-events-auto inline-flex items-center rounded-full backdrop-blur-md border border-white/10 bg-surface/90 px-2 py-2 transition-all duration-300 ${
-                scrolled ? "shadow-lg shadow-black/50 border-stroke" : ""
-              }`}
-            >
-              <a
-                href="#home"
-                className="group relative flex items-center justify-center w-9 h-9 rounded-full bg-gradient-to-r from-[#89AACC] to-[#4E85BF] p-[1.5px] transition-transform duration-300 hover:scale-110"
-              >
-                <span className="w-full h-full bg-bg rounded-full flex items-center justify-center font-display italic text-[13px] text-text-primary">
-                  AB
-                </span>
-              </a>
-
-              <div className="w-px h-5 bg-stroke mx-2 hidden sm:block" />
-
-              <div className="flex items-center gap-1">
-                {["Home", "About", "Projects", "Skills", "Thoughts"].map((item) => (
-                  <button
-                    key={item}
-                    onClick={() => scrollTo(item)}
-                    className={`text-xs sm:text-sm rounded-full px-3 sm:px-4 py-1.5 sm:py-2 transition-colors duration-200 ${
-                      activeNav === item
-                        ? "text-text-primary bg-stroke/50"
-                        : "text-muted hover:text-text-primary hover:bg-stroke/50"
-                    }`}
-                  >
-                    {item}
-                  </button>
-                ))}
-              </div>
-
-              <div className="w-px h-5 bg-stroke mx-2" />
-
-              <a
-                href="#contact"
-                className="group relative inline-flex items-center justify-center rounded-full p-[1.5px] overflow-hidden text-xs sm:text-sm"
-              >
-                <span className="absolute inset-[-2px] bg-gradient-to-r from-[#89AACC] to-[#4E85BF] opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full" />
-                <span className="relative z-10 flex items-center gap-1 bg-surface px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-text-primary">
-                  Say hi <span className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5">↗</span>
-                </span>
-              </a>
-            </nav>
-          </header>
-
-          {/* Hero Section */}
-          <section
-            id="home"
-            ref={heroRef}
-            className="relative h-screen w-full flex flex-col items-center justify-center overflow-hidden"
-          >
-            <HlsVideo src={VIDEO_URL} />
-            <div className="absolute inset-0 bg-black/30 pointer-events-none" />
-            <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-bg to-transparent pointer-events-none" />
-
-            <div className="relative z-10 flex flex-col items-center text-center px-4 max-w-4xl mx-auto mt-12">
-              <div className="blur-in text-xs text-muted uppercase tracking-[0.3em] mb-6">
-                BCA · DATA SCIENCE &amp; CYBERSECURITY '26
-              </div>
-
-              <h1 className="name-reveal text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-display italic leading-[0.92] tracking-tight text-text-primary mb-6">
-                MD ABUTOHA BISWAS
+        <!-- TOP BAR: Top-Left TOHA Branding + Top-Right Circular Progress Counter -->
+        <header class="flex items-start justify-between gap-4">
+          <!-- Top-Left Branding -->
+          <div class="pointer-events-auto">
+            <div class="flex items-center gap-3">
+              <div class="w-2.5 h-2.5 rounded-full bg-lavender shadow-[0_0_12px_#aa88ff]"></div>
+              <h1 class="font-display text-3xl sm:text-4xl font-extrabold tracking-tight text-softWhite">
+                TOHA
               </h1>
+              <span class="hidden sm:inline-block font-mono text-[10px] tracking-[0.22em] px-2.5 py-0.5 rounded-full bg-lavender/15 text-lavender border border-lavender/30">
+                UNIVERSE v2.6
+              </span>
+            </div>
+            <p class="font-mono text-xs sm:text-sm text-zinc-400 tracking-wider mt-1">
+              Data Science / Technology / Creative Developer
+            </p>
 
-              <div className="blur-in text-lg md:text-xl font-light text-muted mb-4 h-8 flex items-center justify-center gap-2">
-                <span>Passionate</span>
-                <span
-                  key={roleIndex}
-                  className="font-display italic text-text-primary text-2xl animate-role-fade-in inline-block"
-                >
-                  {ROLES[roleIndex]}
-                </span>
-                <span>focused on building clear systems.</span>
+            <!-- Category Chips -->
+            <div class="flex flex-wrap items-center gap-1.5 mt-3">
+              <span class="font-mono text-[10px] tracking-widest px-2.5 py-1 rounded-full glass-panel text-zinc-300">DATA SCIENCE</span>
+              <span class="font-mono text-[10px] tracking-widest px-2.5 py-1 rounded-full glass-panel text-zinc-300">PYTHON &amp; EXCEL</span>
+              <span class="font-mono text-[10px] tracking-widest px-2.5 py-1 rounded-full glass-panel text-zinc-300">C SYSTEMS</span>
+              <span class="font-mono text-[10px] tracking-widest px-2.5 py-1 rounded-full glass-panel text-lavender">CYBERSECURITY</span>
+            </div>
+          </div>
+
+          <!-- Top-Right Circular Telemetry / Scroll Counter (offset below floating audio pill on mobile) -->
+          <div class="mt-12 sm:mt-11 pointer-events-auto flex items-center gap-3 glass-panel rounded-full px-3 py-1.5">
+            <div class="relative w-9 h-9 flex items-center justify-center">
+              <svg class="w-9 h-9 -rotate-90" viewBox="0 0 36 36">
+                <circle cx="18" cy="18" r="15" stroke="rgba(255,255,255,0.12)" stroke-width="2" fill="none" />
+                <circle id="hero-scroll-circle" cx="18" cy="18" r="15" stroke="#aa88ff" stroke-width="2"
+                  stroke-dasharray="94.24" stroke-dashoffset="94.24" stroke-linecap="round" fill="none" />
+              </svg>
+              <span id="hero-scroll-pct" class="absolute font-mono text-[9px] text-softWhite">0%</span>
+            </div>
+            <div class="hidden md:block pr-2">
+              <div class="font-mono text-[9px] tracking-widest text-zinc-400 uppercase">ORBIT DEPTH</div>
+              <div class="font-mono text-[11px] text-lavender">INTERACTIVE FIELD</div>
+            </div>
+          </div>
+        </header>
+
+        <!-- MIDDLE ASYMMETRIC AXON COLUMNS: Left Video Feed + Right Personal Intro -->
+        <div class="my-6 lg:my-0 grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+
+          <!-- LEFT SIDE: Independently Scrollable Video-Card Column (4 Cards) -->
+          <div class="lg:col-span-4 pointer-events-auto order-2 lg:order-1">
+            <div class="flex items-center justify-between mb-2 px-1">
+              <span class="font-mono text-[10px] tracking-[0.25em] text-zinc-400 uppercase">VISUAL STREAMS // 04</span>
+              <span class="font-mono text-[10px] text-lavender">SCROLL FEED &updownarrow;</span>
+            </div>
+
+            <div class="axon-scroll max-h-[300px] sm:max-h-[340px] lg:max-h-[430px] overflow-y-auto pr-1.5 space-y-3 rounded-2xl">
+              <!-- Video Card 1 -->
+              <article class="group glass-panel rounded-2xl p-2.5 hover:border-lavender/45 transition-all duration-300">
+                <div class="relative h-28 sm:h-32 w-full rounded-xl overflow-hidden bg-obsidian">
+                  <video class="lazy-hero-video w-full h-full object-cover opacity-85 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
+                    data-src="https://pub-86dc5b5484314368ac5436a674b0d919.r2.dev/aaaf/oraciteslArea.mp4"
+                    muted loop playsinline preload="none"></video>
+                  <div class="absolute inset-0 bg-gradient-to-t from-void/85 via-transparent to-transparent"></div>
+                  <span class="absolute top-2 left-2 font-mono text-[9px] tracking-widest px-2 py-0.5 rounded-full bg-void/75 text-lavender border border-lavender/30">
+                    01 // EXCEL
+                  </span>
+                </div>
+                <div class="mt-2 px-1 flex items-center justify-between">
+                  <div>
+                    <h3 class="text-xs sm:text-sm font-semibold text-softWhite">Student Analytics</h3>
+                    <p class="font-mono text-[11px] text-zinc-400">Excel / Dashboard</p>
+                  </div>
+                  <a href="#projects" class="font-mono text-[10px] text-lavender hover:underline">INSPECT &rarr;</a>
+                </div>
+              </article>
+
+              <!-- Video Card 2 -->
+              <article class="group glass-panel rounded-2xl p-2.5 hover:border-lavender/45 transition-all duration-300">
+                <div class="relative h-28 sm:h-32 w-full rounded-xl overflow-hidden bg-obsidian">
+                  <video class="lazy-hero-video w-full h-full object-cover opacity-85 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
+                    data-src="https://pub-86dc5b5484314368ac5436a674b0d919.r2.dev/aaaf/facet-glass-hero.mp4"
+                    muted loop playsinline preload="none"></video>
+                  <div class="absolute inset-0 bg-gradient-to-t from-void/85 via-transparent to-transparent"></div>
+                  <span class="absolute top-2 left-2 font-mono text-[9px] tracking-widest px-2 py-0.5 rounded-full bg-void/75 text-iceBlue border border-iceBlue/30">
+                    02 // PYTHON
+                  </span>
+                </div>
+                <div class="mt-2 px-1 flex items-center justify-between">
+                  <div>
+                    <h3 class="text-xs sm:text-sm font-semibold text-softWhite">Python Analytics</h3>
+                    <p class="font-mono text-[11px] text-zinc-400">Data / Visualization</p>
+                  </div>
+                  <a href="#projects" class="font-mono text-[10px] text-lavender hover:underline">INSPECT &rarr;</a>
+                </div>
+              </article>
+
+              <!-- Video Card 3 -->
+              <article class="group glass-panel rounded-2xl p-2.5 hover:border-lavender/45 transition-all duration-300">
+                <div class="relative h-28 sm:h-32 w-full rounded-xl overflow-hidden bg-obsidian">
+                  <video class="lazy-hero-video w-full h-full object-cover opacity-85 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
+                    data-src="https://pub-86dc5b5484314368ac5436a674b0d919.r2.dev/aaaf/stellarmind-hero.mp4"
+                    muted loop playsinline preload="none"></video>
+                  <div class="absolute inset-0 bg-gradient-to-t from-void/85 via-transparent to-transparent"></div>
+                  <span class="absolute top-2 left-2 font-mono text-[9px] tracking-widest px-2 py-0.5 rounded-full bg-void/75 text-lavender border border-lavender/30">
+                    03 // C LANG
+                  </span>
+                </div>
+                <div class="mt-2 px-1 flex items-center justify-between">
+                  <div>
+                    <h3 class="text-xs sm:text-sm font-semibold text-softWhite">Programming</h3>
+                    <p class="font-mono text-[11px] text-zinc-400">C / Projects</p>
+                  </div>
+                  <a href="#projects" class="font-mono text-[10px] text-lavender hover:underline">INSPECT &rarr;</a>
+                </div>
+              </article>
+
+              <!-- Video Card 4 -->
+              <article class="group glass-panel rounded-2xl p-2.5 hover:border-lavender/45 transition-all duration-300">
+                <div class="relative h-28 sm:h-32 w-full rounded-xl overflow-hidden bg-obsidian">
+                  <video class="lazy-hero-video w-full h-full object-cover opacity-85 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
+                    data-src="https://pub-86dc5b5484314368ac5436a674b0d919.r2.dev/aaaf/thedropthroughArea.mp4"
+                    muted loop playsinline preload="none"></video>
+                  <div class="absolute inset-0 bg-gradient-to-t from-void/85 via-transparent to-transparent"></div>
+                  <span class="absolute top-2 left-2 font-mono text-[9px] tracking-widest px-2 py-0.5 rounded-full bg-void/75 text-iceBlue border border-iceBlue/30">
+                    04 // LABS
+                  </span>
+                </div>
+                <div class="mt-2 px-1 flex items-center justify-between">
+                  <div>
+                    <h3 class="text-xs sm:text-sm font-semibold text-softWhite">Digital Exploration</h3>
+                    <p class="font-mono text-[11px] text-zinc-400">Technology / Future</p>
+                  </div>
+                  <a href="#playground" class="font-mono text-[10px] text-lavender hover:underline">EXPLORE &rarr;</a>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <!-- CENTER SPACER (Reveals the 3D AXON Sculpted Particle Torus-Knot) -->
+          <div class="hidden lg:block lg:col-span-4"></div>
+
+          <!-- RIGHT SIDE: Personal Introduction, Interests, Highlights & Links -->
+          <div class="lg:col-span-4 pointer-events-auto order-1 lg:order-3">
+            <div class="glass-panel rounded-3xl p-5 sm:p-6 shadow-2xl shadow-black/50">
+              <div class="flex items-center justify-between mb-3">
+                <span class="font-mono text-[10px] tracking-[0.25em] text-lavender uppercase">IDENTITY // PROFILE</span>
+                <span class="font-mono text-[10px] text-zinc-400">BCA — DATA SCIENCE</span>
               </div>
 
-              <p className="blur-in text-sm md:text-base text-muted max-w-lg mb-10 leading-relaxed font-light">
-                I build clean Excel dashboards, organize and analyze data, and put together robust programming and web projects. Currently open to freelance tasks and learning collaborations.
+              <h2 class="font-display text-xl sm:text-2xl font-bold text-softWhite leading-snug">
+                MD ABUTOHA BISWAS
+              </h2>
+
+              <p class="text-xs sm:text-sm text-zinc-300 leading-relaxed mt-2.5">
+                First-year BCA Data Science student exploring structured analytics, C systems programming, and cybersecurity fundamentals—transforming raw datasets into clear, practical tools.
               </p>
 
-              <div className="blur-in inline-flex items-center gap-4">
-                <a
-                  href="#projects"
-                  className="group relative rounded-full text-sm px-7 py-3.5 bg-text-primary text-bg font-medium transition-all duration-300 hover:scale-105 hover:bg-bg hover:text-text-primary accent-gradient-border"
-                >
-                  View My Work
+              <!-- Focus Highlights -->
+              <div class="mt-4 pt-4 border-t border-white/10 grid grid-cols-2 gap-2.5">
+                <div class="rounded-xl bg-white/[0.03] p-2.5 border border-white/5">
+                  <div class="font-mono text-[10px] text-lavender uppercase">FOCUS</div>
+                  <div class="text-xs font-medium text-softWhite mt-0.5">Data &amp; Security</div>
+                </div>
+                <div class="rounded-xl bg-white/[0.03] p-2.5 border border-white/5">
+                  <div class="font-mono text-[10px] text-iceBlue uppercase">BUILDS</div>
+                  <div class="text-xs font-medium text-softWhite mt-0.5">Python, Excel &amp; C</div>
+                </div>
+              </div>
+
+              <!-- Action Links -->
+              <div class="mt-5 flex flex-wrap items-center gap-2.5">
+                <a href="#projects" class="px-4 py-2 rounded-full bg-lavender text-void font-mono text-xs font-semibold tracking-wider hover:bg-lavender/90 transition-all">
+                  EXPLORE WORK
                 </a>
-                <a
-                  href="#contact"
-                  className="group relative rounded-full text-sm px-7 py-3.5 border-2 border-stroke bg-bg text-text-primary font-medium transition-all duration-300 hover:scale-105 hover:border-transparent accent-gradient-border"
-                >
-                  Reach out...
+                <a href="https://github.com/toha-biswas" target="_blank" rel="noopener noreferrer"
+                  class="px-4 py-2 rounded-full bg-white/5 hover:bg-white/10 border border-white/15 text-softWhite font-mono text-xs tracking-wider transition-all flex items-center gap-1.5">
+                  <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+                  </svg>
+                  <span>GITHUB</span>
                 </a>
               </div>
             </div>
+          </div>
+        </div>
 
-            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 pointer-events-none">
-              <span className="text-[10px] text-muted uppercase tracking-[0.25em]">
-                Scroll
-              </span>
-              <div className="w-px h-10 bg-stroke relative overflow-hidden">
-                <div className="w-full h-1/2 bg-text-primary animate-scroll-down" />
+        <!-- BOTTOM BAR: Navigation & Scroll Cue -->
+        <div class="flex flex-wrap items-center justify-between gap-4 pt-2 border-t border-white/10 pointer-events-auto">
+          <nav aria-label="Primary Navigation" class="flex flex-wrap items-center gap-4 sm:gap-6 font-mono text-[11px] tracking-widest text-zinc-400">
+            <a href="#projects" class="hover:text-lavender transition-colors">01. PROJECTS</a>
+            <a href="#about" class="hover:text-lavender transition-colors">02. ABOUT</a>
+            <a href="#rocket-launch-zone" class="hover:text-lavender transition-colors">03. LAUNCH</a>
+            <a href="#skills-universe" class="hover:text-lavender transition-colors">04. SKILLS</a>
+            <a href="#playground" class="hover:text-lavender transition-colors">05. LAB</a>
+            <a href="#connect" class="hover:text-lavender transition-colors">06. CONNECT</a>
+          </nav>
+
+          <a href="#projects" class="font-mono text-[11px] tracking-[0.22em] text-lavender hover:text-white transition-colors flex items-center gap-2">
+            <span>SCROLL TO DESCEND</span>
+            <span class="animate-bounce">&darr;</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- SEQUENCE 4: THINGS I'VE BUILT — PROJECT SHOWCASE                    -->
+    <!-- =================================================================== -->
+    <section id="projects" class="relative py-24 sm:py-32 px-5 sm:px-8 max-w-7xl mx-auto">
+      <div class="reveal-up mb-14">
+        <span class="font-mono text-xs tracking-[0.3em] text-lavender uppercase block mb-2">ARCHIVE // SELECTED WORK</span>
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+          <h2 class="font-display text-3xl sm:text-5xl font-extrabold tracking-tight text-softWhite">
+            THINGS I'VE BUILT
+          </h2>
+          <p class="font-mono text-xs text-zinc-400 max-w-md">
+            Practical data analytics workbooks, Python visualization pipelines, and structured C systems built from first principles.
+          </p>
+        </div>
+      </div>
+
+      <!-- Project Cards Grid -->
+      <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Populated cleanly via JS with custom SVG artwork, 3D tilt, and interactive preview modal -->
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- SEQUENCE 5: ABOUT ME — DIGITAL SCULPTURE & JOURNEY                  -->
+    <!-- =================================================================== -->
+    <section id="about" class="relative py-24 sm:py-32 px-5 sm:px-8 border-t border-white/5 bg-charcoal/40">
+      <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+
+        <!-- Left: Interactive Three.js Morphing Crystalline Digital Sculpture -->
+        <div class="lg:col-span-5 reveal-up">
+          <div class="relative w-full aspect-square max-w-md mx-auto rounded-3xl glass-panel overflow-hidden shadow-2xl shadow-lavender/5">
+            <canvas id="about-sculpture-canvas" class="w-full h-full block"></canvas>
+            <div class="absolute bottom-4 left-4 right-4 flex items-center justify-between font-mono text-[10px] tracking-widest text-zinc-400 pointer-events-none">
+              <span>POLYHEDRAL_CORE // 3D</span>
+              <span class="text-lavender">DRAG TO ROTATE</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Editorial Bio & Structured Pillars -->
+        <div class="lg:col-span-7 reveal-up">
+          <span class="font-mono text-xs tracking-[0.3em] text-lavender uppercase block mb-3">DOSSIER // 02</span>
+          <h2 class="font-display text-3xl sm:text-5xl font-extrabold tracking-tight text-softWhite mb-6">
+            ABOUT ME
+          </h2>
+
+          <!-- Exact Required Introduction Quote -->
+          <blockquote class="glass-panel rounded-2xl p-6 sm:p-7 border-l-4 border-l-lavender text-base sm:text-lg text-softWhite/95 leading-relaxed font-normal mb-8">
+            "I'm a first-year BCA student, building a strong foundation in data science, cybersecurity, and programming. I enjoy turning raw, messy information into something clear and useful — that's what most of the projects below are about."
+          </blockquote>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="glass-panel rounded-2xl p-5 hover:border-lavender/35 transition-colors">
+              <div class="font-mono text-[11px] tracking-widest text-lavender uppercase mb-1.5">01 // EDUCATION</div>
+              <h3 class="text-base font-semibold text-softWhite">BCA — Data Science</h3>
+              <p class="text-xs sm:text-sm text-zinc-400 mt-1.5 leading-relaxed">
+                First-year undergraduate building strong mathematical, statistical, and computational foundations.
+              </p>
+            </div>
+
+            <div class="glass-panel rounded-2xl p-5 hover:border-lavender/35 transition-colors">
+              <div class="font-mono text-[11px] tracking-widest text-iceBlue uppercase mb-1.5">02 // TECH INTERESTS</div>
+              <h3 class="text-base font-semibold text-softWhite">Analytics &amp; Cybersecurity</h3>
+              <p class="text-xs sm:text-sm text-zinc-400 mt-1.5 leading-relaxed">
+                Passionate about data pipelines, structured programming in C &amp; Python, and defensive security fundamentals.
+              </p>
+            </div>
+
+            <div class="glass-panel rounded-2xl p-5 hover:border-lavender/35 transition-colors">
+              <div class="font-mono text-[11px] tracking-widest text-lavender uppercase mb-1.5">03 // LEARNING JOURNEY</div>
+              <h3 class="text-base font-semibold text-softWhite">First-Principles Mastery</h3>
+              <p class="text-xs sm:text-sm text-zinc-400 mt-1.5 leading-relaxed">
+                From manual memory structures in C to automated Python test suites and executive Excel dashboards.
+              </p>
+            </div>
+
+            <div class="glass-panel rounded-2xl p-5 hover:border-lavender/35 transition-colors">
+              <div class="font-mono text-[11px] tracking-widest text-iceBlue uppercase mb-1.5">04 // PRACTICAL BUILDS</div>
+              <h3 class="text-base font-semibold text-softWhite">Clarity Over Clutter</h3>
+              <p class="text-xs sm:text-sm text-zinc-400 mt-1.5 leading-relaxed">
+                Focused on creating reliable software utilities that solve real academic and personal workflow problems.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- SEQUENCE 6A: SCROLL-TRIGGERED ROCKET JOURNEY                        -->
+    <!-- =================================================================== -->
+    <section id="rocket-launch-zone" class="relative h-[260vh] bg-void">
+      <div class="sticky top-0 h-screen w-full overflow-hidden flex flex-col justify-between p-6 sm:p-10">
+        <!-- Three.js Volumetric Rocket Launch Canvas -->
+        <canvas id="rocket-journey-canvas" class="absolute inset-0 w-full h-full block z-0"></canvas>
+
+        <!-- Atmospheric Color Gradient Overlay driven by Scroll Progress -->
+        <div id="rocket-atmosphere-overlay" class="absolute inset-0 pointer-events-none z-0 transition-colors duration-300"
+          style="background: radial-gradient(circle at 50% 80%, rgba(170,136,255,0.14), rgba(3,3,5,0.85));"></div>
+
+        <!-- Top Telemetry Bar -->
+        <div class="relative z-10 flex items-start justify-between gap-4">
+          <div>
+            <span class="font-mono text-[11px] tracking-[0.28em] text-lavender uppercase block">ORBITAL ASCENT // SCROLL DRIVEN</span>
+            <h2 id="rocket-stage-title" class="font-display text-2xl sm:text-4xl font-extrabold text-softWhite mt-1">
+              LAUNCHPAD IGNITION
+            </h2>
+            <p id="rocket-stage-desc" class="font-mono text-xs text-zinc-400 mt-1">
+              Scroll downward to ignite thrusters and ascend toward the Skills Universe.
+            </p>
+          </div>
+
+          <a href="#skills-universe"
+            class="px-4 py-2 rounded-full glass-panel text-xs font-mono tracking-wider text-zinc-300 hover:text-white hover:border-lavender/40 transition-all">
+            Skip Ascent &darr;
+          </a>
+        </div>
+
+        <!-- Bottom Altitude Gauge -->
+        <div class="relative z-10 max-w-xl w-full mx-auto glass-panel rounded-2xl p-4">
+          <div class="flex items-center justify-between font-mono text-[11px] mb-2">
+            <span class="text-zinc-400">ALTITUDE: <strong id="rocket-altitude-km" class="text-softWhite">0.0 KM</strong></span>
+            <span id="rocket-zone-badge" class="text-lavender">TROPOSPHERE // PAD 01</span>
+          </div>
+          <div class="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
+            <div id="rocket-progress-fill" class="h-full bg-gradient-to-r from-lavender via-iceBlue to-white w-0"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- SEQUENCE 6B: MY SKILLS UNIVERSE (3D CONSTELLATION + OFFICIAL SVGs)  -->
+    <!-- =================================================================== -->
+    <section id="skills-universe" class="relative py-24 sm:py-32 px-5 sm:px-8 bg-void border-t border-lavender/15 overflow-hidden">
+      <!-- Subtle Starfield Backdrop -->
+      <div class="absolute inset-0 bg-cosmic-grid opacity-50 pointer-events-none"></div>
+
+      <div class="relative z-10 max-w-7xl mx-auto">
+        <div class="reveal-up text-center max-w-2xl mx-auto mb-14">
+          <span class="font-mono text-xs tracking-[0.3em] text-lavender uppercase block mb-2">ORBITAL DOCKING COMPLETE</span>
+          <h2 class="font-display text-3xl sm:text-5xl font-extrabold tracking-tight text-softWhite">
+            MY SKILLS UNIVERSE
+          </h2>
+          <p class="text-xs sm:text-sm text-zinc-400 mt-3">
+            Select any orbital node to inspect core competencies, tooling, and hands-on applications.
+          </p>
+        </div>
+
+        <!-- Interactive 3D-Styled Orbital Skill Constellation Grid -->
+        <div id="skills-constellation-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-4 sm:gap-6 max-w-5xl mx-auto">
+          <!-- Injected with official multi-path SVG logos (Python, C, Excel, Data Science, HTML5, CSS3, JS, Cybersecurity, Git/GitHub) -->
+        </div>
+
+        <!-- Active Skill Inspector Drawer -->
+        <div id="skill-detail-panel" class="reveal-up mt-8 max-w-3xl mx-auto glass-panel-strong rounded-3xl p-6 sm:p-7 transition-all duration-300">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div class="flex items-center gap-4">
+              <div id="skill-detail-icon" class="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center p-2.5 shrink-0"></div>
+              <div>
+                <span id="skill-detail-category" class="font-mono text-[10px] tracking-[0.25em] text-lavender uppercase">CORE STACK</span>
+                <h3 id="skill-detail-title" class="font-display text-xl sm:text-2xl font-bold text-softWhite">Python</h3>
               </div>
             </div>
-          </section>
+            <span id="skill-detail-level" class="self-start sm:self-center font-mono text-[11px] px-3 py-1 rounded-full bg-lavender/15 text-lavender border border-lavender/30">
+              DATA &amp; AUTOMATION
+            </span>
+          </div>
+          <p id="skill-detail-desc" class="text-xs sm:text-sm text-zinc-300 leading-relaxed mt-4">
+            Used for statistical analysis, student performance dashboards, automated test suites, data cleaning, and CSV reporting pipelines.
+          </p>
+        </div>
+      </div>
+    </section>
 
-          {/* About Me Section */}
-          <section id="about" className="bg-bg py-20 md:py-28 border-t border-stroke">
-            <div className="max-w-[1200px] mx-auto px-6 md:px-10 lg:px-16">
-              <div className="grid grid-cols-1 md:grid-cols-12 gap-10 items-center">
-                <div className="md:col-span-5">
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="w-8 h-px bg-stroke" />
-                    <span className="text-xs text-muted uppercase tracking-[0.3em]">
-                      Background
-                    </span>
-                  </div>
-                  <h2 className="text-4xl md:text-6xl font-normal tracking-tight">
-                    About <span className="font-display italic">myself</span>
-                  </h2>
-                </div>
+    <!-- =================================================================== -->
+    <!-- SEQUENCE 7: VISUAL PLAYGROUND — EXPERIMENTAL TECH LAB               -->
+    <!-- =================================================================== -->
+    <section id="playground" class="relative py-24 sm:py-32 px-5 sm:px-8 border-t border-white/5 bg-charcoal/50">
+      <div class="max-w-7xl mx-auto">
+        <div class="reveal-up mb-14">
+          <span class="font-mono text-xs tracking-[0.3em] text-iceBlue uppercase block mb-2">EXPERIMENTAL SANDBOX // 05</span>
+          <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+            <h2 class="font-display text-3xl sm:text-5xl font-extrabold tracking-tight text-softWhite">
+              VISUAL PLAYGROUND
+            </h2>
+            <p class="font-mono text-xs text-zinc-400 max-w-md">
+              Interactive mini-environments exploring cybersecurity terminals, spreadsheet formulas, algorithmic sorting, and relational matrices.
+            </p>
+          </div>
+        </div>
 
-                <div className="md:col-span-7 bg-surface/50 border border-stroke rounded-3xl p-8 md:p-10 backdrop-blur-sm">
-                  <p className="text-base md:text-lg leading-relaxed text-text-primary/90 font-light">
-                    I'm a first-year BCA student, building a strong foundation in data science, cybersecurity, and programming. I enjoy turning raw, messy information into something clear and useful — that's what most of the projects below are about.
-                  </p>
-                  <div className="mt-6 flex flex-wrap gap-4 text-xs font-mono text-muted">
-                    <span className="px-3 py-1.5 rounded-md bg-bg border border-stroke">✦ First-Year BCA</span>
-                    <span className="px-3 py-1.5 rounded-md bg-bg border border-stroke">✦ Data Science Aspirant</span>
-                    <span className="px-3 py-1.5 rounded-md bg-bg border border-stroke">✦ Cyber Defense Fundamentals</span>
-                  </div>
-                </div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+          <!-- LAB 1: Interactive Cybersecurity Terminal -->
+          <div class="reveal-up glass-panel rounded-3xl overflow-hidden flex flex-col">
+            <div class="relative h-36 w-full overflow-hidden">
+              <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&q=80" alt="Cybersecurity Matrix"
+                loading="lazy" onerror="this.src='https://placehold.co/800x300/0a0a0f/aa88ff?text=CYBER_TERMINAL'"
+                class="w-full h-full object-cover opacity-45" />
+              <div class="absolute inset-0 bg-gradient-to-t from-charcoal via-charcoal/60 to-transparent"></div>
+              <div class="absolute bottom-3 left-5 right-5 flex items-center justify-between">
+                <span class="font-mono text-xs text-lavender font-semibold">LAB 01 // CYBERSECURITY TERMINAL</span>
+                <span class="font-mono text-[10px] px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">LIVE SHELL</span>
               </div>
             </div>
-          </section>
 
-          {/* Featured Projects Section */}
-          <section id="projects" className="bg-bg py-16 md:py-24">
-            <div className="max-w-[1200px] mx-auto px-6 md:px-10 lg:px-16">
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1] }}
-                className="flex items-end justify-between mb-16"
-              >
+            <div class="p-5 flex-1 flex flex-col justify-between">
+              <div id="cyber-terminal-output" class="font-mono text-xs text-zinc-300 bg-void/90 rounded-2xl p-4 h-44 overflow-y-auto space-y-1.5 border border-white/5">
+                <div class="text-lavender">TOHA-SEC OS [Version 1.0.4] — Type <span class="text-white underline">help</span>, <span class="text-white underline">whoami</span>, <span class="text-white underline">scan</span>, or <span class="text-white underline">skills</span>.</div>
+              </div>
+
+              <form id="cyber-terminal-form" class="mt-3 flex items-center gap-2">
+                <span class="font-mono text-xs text-lavender pl-2">toha@sec:~$</span>
+                <input id="cyber-terminal-input" type="text" placeholder="Enter command (e.g. scan)..." autocomplete="off"
+                  class="flex-1 bg-void/80 border border-white/10 rounded-xl px-3 py-2 font-mono text-xs text-softWhite focus:outline-none focus:border-lavender" />
+                <button type="submit" class="px-4 py-2 rounded-xl bg-lavender/20 hover:bg-lavender/30 text-lavender font-mono text-xs transition-colors">
+                  RUN
+                </button>
+              </form>
+            </div>
+          </div>
+
+          <!-- LAB 2: Spreadsheet Analytics Live Matrix -->
+          <div class="reveal-up glass-panel rounded-3xl overflow-hidden flex flex-col">
+            <div class="relative h-36 w-full overflow-hidden">
+              <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80" alt="Spreadsheet Analytics"
+                loading="lazy" onerror="this.src='https://placehold.co/800x300/0a0a0f/64d2ff?text=DATA_MATRIX'"
+                class="w-full h-full object-cover opacity-45" />
+              <div class="absolute inset-0 bg-gradient-to-t from-charcoal via-charcoal/60 to-transparent"></div>
+              <div class="absolute bottom-3 left-5 right-5 flex items-center justify-between">
+                <span class="font-mono text-xs text-iceBlue font-semibold">LAB 02 // SPREADSHEET ANALYTICS ENGINE</span>
+                <span class="font-mono text-[10px] text-zinc-300">REACTIVE FORMULAS</span>
+              </div>
+            </div>
+
+            <div class="p-5 flex-1 flex flex-col justify-between">
+              <p class="text-xs text-zinc-400 mb-3">Adjust student subject scores below to compute live mean, grade classification, and distribution bars.</p>
+
+              <div class="grid grid-cols-3 gap-2.5 mb-4">
+                <div class="bg-void/80 p-3 rounded-xl border border-white/5">
+                  <label for="score-math" class="font-mono text-[10px] text-zinc-400 block">DATA STRUCT</label>
+                  <input id="score-math" type="number" min="0" max="100" value="88" class="w-full mt-1 bg-transparent font-mono text-base font-bold text-softWhite focus:outline-none" />
+                </div>
+                <div class="bg-void/80 p-3 rounded-xl border border-white/5">
+                  <label for="score-py" class="font-mono text-[10px] text-zinc-400 block">PYTHON LAB</label>
+                  <input id="score-py" type="number" min="0" max="100" value="94" class="w-full mt-1 bg-transparent font-mono text-base font-bold text-softWhite focus:outline-none" />
+                </div>
+                <div class="bg-void/80 p-3 rounded-xl border border-white/5">
+                  <label for="score-sec" class="font-mono text-[10px] text-zinc-400 block">CYBER SEC</label>
+                  <input id="score-sec" type="number" min="0" max="100" value="85" class="w-full mt-1 bg-transparent font-mono text-base font-bold text-softWhite focus:outline-none" />
+                </div>
+              </div>
+
+              <div class="bg-void/90 rounded-2xl p-4 border border-white/5 flex items-center justify-between">
                 <div>
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="w-8 h-px bg-stroke" />
-                    <span className="text-xs text-muted uppercase tracking-[0.3em]">
-                      Portfolio Works
-                    </span>
-                  </div>
-                  <h2 className="text-3xl md:text-5xl font-normal">
-                    Featured <span className="font-display italic">projects</span>
-                  </h2>
-                  <p className="text-muted text-sm md:text-base mt-2 max-w-md">
-                    Structured dashboards, computational tools, and data-driven systems designed for clarity.
-                  </p>
+                  <span class="font-mono text-[10px] text-zinc-400 block">COMPUTED AVERAGE</span>
+                  <span id="sheet-avg-output" class="font-display text-2xl font-bold text-lavender">89.0%</span>
                 </div>
-
-                <a
-                  href="#contact"
-                  className="hidden md:inline-flex items-center gap-2 rounded-full p-[1.5px] group text-sm"
-                >
-                  <span className="accent-gradient-border rounded-full px-5 py-2.5 bg-surface text-text-primary">
-                    Inquire Files →
-                  </span>
-                </a>
-              </motion.div>
-
-              {/* Project Grid: 4 completed projects + one upcoming card */}
-              <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
-                {/* 1. Excel Student Performance Dashboard */}
-                <div className="group relative h-[380px] md:h-[460px] md:col-span-7 rounded-3xl overflow-hidden border border-stroke bg-surface">
-                  <img
-                    src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&q=80"
-                    alt="Excel Student Performance Dashboard"
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 halftone-overlay opacity-20 mix-blend-multiply pointer-events-none" />
-                  <div className="absolute top-6 left-6 right-6 flex justify-between items-start pointer-events-none">
-                    <span className="text-xs font-mono px-3 py-1 rounded-full bg-bg/80 backdrop-blur-md border border-stroke text-[#89AACC]">
-                      01 · Excel Analytics
-                    </span>
-                  </div>
-                  <div className="absolute inset-0 bg-bg/85 opacity-0 backdrop-blur-lg group-hover:opacity-100 transition-all duration-300 flex flex-col justify-between p-8">
-                    <span className="text-xs font-mono text-muted uppercase tracking-widest">Excel Dashboard</span>
-                    <div>
-                      <h3 className="text-2xl md:text-3xl font-display italic text-text-primary mb-3">
-                        Student Performance Dashboard
-                      </h3>
-                      <p className="text-muted text-sm max-w-md leading-relaxed">
-                        An Excel workbook for reviewing student marks, attendance, subject performance, and summary insights.
-                      </p>
-                    </div>
-                    <a
-                      href="./Professional_Student_Performance_Dashboard.xlsx"
-                      download="Professional_Student_Performance_Dashboard.xlsx"
-                      className="accent-gradient-border self-start p-[1.5px] rounded-full"
-                      aria-label="Download Student Performance Dashboard Excel file"
-                    >
-                      <span className="inline-block bg-white text-black px-6 py-2.5 rounded-full text-xs uppercase tracking-widest font-semibold">
-                        Download Excel Dashboard ↓
-                      </span>
-                    </a>
-                  </div>
-                </div>
-
-                {/* 2. Python Student Performance Analytics */}
-                <div className="group relative h-[380px] md:h-[460px] md:col-span-5 rounded-3xl overflow-hidden border border-stroke bg-surface">
-                  <img
-                    src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&q=80"
-                    alt="Python Student Performance Analytics"
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 halftone-overlay opacity-20 mix-blend-multiply pointer-events-none" />
-                  <div className="absolute top-6 left-6 right-6 flex justify-between items-start pointer-events-none">
-                    <span className="text-xs font-mono px-3 py-1 rounded-full bg-bg/80 backdrop-blur-md border border-stroke text-[#89AACC]">
-                      02 · Python Analytics
-                    </span>
-                  </div>
-                  <div className="absolute inset-0 bg-bg/85 opacity-0 backdrop-blur-lg group-hover:opacity-100 transition-all duration-300 flex flex-col justify-between p-8">
-                    <span className="text-xs font-mono text-muted uppercase tracking-widest">Python · Pandas · SQLite · Streamlit</span>
-                    <div>
-                      <h3 className="text-2xl md:text-3xl font-display italic text-text-primary mb-3">
-                        Student Performance Analytics
-                      </h3>
-                      <p className="text-muted text-sm leading-relaxed">
-                        An interactive student-data dashboard with analysis, filters, charts, CSV export, and automated tests.
-                      </p>
-                    </div>
-                    <a
-                      href="https://github.com/toha-biswas?tab=repositories"
-                      target="_blank"
-                      rel="noreferrer"
-                      className="accent-gradient-border self-start p-[1.5px] rounded-full"
-                    >
-                      <span className="inline-block bg-white text-black px-6 py-2.5 rounded-full text-xs uppercase tracking-widest font-semibold">
-                        View GitHub Repositories ↗
-                      </span>
-                    </a>
-                  </div>
-                </div>
-
-                {/* 3. Inventory Management in C */}
-                <div className="group relative h-[380px] md:h-[460px] md:col-span-5 rounded-3xl overflow-hidden border border-stroke bg-surface">
-                  <img
-                    src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=1200&q=80"
-                    alt="Inventory Management in C"
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 halftone-overlay opacity-20 mix-blend-multiply pointer-events-none" />
-                  <div className="absolute top-6 left-6 right-6 flex justify-between items-start pointer-events-none">
-                    <span className="text-xs font-mono px-3 py-1 rounded-full bg-bg/80 backdrop-blur-md border border-stroke text-[#89AACC]">
-                      03 · C Programming
-                    </span>
-                  </div>
-                  <div className="absolute inset-0 bg-bg/85 opacity-0 backdrop-blur-lg group-hover:opacity-100 transition-all duration-300 flex flex-col justify-between p-8">
-                    <span className="text-xs font-mono text-muted uppercase tracking-widest">C · Structures · Arrays</span>
-                    <div>
-                      <h3 className="text-2xl md:text-3xl font-display italic text-text-primary mb-3">
-                        Inventory Management
-                      </h3>
-                      <p className="text-muted text-sm leading-relaxed">
-                        A menu-driven C program to add, view, and search product records using structures and arrays.
-                      </p>
-                    </div>
-                    <a
-                      href="https://github.com/toha-biswas?tab=repositories"
-                      target="_blank"
-                      rel="noreferrer"
-                      className="accent-gradient-border self-start p-[1.5px] rounded-full"
-                    >
-                      <span className="inline-block bg-white text-black px-6 py-2.5 rounded-full text-xs uppercase tracking-widest font-semibold">
-                        View C Projects ↗
-                      </span>
-                    </a>
-                  </div>
-                </div>
-
-                {/* 4. Expense Tracker in C */}
-                <div className="group relative h-[380px] md:h-[460px] md:col-span-7 rounded-3xl overflow-hidden border border-stroke bg-surface">
-                  <img
-                    src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=1200&q=80"
-                    alt="Expense Tracker in C"
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 halftone-overlay opacity-20 mix-blend-multiply pointer-events-none" />
-                  <div className="absolute top-6 left-6 right-6 flex justify-between items-start pointer-events-none">
-                    <span className="text-xs font-mono px-3 py-1 rounded-full bg-bg/80 backdrop-blur-md border border-stroke text-[#89AACC]">
-                      04 · C Programming
-                    </span>
-                  </div>
-                  <div className="absolute inset-0 bg-bg/85 opacity-0 backdrop-blur-lg group-hover:opacity-100 transition-all duration-300 flex flex-col justify-between p-8">
-                    <span className="text-xs font-mono text-muted uppercase tracking-widest">C · Expense Tracking</span>
-                    <div>
-                      <h3 className="text-2xl md:text-3xl font-display italic text-text-primary mb-3">
-                        Personal Expense Tracker
-                      </h3>
-                      <p className="text-muted text-sm max-w-md leading-relaxed">
-                        A beginner-friendly C programming project for recording and managing personal expenses.
-                      </p>
-                    </div>
-                    <a
-                      href="https://github.com/toha-biswas?tab=repositories"
-                      target="_blank"
-                      rel="noreferrer"
-                      className="accent-gradient-border self-start p-[1.5px] rounded-full"
-                    >
-                      <span className="inline-block bg-white text-black px-6 py-2.5 rounded-full text-xs uppercase tracking-widest font-semibold">
-                        View C Projects ↗
-                      </span>
-                    </a>
-                  </div>
-                </div>
-
-                {/* One upcoming-project card */}
-                <div className="group relative h-[380px] md:h-[460px] md:col-span-5 rounded-3xl overflow-hidden border border-dashed border-stroke bg-surface/50 flex flex-col justify-between p-8">
-                  <div className="flex justify-between items-center">
-                    <span className="text-xs font-mono px-3 py-1 rounded-full bg-surface border border-stroke text-amber-400">
-                      In Development
-                    </span>
-                    <span className="text-2xl">⚡</span>
-                  </div>
-                  <div>
-                    <h3 className="text-3xl font-display italic text-text-primary mb-2">
-                      More Projects Soon
-                    </h3>
-                    <p className="text-muted text-sm leading-relaxed">
-                      Exploring new projects in data analytics, programming, databases, and cybersecurity fundamentals.
-                    </p>
-                  </div>
-                  <a
-                    href="https://github.com/toha-biswas"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="accent-gradient-border self-start p-[1.5px] rounded-full"
-                  >
-                    <span className="inline-block bg-surface hover:bg-bg transition-colors text-text-primary px-6 py-2.5 rounded-full text-xs uppercase tracking-widest font-semibold">
-                      Visit GitHub ↗
-                    </span>
-                  </a>
+                <div class="text-right">
+                  <span class="font-mono text-[10px] text-zinc-400 block">STATUS</span>
+                  <span id="sheet-grade-output" class="font-mono text-xs px-3 py-1 rounded-full bg-lavender/20 text-lavender">DISTINCTION (A)</span>
                 </div>
               </div>
             </div>
-          </section>
+          </div>
 
-          {/* Skills Section */}
-          <section id="skills" className="bg-bg py-16 md:py-24 border-t border-stroke">
-            <div className="max-w-[1200px] mx-auto px-6 md:px-10 lg:px-16">
-              <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
-                <div>
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="w-8 h-px bg-stroke" />
-                    <span className="text-xs text-muted uppercase tracking-[0.3em]">
-                      Capabilities
-                    </span>
-                  </div>
-                  <h2 className="text-3xl md:text-5xl font-normal">
-                    Core <span className="font-display italic">technologies</span>
-                  </h2>
-                </div>
-                <p className="text-muted text-sm md:text-base max-w-sm">
-                  Applied tools, languages, and technical disciplines practiced in academic and project work.
-                </p>
-              </div>
-
-              <div className="flex flex-wrap gap-3">
-                {skillsList.map((skill, index) => (
-                  <div
-                    key={index}
-                    className="group relative rounded-2xl border border-stroke bg-surface/60 hover:bg-surface px-6 py-4 transition-all duration-300 hover:scale-105 hover:border-text-primary/40 cursor-default"
-                  >
-                    <div className="flex items-center gap-3">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#89AACC] group-hover:scale-150 transition-transform" />
-                      <span className="text-sm md:text-base font-mono tracking-tight text-text-primary">
-                        {skill}
-                      </span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </section>
-
-          {/* Recent Thoughts (Journal) */}
-          <section id="thoughts" className="bg-bg py-16 md:py-24 border-t border-stroke">
-            <div className="max-w-[1200px] mx-auto px-6 md:px-10 lg:px-16">
-              <div className="flex items-end justify-between mb-16">
-                <div>
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="w-8 h-px bg-stroke" />
-                    <span className="text-xs text-muted uppercase tracking-[0.3em]">
-                      Academic Notes &amp; Thoughts
-                    </span>
-                  </div>
-                  <h2 className="text-3xl md:text-5xl font-normal">
-                    Recent <span className="font-display italic">thoughts</span>
-                  </h2>
-                  <p className="text-muted text-sm md:text-base mt-2">
-                    Reflections on data structures, defensive security, and cleaner spreadsheets.
-                  </p>
-                </div>
-                <button className="hidden md:inline-flex items-center gap-2 rounded-full border border-stroke px-5 py-2 text-sm hover:border-text-primary transition-colors">
-                  View archive
+          <!-- LAB 3: Algorithmic Logic & Sorting Visualizer -->
+          <div class="reveal-up glass-panel rounded-3xl overflow-hidden flex flex-col">
+            <div class="relative h-36 w-full overflow-hidden">
+              <img src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=800&q=80" alt="Algorithmic Logic"
+                loading="lazy" onerror="this.src='https://placehold.co/800x300/0a0a0f/aa88ff?text=ALGO_LOGIC'"
+                class="w-full h-full object-cover opacity-45" />
+              <div class="absolute inset-0 bg-gradient-to-t from-charcoal via-charcoal/60 to-transparent"></div>
+              <div class="absolute bottom-3 left-5 right-5 flex items-center justify-between">
+                <span class="font-mono text-xs text-lavender font-semibold">LAB 03 // ALGORITHMIC LOGIC (C / ARRAY SORT)</span>
+                <button id="btn-run-sort" type="button" class="font-mono text-[10px] px-3 py-1 rounded-full bg-lavender text-void font-semibold hover:bg-lavender/90">
+                  SORT ARRAY
                 </button>
               </div>
+            </div>
 
-              <div className="flex flex-col gap-4">
-                {[
-                  { title: "Building foolproof automated validation rules into Excel dashboards", time: "4 min read", date: "Sep 2026", img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=200&q=80" },
-                  { title: "Why memory management in C sharpens overall problem-solving skills", time: "6 min read", date: "Aug 2026", img: "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=200&q=80" },
-                  { title: "Foundational cybersecurity practices every first-year student must adopt", time: "5 min read", date: "Jun 2026", img: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=200&q=80" },
-                  { title: "From raw CSV to actionable insights: the anatomy of methodical data cleaning", time: "5 min read", date: "Apr 2026", img: "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=200&q=80" },
-                ].map((post, idx) => (
-                  <div
-                    key={idx}
-                    className="group flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-[40px] sm:rounded-full bg-surface/30 hover:bg-surface border border-stroke transition-all duration-300"
-                  >
-                    <div className="flex items-center gap-5">
-                      <img
-                        src={post.img}
-                        alt={post.title}
-                        className="w-14 h-14 rounded-full object-cover border border-stroke"
-                      />
-                      <h3 className="text-sm sm:text-base font-normal group-hover:text-text-primary transition-colors">
-                        {post.title}
-                      </h3>
-                    </div>
-                    <div className="flex items-center gap-6 px-4 text-xs text-muted">
-                      <span>{post.time}</span>
-                      <span className="w-1 h-1 rounded-full bg-stroke" />
-                      <span>{post.date}</span>
-                    </div>
-                  </div>
-                ))}
+            <div class="p-5 flex-1 flex flex-col justify-between">
+              <div id="algo-bars-container" class="h-36 bg-void/90 rounded-2xl p-4 border border-white/5 flex items-end justify-between gap-1.5">
+                <!-- Dynamic bars injected by JS -->
+              </div>
+              <div class="mt-3 flex items-center justify-between font-mono text-[11px] text-zinc-400">
+                <span id="algo-status-text">ARRAY STATE: UNSORTED [18 ELEMENTS]</span>
+                <button id="btn-shuffle-sort" type="button" class="text-lavender hover:underline">SHUFFLE</button>
               </div>
             </div>
-          </section>
+          </div>
 
-          {/* Explorations Parallax */}
-          <Explorations />
-
-          {/* Stats Section */}
-          <section className="bg-bg py-16 md:py-24 border-y border-stroke">
-            <div className="max-w-[1200px] mx-auto px-6 md:px-10 lg:px-16 grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
-              <div>
-                <div className="text-5xl md:text-7xl font-display italic text-text-primary mb-2">BCA</div>
-                <div className="text-xs uppercase tracking-[0.25em] text-muted">Data Science Student</div>
-              </div>
-              <div>
-                <div className="text-5xl md:text-7xl font-display italic text-text-primary mb-2">4</div>
-                <div className="text-xs uppercase tracking-[0.25em] text-muted">Featured Projects</div>
-              </div>
-              <div>
-                <div className="text-5xl md:text-7xl font-display italic text-text-primary mb-2">3+</div>
-                <div className="text-xs uppercase tracking-[0.25em] text-muted">Areas of Learning</div>
-              </div>
-            </div>
-          </section>
-
-          {/* Contact & Footer Section */}
-          <footer id="contact" className="relative bg-bg pt-16 md:pt-20 pb-8 md:pb-12 overflow-hidden">
-            <HlsVideo src={VIDEO_URL} flipped={true} />
-            <div className="absolute inset-0 bg-black/60 pointer-events-none" />
-
-            {/* GSAP Infinite Marquee */}
-            <div className="relative w-full overflow-hidden whitespace-nowrap mb-16 opacity-30 select-none">
-              <div ref={marqueeRef} className="inline-block text-6xl md:text-8xl font-black tracking-widest">
-                {Array(10)
-                  .fill("TURNING RAW DATA INTO CLARITY • ")
-                  .map((text, i) => (
-                    <span key={i} className="text-stroke-title">
-                      {text}
-                    </span>
-                  ))}
+          <!-- LAB 4: Relational Structures & Particle Wave Canvas -->
+          <div class="reveal-up glass-panel rounded-3xl overflow-hidden flex flex-col">
+            <div class="relative h-36 w-full overflow-hidden">
+              <img src="https://images.unsplash.com/photo-1544383835-bda2bc66a55d?w=800&q=80" alt="Relational Structures"
+                loading="lazy" onerror="this.src='https://placehold.co/800x300/0a0a0f/64d2ff?text=RELATIONAL_NODES'"
+                class="w-full h-full object-cover opacity-45" />
+              <div class="absolute inset-0 bg-gradient-to-t from-charcoal via-charcoal/60 to-transparent"></div>
+              <div class="absolute bottom-3 left-5 right-5 flex items-center justify-between">
+                <span class="font-mono text-xs text-iceBlue font-semibold">LAB 04 // RELATIONAL NODE GRAPH</span>
+                <span class="font-mono text-[10px] text-zinc-300">MOVE CURSOR TO PERTURB</span>
               </div>
             </div>
 
-            <div className="relative z-10 max-w-[1200px] mx-auto px-6 flex flex-col items-center text-center mb-20">
-              <span className="text-xs text-muted uppercase tracking-[0.3em] mb-4">
-                Get In Touch
-              </span>
-              <h2 className="text-4xl md:text-7xl font-normal mb-8">
-                Let&apos;s build something <br />
-                <span className="font-display italic">clear and impactful.</span>
-              </h2>
+            <div class="p-5 flex-1 flex flex-col justify-between">
+              <canvas id="relational-lab-canvas" class="w-full h-36 rounded-2xl bg-void/90 border border-white/5 block"></canvas>
+              <div class="mt-3 flex items-center justify-between font-mono text-[11px] text-zinc-400">
+                <span>TOPOLOGY: 24 CONNECTED ENTITIES</span>
+                <span class="text-iceBlue">INTERACTIVE FIELD</span>
+              </div>
+            </div>
+          </div>
 
-              <a
-                href="mailto:abutohabiswas@example.com"
-                className="group relative rounded-full p-[1.5px] overflow-hidden"
-              >
-                <span className="absolute inset-[-2px] bg-gradient-to-r from-[#89AACC] to-[#4E85BF] rounded-full" />
-                <span className="relative z-10 flex items-center gap-3 bg-surface px-8 py-4 rounded-full text-base font-medium">
-                  abutohabiswas@example.com ↗
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- SEQUENCE 9: LET'S CONNECT & FOOTER                                  -->
+    <!-- =================================================================== -->
+    <section id="connect" class="relative py-24 sm:py-32 px-5 sm:px-8 bg-void border-t border-white/10">
+      <div class="max-w-5xl mx-auto text-center reveal-up">
+        <span class="font-mono text-xs tracking-[0.3em] text-lavender uppercase block mb-3">TRANSMISSION // 06</span>
+        <h2 class="font-display text-4xl sm:text-6xl font-extrabold tracking-tight text-softWhite">
+          LET'S CONNECT
+        </h2>
+        <p class="text-sm sm:text-base text-zinc-400 max-w-xl mx-auto mt-4 leading-relaxed">
+          Thank you for exploring my digital universe. Feel free to inspect my repositories on GitHub or bookmark my live portfolio hub for upcoming data science and security builds.
+        </p>
+
+        <!-- Social & Portfolio Cards -->
+        <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-5 max-w-2xl mx-auto">
+          <a href="https://github.com/toha-biswas" target="_blank" rel="noopener noreferrer"
+            class="group glass-panel rounded-3xl p-6 text-left hover:border-lavender/50 transition-all duration-300 flex items-center justify-between">
+            <div class="flex items-center gap-4">
+              <div class="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center text-softWhite group-hover:text-lavender transition-colors">
+                <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+                </svg>
+              </div>
+              <div>
+                <div class="font-mono text-[10px] tracking-widest text-zinc-400 uppercase">SOURCE REPOSITORIES</div>
+                <div class="font-display text-lg font-bold text-softWhite group-hover:text-lavender transition-colors">GitHub</div>
+                <div class="font-mono text-xs text-zinc-400 mt-0.5">github.com/toha-biswas</div>
+              </div>
+            </div>
+            <span class="font-mono text-lavender text-lg group-hover:translate-x-1 transition-transform">&nearr;</span>
+          </a>
+
+          <a href="https://toha-biswas.github.io" target="_blank" rel="noopener noreferrer"
+            class="group glass-panel rounded-3xl p-6 text-left hover:border-iceBlue/50 transition-all duration-300 flex items-center justify-between">
+            <div class="flex items-center gap-4">
+              <div class="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center text-softWhite group-hover:text-iceBlue transition-colors">
+                <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="2" y1="12" x2="22" y2="12"></line>
+                  <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                </svg>
+              </div>
+              <div>
+                <div class="font-mono text-[10px] tracking-widest text-zinc-400 uppercase">LIVE PORTAL</div>
+                <div class="font-display text-lg font-bold text-softWhite group-hover:text-iceBlue transition-colors">Portfolio</div>
+                <div class="font-mono text-xs text-zinc-400 mt-0.5">toha-biswas.github.io</div>
+              </div>
+            </div>
+            <span class="font-mono text-iceBlue text-lg group-hover:translate-x-1 transition-transform">&nearr;</span>
+          </a>
+        </div>
+
+        <!-- Footer -->
+        <footer class="mt-20 pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs text-zinc-500">
+          <div>&copy; <span id="footer-year">2026</span> MD ABUTOHA BISWAS (TOHA). ALL RIGHTS RESERVED.</div>
+          <div class="text-zinc-400">BCA — DATA SCIENCE // CRAFTED WITH PRECISION</div>
+        </footer>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================================================================== -->
+  <!-- PROJECT DETAILS MODAL (NO FAKE URLS — SHOWS REAL ARCHITECTURE)       -->
+  <!-- ===================================================================== -->
+  <div id="project-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+    <div class="glass-panel-strong rounded-3xl max-w-xl w-full p-6 sm:p-8 relative shadow-2xl border border-lavender/30">
+      <button id="btn-close-project-modal" type="button" aria-label="Close modal"
+        class="absolute top-5 right-5 w-9 h-9 rounded-full bg-white/5 hover:bg-white/15 flex items-center justify-center text-zinc-300 hover:text-white transition-colors">
+        &times;
+      </button>
+
+      <span id="modal-project-tag" class="font-mono text-[10px] tracking-[0.25em] text-lavender uppercase">PROJECT 01</span>
+      <h3 id="modal-project-title" class="font-display text-2xl sm:text-3xl font-bold text-softWhite mt-1">
+        Student Performance Dashboard
+      </h3>
+      <div id="modal-project-tech" class="font-mono text-xs text-iceBlue mt-1">Microsoft Excel</div>
+
+      <p id="modal-project-desc" class="text-sm text-zinc-300 leading-relaxed mt-4"></p>
+
+      <div class="mt-5 rounded-2xl bg-void/80 p-4 border border-white/10">
+        <div class="font-mono text-[10px] tracking-widest text-zinc-400 uppercase mb-2">KEY CAPABILITIES &amp; ARCHITECTURE</div>
+        <ul id="modal-project-highlights" class="space-y-1.5 text-xs text-zinc-300 font-mono"></ul>
+      </div>
+
+      <div class="mt-6 flex flex-wrap items-center justify-end gap-3">
+        <button id="btn-modal-done" type="button" class="px-5 py-2 rounded-full bg-white/10 hover:bg-white/15 text-xs font-mono text-softWhite transition-colors">
+          CLOSE PREVIEW
+        </button>
+        <a id="modal-github-link" href="https://github.com/toha-biswas" target="_blank" rel="noopener noreferrer"
+          class="px-5 py-2 rounded-full bg-lavender text-void font-mono text-xs font-semibold hover:bg-lavender/90 transition-colors">
+          VIEW ON GITHUB &nearr;
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- SEQUENCE 8: MILO — MY LITTLE AI COMPANION (PERSISTENT BOTTOM-RIGHT)   -->
+  <!-- ===================================================================== -->
+  <div id="milo-widget-root" class="fixed bottom-5 right-5 z-50 flex flex-col items-end">
+
+    <!-- Dismissible Ambient Speech Bubble -->
+    <div id="milo-ambient-bubble" class="hidden mb-3 max-w-[240px] glass-panel-strong rounded-2xl rounded-br-sm p-3.5 shadow-xl border border-lavender/35 transition-all duration-300">
+      <div class="flex items-start justify-between gap-2">
+        <p id="milo-ambient-text" class="text-xs text-softWhite leading-relaxed">
+          Psst... have you checked out the projects?
+        </p>
+        <button id="btn-dismiss-milo-bubble" type="button" aria-label="Dismiss tip" class="text-zinc-400 hover:text-white text-xs leading-none">
+          &times;
+        </button>
+      </div>
+    </div>
+
+    <!-- Expandable MILO Chat Panel -->
+    <div id="milo-chat-panel" class="hidden mb-3 w-[92vw] sm:w-[370px] max-h-[75vh] glass-panel-strong rounded-3xl shadow-2xl shadow-black/80 border border-lavender/35 flex flex-col overflow-hidden transition-all duration-300">
+      <!-- Chat Header -->
+      <div class="px-4 py-3.5 bg-white/[0.03] border-b border-white/10 flex items-center justify-between">
+        <div class="flex items-center gap-2.5">
+          <!-- Mini MILO Avatar -->
+          <div class="w-8 h-8 rounded-full bg-gradient-to-br from-white via-lavender/40 to-iceBlue/40 p-0.5 flex items-center justify-center shadow-inner">
+            <div class="w-full h-full rounded-full bg-obsidian flex items-center justify-center">
+              <span class="w-2 h-2 rounded-full bg-iceBlue animate-pulse"></span>
+            </div>
+          </div>
+          <div>
+            <div class="flex items-center gap-1.5">
+              <span class="font-display text-sm font-bold text-softWhite">MILO</span>
+              <span class="font-mono text-[9px] px-1.5 py-0.2 rounded bg-lavender/20 text-lavender">COPILOT</span>
+            </div>
+            <div class="font-mono text-[10px] text-zinc-400">Toha's Digital Companion</div>
+          </div>
+        </div>
+
+        <!-- Header Actions: Speak Greeting, Clear, Close -->
+        <div class="flex items-center gap-1">
+          <button id="btn-milo-greet-voice" type="button" title="Play Voice Greeting" aria-label="Play Voice Greeting"
+            class="p-1.5 rounded-lg hover:bg-white/10 text-lavender transition-colors">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+              <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+            </svg>
+          </button>
+          <button id="btn-milo-clear" type="button" title="Clear Chat" aria-label="Clear Chat"
+            class="p-1.5 rounded-lg hover:bg-white/10 text-zinc-400 hover:text-white transition-colors font-mono text-[10px]">
+            CLR
+          </button>
+          <button id="btn-milo-close" type="button" title="Minimize Chat" aria-label="Minimize Chat"
+            class="p-1.5 rounded-lg hover:bg-white/10 text-zinc-400 hover:text-white transition-colors text-base leading-none">
+            &minus;
+          </button>
+        </div>
+      </div>
+
+      <!-- Speaking Soundwave Indicator Bar -->
+      <div id="milo-speaking-bar" class="hidden px-4 py-2 bg-lavender/15 border-b border-lavender/20 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <div class="flex items-end gap-0.5 h-4">
+            <span class="sound-bar w-1 bg-lavender rounded-full"></span>
+            <span class="sound-bar w-1 bg-iceBlue rounded-full"></span>
+            <span class="sound-bar w-1 bg-lavender rounded-full"></span>
+            <span class="sound-bar w-1 bg-iceBlue rounded-full"></span>
+            <span class="sound-bar w-1 bg-lavender rounded-full"></span>
+          </div>
+          <span class="font-mono text-[10px] text-lavender tracking-wider">MILO IS SPEAKING...</span>
+        </div>
+        <button id="btn-milo-stop-speech" type="button" class="font-mono text-[10px] px-2 py-0.5 rounded bg-white/10 text-white hover:bg-white/20">
+          STOP
+        </button>
+      </div>
+
+      <!-- Chat Messages Feed -->
+      <div id="milo-messages" class="p-4 space-y-3 overflow-y-auto flex-1 max-h-[300px] text-xs leading-relaxed">
+        <!-- Initial Greeting populated by JS -->
+      </div>
+
+      <!-- Quick Prompt Chips -->
+      <div class="px-3 py-2 border-t border-white/5 flex gap-1.5 overflow-x-auto axon-scroll">
+        <button type="button" class="milo-chip shrink-0 font-mono text-[10px] px-2.5 py-1 rounded-full bg-white/5 hover:bg-lavender/20 text-zinc-300 hover:text-lavender border border-white/10 transition-colors">
+          Who is Toha?
+        </button>
+        <button type="button" class="milo-chip shrink-0 font-mono text-[10px] px-2.5 py-1 rounded-full bg-white/5 hover:bg-lavender/20 text-zinc-300 hover:text-lavender border border-white/10 transition-colors">
+          Show me the projects.
+        </button>
+        <button type="button" class="milo-chip shrink-0 font-mono text-[10px] px-2.5 py-1 rounded-full bg-white/5 hover:bg-lavender/20 text-zinc-300 hover:text-lavender border border-white/10 transition-colors">
+          What skills does Toha have?
+        </button>
+        <button type="button" class="milo-chip shrink-0 font-mono text-[10px] px-2.5 py-1 rounded-full bg-white/5 hover:bg-lavender/20 text-zinc-300 hover:text-lavender border border-white/10 transition-colors">
+          Tell me about this website.
+        </button>
+        <button type="button" class="milo-chip shrink-0 font-mono text-[10px] px-2.5 py-1 rounded-full bg-white/5 hover:bg-lavender/20 text-zinc-300 hover:text-lavender border border-white/10 transition-colors">
+          Let's have a little chat.
+        </button>
+      </div>
+
+      <!-- Chat Input Form + Mic Button -->
+      <form id="milo-chat-form" class="p-3 bg-void/80 border-t border-white/10 flex items-center gap-2">
+        <button id="btn-milo-mic" type="button" title="Voice Input" aria-label="Voice Input"
+          class="p-2 rounded-xl bg-white/5 hover:bg-lavender/20 text-zinc-300 hover:text-lavender border border-white/10 transition-colors shrink-0">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+            <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+            <line x1="12" y1="19" x2="12" y2="23"></line>
+          </svg>
+        </button>
+        <input id="milo-chat-input" type="text" placeholder="Ask MILO anything..." autocomplete="off"
+          class="flex-1 bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-xs text-softWhite placeholder-zinc-500 focus:outline-none focus:border-lavender" />
+        <button type="submit" aria-label="Send message"
+          class="px-3.5 py-2 rounded-xl bg-lavender text-void font-mono text-xs font-semibold hover:bg-lavender/90 transition-colors shrink-0">
+          SEND
+        </button>
+      </form>
+    </div>
+
+    <!-- Floating 3D-Styled MILO Robot Mascot Trigger -->
+    <button id="btn-milo-launcher" type="button" aria-label="Open MILO AI Companion"
+      class="milo-float group relative w-16 h-16 rounded-full flex items-center justify-center focus:outline-none">
+      <!-- Outer Lavender/Blue Aura -->
+      <span class="absolute inset-0 rounded-full bg-gradient-to-tr from-lavender/40 via-iceBlue/30 to-white/20 blur-md group-hover:blur-lg transition-all"></span>
+
+      <!-- Custom 3D-Shaded Robot Mascot SVG -->
+      <svg id="milo-mascot-svg" class="relative w-15 h-15 drop-shadow-[0_8px_18px_rgba(170,136,255,0.45)]" viewBox="0 0 80 80" fill="none">
+        <defs>
+          <radialGradient id="miloShell" cx="35%" cy="28%" r="70%">
+            <stop offset="0%" stop-color="#ffffff" />
+            <stop offset="65%" stop-color="#e4e0ff" />
+            <stop offset="100%" stop-color="#9e87f5" />
+          </radialGradient>
+          <linearGradient id="miloVisor" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#090912" />
+            <stop offset="100%" stop-color="#17152b" />
+          </linearGradient>
+        </defs>
+
+        <!-- Cute Antenna -->
+        <line x1="40" y1="14" x2="40" y2="7" stroke="#aa88ff" stroke-width="2.5" stroke-linecap="round" />
+        <circle cx="40" cy="6" r="3.5" fill="#64d2ff" />
+
+        <!-- Ear Pods -->
+        <rect x="10" y="32" width="6" height="16" rx="3" fill="#aa88ff" />
+        <rect x="64" y="32" width="6" height="16" rx="3" fill="#aa88ff" />
+
+        <!-- Rounded Futuristic Head Shell -->
+        <rect x="15" y="15" width="50" height="46" rx="22" fill="url(#miloShell)" />
+
+        <!-- Dark Glass Face Visor -->
+        <rect x="21" y="24" width="38" height="26" rx="13" fill="url(#miloVisor)" stroke="rgba(170,136,255,0.45)" stroke-width="1" />
+
+        <!-- Expressive Eyes Group (Moves subtly toward cursor + blinks) -->
+        <g id="milo-eyes-group">
+          <ellipse id="milo-eye-left" cx="32" cy="37" rx="4.2" ry="5" fill="#64d2ff" />
+          <ellipse id="milo-eye-right" cx="48" cy="37" rx="4.2" ry="5" fill="#64d2ff" />
+          <circle cx="33.2" cy="35.2" r="1.4" fill="#ffffff" />
+          <circle cx="49.2" cy="35.2" r="1.4" fill="#ffffff" />
+        </g>
+
+        <!-- Cute Subtle Smile Arc -->
+        <path d="M36 44 Q40 47 44 44" stroke="#aa88ff" stroke-width="1.8" stroke-linecap="round" fill="none" />
+
+        <!-- Hover Thruster Ring -->
+        <ellipse cx="40" cy="67" rx="14" ry="3" fill="rgba(100, 210, 255, 0.45)" />
+      </svg>
+    </button>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- APPLICATION LOGIC, WEB AUDIO ENGINE, THREE.JS & MILO AI               -->
+  <!-- ===================================================================== -->
+  <script>
+    (() => {
+      'use strict';
+
+      /* ------------------------------------------------------------------- */
+      /* 0. STATE & DATA DEFINITIONS                                         */
+      /* ------------------------------------------------------------------- */
+      const state = {
+        audioEnabled: false,
+        masterVolume: 0.65,
+        miloVoiceEnabled: true,
+        introCompleted: false,
+        carSequenceActive: false,
+        miloOpen: false,
+        miloHistory: [],
+        activeSkillIndex: 0,
+      };
+
+      const PROJECTS_DATA = [
+        {
+          id: 'proj-01',
+          num: 'PROJECT 01',
+          title: 'Student Performance Dashboard',
+          tech: 'Microsoft Excel',
+          badgeColor: 'text-emerald-400 border-emerald-400/30 bg-emerald-400/10',
+          description: 'An Excel workbook for reviewing student marks, attendance, subject performance and summary insights.',
+          highlights: [
+            'Dynamic lookup formulas & conditional grade thresholds',
+            'Attendance correlation & subject-wise summary pivot tables',
+            'Clean executive visual charts for rapid academic review'
+          ],
+          github: 'https://github.com/toha-biswas',
+          svgType: 'excel'
+        },
+        {
+          id: 'proj-02',
+          num: 'PROJECT 02',
+          title: 'Student Performance Analytics',
+          tech: 'Python / Data Analysis',
+          badgeColor: 'text-iceBlue border-iceBlue/30 bg-iceBlue/10',
+          description: 'An interactive student-data dashboard with analysis, filters, charts, CSV export and automated tests.',
+          highlights: [
+            'Programmatic data filtering & statistical aggregation in Python',
+            'Interactive visual charts & one-click clean CSV report export',
+            'Automated unit test suite verifying calculation integrity'
+          ],
+          github: 'https://github.com/toha-biswas',
+          svgType: 'python'
+        },
+        {
+          id: 'proj-03',
+          num: 'PROJECT 03',
+          title: 'Inventory Management in C',
+          tech: 'C Programming',
+          badgeColor: 'text-lavender border-lavender/30 bg-lavender/10',
+          description: 'A menu-driven C program to add, view and search product records using structures and arrays.',
+          highlights: [
+            'Custom C structs modeling product IDs, quantities, and pricing',
+            'Deterministic linear/indexed search & stock update routines',
+            'Clean CLI menu architecture with input validation'
+          ],
+          github: 'https://github.com/toha-biswas',
+          svgType: 'c-inv'
+        },
+        {
+          id: 'proj-04',
+          num: 'PROJECT 04',
+          title: 'Personal Expense Tracker in C',
+          tech: 'C Programming',
+          badgeColor: 'text-lavender border-lavender/30 bg-lavender/10',
+          description: 'A beginner-friendly C programming project for recording and managing personal expenses.',
+          highlights: [
+            'Categorized expense entry & cumulative budget summaries',
+            'Lightweight memory footprint built in pure standard C',
+            'Designed for clarity, reliability, and structured logic'
+          ],
+          github: 'https://github.com/toha-biswas',
+          svgType: 'c-exp'
+        },
+        {
+          id: 'proj-05',
+          num: 'PROJECT 05',
+          title: 'More Projects Soon',
+          tech: 'Future Experiments',
+          badgeColor: 'text-zinc-300 border-white/20 bg-white/5',
+          description: 'Exploring new projects in data analytics, programming, databases and cybersecurity fundamentals.',
+          highlights: [
+            'Relational database modeling & SQL analytical queries',
+            'Python security log parsers & anomaly detection scripts',
+            'Interactive web data visualizations'
+          ],
+          github: 'https://github.com/toha-biswas',
+          svgType: 'future'
+        }
+      ];
+
+      /* Authentic Custom-Crafted Multi-Path Brand & Technical SVGs (NO Emojis) */
+      const SKILLS_DATA = [
+        {
+          name: 'Python',
+          category: 'DATA & SCRIPTING',
+          level: 'CORE LANGUAGE',
+          desc: 'Used for data cleaning, statistical analysis, student performance analytics dashboards, CSV pipelines, and automated unit tests.',
+          svg: `<svg viewBox="0 0 128 128" class="w-full h-full">
+            <defs>
+              <linearGradient id="pyBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#387EB8"/><stop offset="100%" stop-color="#366994"/>
+              </linearGradient>
+              <linearGradient id="pyYellow" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#FFE052"/><stop offset="100%" stop-color="#FFC331"/>
+              </linearGradient>
+            </defs>
+            <path fill="url(#pyBlue)" d="M63.4 12c-22.2 0-20.8 9.6-20.8 9.6l.03 10h21.2v3H34.2S20 33 20 55.4s12.4 21.6 12.4 21.6h7.4V66.6s-.4-12.4 12.2-12.4h21s11.8.2 11.8-11.4V23.6S86.6 12 63.4 12zm-11.6 6.8a3.8 3.8 0 1 1 0 7.6 3.8 3.8 0 0 1 0-7.6z"/>
+            <path fill="url(#pyYellow)" d="M64.6 116c22.2 0 20.8-9.6 20.8-9.6l-.03-10h-21.2v-3h29.6S108 95 108 72.6 95.6 51 95.6 51h-7.4v10.4s.4 12.4-12.2 12.4H55s-11.8-.2-11.8 11.4v19.2S41.4 116 64.6 116zm11.6-6.8a3.8 3.8 0 1 1 0-7.6 3.8 3.8 0 0 1 0 7.6z"/>
+          </svg>`
+        },
+        {
+          name: 'C Programming',
+          category: 'SYSTEMS & LOGIC',
+          level: 'STRUCTURED CORE',
+          desc: 'Strong command of structures, arrays, pointers, and modular CLI applications like Inventory Management and Personal Expense Tracker.',
+          svg: `<svg viewBox="0 0 128 128" class="w-full h-full">
+            <polygon points="64,8 114,36 114,92 64,120 14,92 14,36" fill="#283593"/>
+            <polygon points="64,8 114,36 114,92 64,120" fill="#1A237E" opacity="0.55"/>
+            <path d="M84 48a24 24 0 1 0 0 32l-11-7a11 11 0 1 1 0-18z" fill="#ffffff"/>
+          </svg>`
+        },
+        {
+          name: 'Microsoft Excel',
+          category: 'SPREADSHEET ANALYTICS',
+          level: 'DATA MODELING',
+          desc: 'Designing structured academic and operational workbooks featuring formulas, attendance tracking, pivot summaries, and KPI charts.',
+          svg: `<svg viewBox="0 0 128 128" class="w-full h-full">
+            <rect x="28" y="16" width="82" height="96" rx="10" fill="#185C37"/>
+            <rect x="28" y="16" width="82" height="32" rx="10" fill="#21A366"/>
+            <rect x="28" y="48" width="82" height="32" fill="#107C41"/>
+            <rect x="14" y="34" width="54" height="60" rx="8" fill="#107C41" stroke="#33C481" stroke-width="2"/>
+            <path d="M29 48l12 16-12 16h8l8-11 8 11h8L49 64l12-16h-8l-8 11-8-11z" fill="#ffffff"/>
+          </svg>`
+        },
+        {
+          name: 'Data Science',
+          category: 'ANALYTICS & INSIGHTS',
+          level: 'BCA SPECIALIZATION',
+          desc: 'Turning raw, unstructured data into actionable patterns through exploratory analysis, statistical summaries, and visual storytelling.',
+          svg: `<svg viewBox="0 0 128 128" class="w-full h-full">
+            <rect x="16" y="16" width="96" height="96" rx="20" fill="#121024" stroke="#aa88ff" stroke-width="3"/>
+            <line x1="34" y1="92" x2="94" y2="92" stroke="#64d2ff" stroke-width="3" stroke-linecap="round"/>
+            <rect x="38" y="64" width="10" height="24" rx="3" fill="#aa88ff"/>
+            <rect x="58" y="48" width="10" height="40" rx="3" fill="#64d2ff"/>
+            <rect x="78" y="34" width="10" height="54" rx="3" fill="#c4b5fd"/>
+            <circle cx="43" cy="52" r="4" fill="#ffffff"/>
+            <circle cx="63" cy="38" r="4" fill="#ffffff"/>
+            <circle cx="83" cy="24" r="4" fill="#ffffff"/>
+            <path d="M43 52 L63 38 L83 24" stroke="#ffffff" stroke-width="2" fill="none"/>
+          </svg>`
+        },
+        {
+          name: 'HTML',
+          category: 'WEB ARCHITECTURE',
+          level: 'HTML5 SEMANTICS',
+          desc: 'Semantic, accessible document structure engineered for responsive modern web applications and interactive dashboards.',
+          svg: `<svg viewBox="0 0 128 128" class="w-full h-full">
+            <path fill="#E44D26" d="M22 14h84l-7.6 86L64 114l-34.4-14z"/>
+            <path fill="#F16529" d="M64 22v84l27.8-11.2L98 22z"/>
+            <path fill="#EBEBEB" d="M64 46H44l1.4 15H64V46zm0 30.8l-13.2-3.6-.8-9.2H39l1.6 18L64 88.4V76.8z"/>
+            <path fill="#ffffff" d="M64 46v15h17.4l-1.6 15.8L64 80.4v11.6l23.4-6.4L91 46H64z"/>
+          </svg>`
+        },
+        {
+          name: 'CSS',
+          category: 'INTERFACE DESIGN',
+          level: 'CSS3 & LAYOUTS',
+          desc: 'Responsive Flexbox/Grid systems, glassmorphism surfaces, fluid typography, and GPU-accelerated keyframe transitions.',
+          svg: `<svg viewBox="0 0 128 128" class="w-full h-full">
+            <path fill="#1572B6" d="M22 14h84l-7.6 86L64 114l-34.4-14z"/>
+            <path fill="#33A9DC" d="M64 22v84l27.8-11.2L98 22z"/>
+            <path fill="#EBEBEB" d="M64 46H43l1.2 13H64V46zm0 30.8l-13.2-3.6-.8-9.2H39l1.6 18L64 88.4V76.8z"/>
+            <path fill="#ffffff" d="M64 46v13h17.6l-1.6 17.8L64 80.4v11.6l23.4-6.4L91 46H64z"/>
+          </svg>`
+        },
+        {
+          name: 'JavaScript',
+          category: 'INTERACTIVE LOGIC',
+          level: 'ES6+ & WEBGL',
+          desc: 'Building dynamic web experiences, Three.js particle fields, Web Audio synthesis, and real-time DOM data visualizations.',
+          svg: `<svg viewBox="0 0 128 128" class="w-full h-full">
+            <rect x="16" y="16" width="96" height="96" rx="14" fill="#F7DF1E"/>
+            <path d="M56 66v26c0 8-4.5 12-11.5 12-5.5 0-9-2.8-11-6.8l7-4.2c1.2 2.2 2.4 3.8 4.8 3.8 2.4 0 3.7-1.2 3.7-5.2V66h7zm34.5 25.5c0 7.6-5.6 12.5-14.2 12.5-7.4 0-12.4-3.6-14.8-8.4l7-4c1.8 3 4 5 7.8 5 3.4 0 5.5-1.6 5.5-4.2 0-2.8-2.2-3.8-6.4-5.6l-2.4-1c-6.8-2.9-11.2-6.5-11.2-13.8 0-6.8 5.2-12 13.4-12 5.8 0 10 2 13 7.2l-6.8 4.4c-1.5-2.6-3.2-3.8-6.2-3.8-2.8 0-4.6 1.8-4.6 3.8 0 2.6 1.8 3.7 5.8 5.4l2.4 1c7.8 3.3 12.1 6.8 12.1 14.3z" fill="#111111"/>
+          </svg>`
+        },
+        {
+          name: 'Cybersecurity Fundamentals',
+          category: 'DEFENSIVE SECURITY',
+          level: 'FOUNDATIONS',
+          desc: 'Understanding network hygiene, system hardening, cryptographic principles, access control, and safe software practices.',
+          svg: `<svg viewBox="0 0 128 128" class="w-full h-full">
+            <path d="M64 12L22 28v32c0 28.5 17.9 54.6 42 62 24.1-7.4 42-33.5 42-62V28L64 12z" fill="#141229" stroke="#aa88ff" stroke-width="4"/>
+            <rect x="48" y="58" width="32" height="26" rx="5" fill="#aa88ff"/>
+            <path d="M54 58V48a10 10 0 0 1 20 0v10" stroke="#64d2ff" stroke-width="4" fill="none" stroke-linecap="round"/>
+            <circle cx="64" cy="70" r="3" fill="#030305"/>
+          </svg>`
+        },
+        {
+          name: 'Git & GitHub',
+          category: 'VERSION CONTROL',
+          level: 'WORKFLOWS',
+          desc: 'Managing repositories, structured commit histories, branching workflows, and publishing open-source projects on GitHub.',
+          svg: `<svg viewBox="0 0 128 128" class="w-full h-full">
+            <circle cx="64" cy="64" r="52" fill="#161622" stroke="rgba(255,255,255,0.15)" stroke-width="2"/>
+            <path fill="#ffffff" fill-rule="evenodd" clip-rule="evenodd" d="M64 24c-22.1 0-40 17.9-40 40 0 17.7 11.5 32.7 27.4 38 2 .4 2.7-.9 2.7-1.9v-6.8c-11.1 2.4-13.5-5.4-13.5-5.4-1.8-4.6-4.4-5.8-4.4-5.8-3.6-2.5.3-2.4.3-2.4 4 .3 6.1 4.1 6.1 4.1 3.6 6.1 9.3 4.3 11.6 3.3.4-2.6 1.4-4.3 2.5-5.3-8.9-1-18.2-4.4-18.2-19.8 0-4.4 1.6-7.9 4.1-10.7-.4-1-1.8-5.1.4-10.6 0 0 3.4-1.1 11 4.1 3.2-.9 6.6-1.3 10-1.3s6.8.4 10 1.3c7.6-5.2 11-4.1 11-4.1 2.2 5.5.8 9.6.4 10.6 2.6 2.8 4.1 6.4 4.1 10.7 0 15.4-9.4 18.8-18.3 19.8 1.4 1.2 2.7 3.7 2.7 7.4v11c0 1.1.7 2.3 2.8 1.9C92.5 96.7 104 81.7 104 64c0-22.1-17.9-40-40-40z"/>
+          </svg>`
+        }
+      ];
+
+      /* ------------------------------------------------------------------- */
+      /* 1. PROCEDURAL WEB AUDIO SYNTHESIZER ENGINE (ZERO EXTERNAL AUDIO)    */
+      /* ------------------------------------------------------------------- */
+      class CinematicSoundEngine {
+        constructor() {
+          this.ctx = null;
+          this.masterGain = null;
+          this.engineNodes = null;
+          this.rocketNodes = null;
+        }
+
+        init() {
+          if (!this.ctx) {
+            const AudioCtx = window.AudioContext || window.webkitAudioContext;
+            if (!AudioCtx) return false;
+            this.ctx = new AudioCtx();
+            this.masterGain = this.ctx.createGain();
+            this.masterGain.gain.value = state.audioEnabled ? state.masterVolume : 0;
+            this.masterGain.connect(this.ctx.destination);
+          }
+          if (this.ctx.state === 'suspended') {
+            this.ctx.resume().catch(() => {});
+          }
+          return true;
+        }
+
+        setEnabled(enabled) {
+          state.audioEnabled = enabled;
+          if (enabled) this.init();
+          if (this.masterGain && this.ctx) {
+            this.masterGain.gain.setTargetAtTime(enabled ? state.masterVolume : 0, this.ctx.currentTime, 0.06);
+          }
+          updateAudioUI();
+        }
+
+        setVolume(val) {
+          state.masterVolume = parseFloat(val);
+          if (this.masterGain && this.ctx && state.audioEnabled) {
+            this.masterGain.gain.setTargetAtTime(state.masterVolume, this.ctx.currentTime, 0.05);
+          }
+        }
+
+        /* Subtle UI Click / Hover Ping */
+        playClick(freq = 620) {
+          if (!state.audioEnabled || !this.init()) return;
+          const now = this.ctx.currentTime;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(freq, now);
+          osc.frequency.exponentialRampToValueAtTime(freq * 1.35, now + 0.06);
+          gain.gain.setValueAtTime(0.08, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.07);
+          osc.connect(gain);
+          gain.connect(this.masterGain);
+          osc.start(now);
+          osc.stop(now + 0.08);
+        }
+
+        /* Countdown Beep & Final Cinematic Sub-Bass Impact */
+        playCountdownTick(step) {
+          if (!state.audioEnabled || !this.init()) return;
+          const now = this.ctx.currentTime;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+
+          if (step > 0) {
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(520, now);
+            osc.frequency.exponentialRampToValueAtTime(440, now + 0.16);
+            gain.gain.setValueAtTime(0.18, now);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
+            osc.connect(gain);
+            gain.connect(this.masterGain);
+            osc.start(now);
+            osc.stop(now + 0.24);
+          } else {
+            // Final "00" Sub-Bass Impact + Shimmer
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(140, now);
+            osc.frequency.exponentialRampToValueAtTime(38, now + 0.85);
+            gain.gain.setValueAtTime(0.45, now);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.95);
+            osc.connect(gain);
+            gain.connect(this.masterGain);
+            osc.start(now);
+            osc.stop(now + 1.0);
+          }
+        }
+
+        /* Car Ignition -> Idle Rumble -> Acceleration Sweep -> Fade Out */
+        startCarSequenceAudio() {
+          if (!state.audioEnabled || !this.init()) return;
+          this.stopCarSequenceAudio(0.1);
+
+          const now = this.ctx.currentTime;
+          const engineGain = this.ctx.createGain();
+          engineGain.gain.setValueAtTime(0.001, now);
+          engineGain.gain.linearRampToValueAtTime(0.24, now + 0.6);
+
+          // Low sawtooth engine growl filtered through lowpass
+          const osc1 = this.ctx.createOscillator();
+          const osc2 = this.ctx.createOscillator();
+          const filter = this.ctx.createBiquadFilter();
+
+          osc1.type = 'sawtooth';
+          osc2.type = 'triangle';
+          filter.type = 'lowpass';
+          filter.frequency.setValueAtTime(130, now);
+
+          // Ignition crank -> Idle (48Hz) -> Acceleration sweep (up to 135Hz)
+          osc1.frequency.setValueAtTime(32, now);
+          osc1.frequency.linearRampToValueAtTime(75, now + 0.45);
+          osc1.frequency.linearRampToValueAtTime(46, now + 1.1);
+          osc1.frequency.exponentialRampToValueAtTime(128, now + 5.5);
+
+          osc2.frequency.setValueAtTime(64, now);
+          osc2.frequency.linearRampToValueAtTime(92, now + 1.1);
+          osc2.frequency.exponentialRampToValueAtTime(256, now + 5.5);
+
+          filter.frequency.exponentialRampToValueAtTime(420, now + 5.5);
+
+          osc1.connect(filter);
+          osc2.connect(filter);
+          filter.connect(engineGain);
+          engineGain.connect(this.masterGain);
+
+          osc1.start(now);
+          osc2.start(now);
+
+          this.engineNodes = { osc1, osc2, engineGain };
+        }
+
+        stopCarSequenceAudio(fadeSec = 1.2) {
+          if (!this.engineNodes || !this.ctx) return;
+          const now = this.ctx.currentTime;
+          const { osc1, osc2, engineGain } = this.engineNodes;
+          try {
+            engineGain.gain.cancelScheduledValues(now);
+            engineGain.gain.setValueAtTime(Math.max(engineGain.gain.value, 0.001), now);
+            engineGain.gain.exponentialRampToValueAtTime(0.0001, now + fadeSec);
+            osc1.stop(now + fadeSec + 0.05);
+            osc2.stop(now + fadeSec + 0.05);
+          } catch (_) {}
+          this.engineNodes = null;
+        }
+
+        /* Scroll-Linked Rocket Engine & Space Ambience */
+        updateRocketAudio(progress) {
+          if (!state.audioEnabled || !this.init()) return;
+          const active = progress > 0.03 && progress < 0.96;
+          if (!active) {
+            if (this.rocketNodes) {
+              const now = this.ctx.currentTime;
+              this.rocketNodes.gain.gain.setTargetAtTime(0.0001, now, 0.15);
+            }
+            return;
+          }
+
+          if (!this.rocketNodes) {
+            const now = this.ctx.currentTime;
+            // Filtered white noise buffer for thruster roar + atmospheric wind
+            const bufferSize = this.ctx.sampleRate * 2;
+            const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+            const data = buffer.getChannelData(0);
+            for (let i = 0; i < bufferSize; i++) data[i] = Math.random() * 2 - 1;
+
+            const noise = this.ctx.createBufferSource();
+            noise.buffer = buffer;
+            noise.loop = true;
+
+            const filter = this.ctx.createBiquadFilter();
+            filter.type = 'bandpass';
+            filter.frequency.value = 180;
+            filter.Q.value = 0.9;
+
+            const gain = this.ctx.createGain();
+            gain.gain.value = 0.001;
+
+            noise.connect(filter);
+            filter.connect(gain);
+            gain.connect(this.masterGain);
+            noise.start(now);
+
+            this.rocketNodes = { noise, filter, gain };
+          }
+
+          const now = this.ctx.currentTime;
+          // Peak roar during mid-ascent, tapering into serene high-frequency space shimmer
+          const thrustEnv = Math.sin(progress * Math.PI) * 0.22;
+          const freq = 140 + progress * 580;
+          this.rocketNodes.gain.gain.setTargetAtTime(Math.max(0.001, thrustEnv), now, 0.08);
+          this.rocketNodes.filter.frequency.setTargetAtTime(freq, now, 0.08);
+        }
+      }
+
+      const soundEngine = new CinematicSoundEngine();
+
+      function updateAudioUI() {
+        const dot = document.getElementById('audio-status-dot');
+        const label = document.getElementById('audio-status-label');
+        if (state.audioEnabled) {
+          dot.classList.remove('bg-zinc-500');
+          dot.classList.add('bg-lavender', 'shadow-[0_0_8px_#aa88ff]');
+          label.textContent = 'SOUND ON';
+        } else {
+          dot.classList.add('bg-zinc-500');
+          dot.classList.remove('bg-lavender', 'shadow-[0_0_8px_#aa88ff]');
+          label.textContent = 'SOUND OFF';
+        }
+      }
+
+      document.getElementById('btn-audio-toggle').addEventListener('click', () => {
+        soundEngine.setEnabled(!state.audioEnabled);
+        if (state.audioEnabled) {
+          soundEngine.playClick(740);
+          if (state.carSequenceActive) soundEngine.startCarSequenceAudio();
+        } else {
+          soundEngine.stopCarSequenceAudio(0.2);
+        }
+      });
+
+      document.getElementById('audio-volume-slider').addEventListener('input', (e) => {
+        soundEngine.setVolume(e.target.value);
+      });
+
+      document.getElementById('btn-milo-voice-toggle').addEventListener('click', () => {
+        state.miloVoiceEnabled = !state.miloVoiceEnabled;
+        const lbl = document.getElementById('milo-voice-label');
+        lbl.textContent = state.miloVoiceEnabled ? 'VOICE ON' : 'VOICE OFF';
+        if (!state.miloVoiceEnabled && 'speechSynthesis' in window) {
+          window.speechSynthesis.cancel();
+          document.getElementById('milo-speaking-bar').classList.add('hidden');
+        }
+        soundEngine.playClick(580);
+      });
+
+      /* ------------------------------------------------------------------- */
+      /* 2. SEQUENCE 1 (COUNTDOWN) & SEQUENCE 2 (MUX HLS CAR INTRO)          */
+      /* ------------------------------------------------------------------- */
+      const seqCountdown = document.getElementById('seq-countdown');
+      const seqCarIntro = document.getElementById('seq-car-intro');
+      const mainUniverse = document.getElementById('main-universe');
+      const countdownNumEl = document.getElementById('countdown-number');
+      const countdownSubEl = document.getElementById('countdown-substatus');
+      const countdownRingEl = document.getElementById('countdown-ring-progress');
+
+      let countdownTimer = null;
+      let carSafetyTimer = null;
+      let carProgressInterval = null;
+      let hlsInstance = null;
+
+      function completeAllIntros() {
+        if (state.introCompleted) return;
+        state.introCompleted = true;
+        state.carSequenceActive = false;
+
+        clearInterval(countdownTimer);
+        clearTimeout(carSafetyTimer);
+        clearInterval(carProgressInterval);
+        soundEngine.stopCarSequenceAudio(1.1);
+
+        if (hlsInstance) {
+          try { hlsInstance.destroy(); } catch (_) {}
+          hlsInstance = null;
+        }
+
+        seqCountdown.classList.add('opacity-0', 'pointer-events-none');
+        seqCarIntro.classList.add('opacity-0', 'pointer-events-none');
+        setTimeout(() => {
+          seqCountdown.classList.add('hidden');
+          seqCarIntro.classList.add('hidden');
+        }, 700);
+
+        mainUniverse.classList.remove('opacity-0');
+        initLazyHeroVideos();
+        scheduleMiloAmbientTip();
+      }
+
+      function startCarIntroSequence() {
+        if (state.introCompleted) return;
+        state.carSequenceActive = true;
+
+        seqCountdown.classList.add('opacity-0', 'pointer-events-none');
+        setTimeout(() => seqCountdown.classList.add('hidden'), 650);
+
+        seqCarIntro.classList.remove('hidden');
+        requestAnimationFrame(() => seqCarIntro.classList.remove('opacity-0'));
+
+        soundEngine.startCarSequenceAudio();
+
+        const video = document.getElementById('car-intro-video');
+        const progressBar = document.getElementById('car-progress-bar');
+        const phaseLabel = document.getElementById('car-phase-label');
+        const telemetryText = document.getElementById('car-telemetry-text');
+        const streamUrl = 'https://stream.mux.com/Aa02T7oM1wH5Mk5EEVDYhbZ1ChcdhRsS2m1NYyx4Ua1g.m3u8';
+
+        let finishedCar = false;
+        const finishCar = () => {
+          if (finishedCar) return;
+          finishedCar = true;
+          soundEngine.stopCarSequenceAudio(1.4);
+          completeAllIntros();
+        };
+
+        // Listen for natural video end
+        video.addEventListener('ended', finishCar, { once: true });
+
+        // Progressive telemetry & progress bar
+        const startTime = Date.now();
+        const maxDurationMs = 11000; // Caps intro cleanly if stream is long or fallback mode runs
+        carProgressInterval = setInterval(() => {
+          const elapsed = Date.now() - startTime;
+          const pct = Math.min(100, (elapsed / maxDurationMs) * 100);
+          progressBar.style.width = `${pct}%`;
+
+          if (pct < 25) {
+            phaseLabel.textContent = 'HEADLIGHTS & IGNITION';
+            telemetryText.textContent = 'OPTICS ILLUMINATED // ENGINE CRANKING';
+          } else if (pct < 55) {
+            phaseLabel.textContent = 'ENGINE ACCELERATION';
+            telemetryText.textContent = 'TORQUE ENGAGED // VELOCITY CLIMBING';
+          } else {
+            phaseLabel.textContent = 'APPROACHING DIGITAL HORIZON';
+            telemetryText.textContent = 'ROAD AMBIENCE SYNCED // PREPARING UNIVERSE';
+          }
+
+          if (pct >= 100) {
+            finishCar();
+          }
+        }, 120);
+
+        // Attach Mux HLS Stream cleanly with error handling
+        try {
+          if (window.Hls && Hls.isSupported()) {
+            hlsInstance = new Hls({
+              maxBufferLength: 10,
+              enableWorker: true,
+            });
+            hlsInstance.loadSource(streamUrl);
+            hlsInstance.attachMedia(video);
+            hlsInstance.on(Hls.Events.MANIFEST_PARSED, () => {
+              video.play().then(() => {
+                video.classList.remove('opacity-0');
+              }).catch(() => {
+                // Keep graceful headlight canvas fallback visible if autoplay is blocked
+              });
+            });
+            hlsInstance.on(Hls.Events.ERROR, (_event, data) => {
+              if (data.fatal) {
+                try { hlsInstance.destroy(); } catch (_) {}
+              }
+            });
+          } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+            video.src = streamUrl;
+            video.addEventListener('loadedmetadata', () => {
+              video.play().then(() => video.classList.remove('opacity-0')).catch(() => {});
+            });
+          }
+        } catch (_) {
+          // Graceful fallback continues smoothly
+        }
+
+        // Max safety timeout
+        carSafetyTimer = setTimeout(finishCar, maxDurationMs + 400);
+      }
+
+      function runCountdownSequence() {
+        const steps = [
+          { num: '03', sub: 'CALIBRATING OPTICS', offset: 0 },
+          { num: '02', sub: 'LOADING PARTICLE FIELD', offset: 184 },
+          { num: '01', sub: 'IGNITION STANDBY', offset: 368 },
+          { num: '00', sub: 'LAUNCHING SEQUENCE', offset: 552.92 },
+        ];
+        let idx = 0;
+
+        const renderStep = () => {
+          const s = steps[idx];
+          countdownNumEl.textContent = s.num;
+          countdownSubEl.textContent = s.sub;
+          countdownRingEl.style.strokeDashoffset = s.offset;
+          soundEngine.playCountdownTick(3 - idx);
+
+          idx++;
+          if (idx >= steps.length) {
+            clearInterval(countdownTimer);
+            setTimeout(startCarIntroSequence, 750);
+          }
+        };
+
+        renderStep();
+        countdownTimer = setInterval(renderStep, 850);
+      }
+
+      document.getElementById('btn-countdown-sound').addEventListener('click', (e) => {
+        soundEngine.setEnabled(true);
+        soundEngine.playClick(680);
+        e.currentTarget.innerHTML = '<span>Audio Enabled &check;</span>';
+      });
+
+      document.getElementById('btn-car-enable-sound').addEventListener('click', (e) => {
+        soundEngine.setEnabled(true);
+        soundEngine.startCarSequenceAudio();
+        e.currentTarget.textContent = 'Engine Audio Active';
+      });
+
+      document.getElementById('btn-skip-all-intro').addEventListener('click', () => {
+        soundEngine.playClick(520);
+        completeAllIntros();
+      });
+
+      document.getElementById('btn-skip-car').addEventListener('click', () => {
+        soundEngine.playClick(520);
+        completeAllIntros();
+      });
+
+      /* ------------------------------------------------------------------- */
+      /* 3. LAZY LOAD HERO VIDEO CARDS WITH SAFE FALLBACK                    */
+      /* ------------------------------------------------------------------- */
+      function initLazyHeroVideos() {
+        const videos = document.querySelectorAll('.lazy-hero-video');
+        videos.forEach((vid) => {
+          const src = vid.getAttribute('data-src');
+          if (!src) return;
+          vid.src = src;
+          vid.load();
+          vid.play().catch(() => {
+            // Silent fallback if browser restricts background video autoplay
+          });
+        });
+      }
+
+      /* ------------------------------------------------------------------- */
+      /* 4. THREE.JS AXON-INSPIRED SCULPTED PARTICLE UNIVERSE (HERO)         */
+      /* ------------------------------------------------------------------- */
+      function initAxonParticleUniverse() {
+        const canvas = document.getElementById('axon-particle-canvas');
+        if (!canvas || !window.THREE) return;
+
+        const isMobile = window.innerWidth < 768;
+        const renderer = new THREE.WebGLRenderer({
+          canvas,
+          antialias: !isMobile,
+          alpha: true,
+          powerPreference: 'high-performance',
+        });
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.setSize(canvas.clientWidth, canvas.clientHeight, false);
+
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(48, canvas.clientWidth / canvas.clientHeight, 0.1, 100);
+        camera.position.set(0, 0, isMobile ? 11.5 : 9.2);
+
+        // Sculpted Hollow Twisted Torus-Knot Particle Cloud (AXON Organic Ring Form)
+        const particleCount = isMobile ? 3200 : 7500;
+        const geometry = new THREE.BufferGeometry();
+        const positions = new Float32Array(particleCount * 3);
+        const basePositions = new Float32Array(particleCount * 3);
+        const velocities = new Float32Array(particleCount * 3);
+        const colors = new Float32Array(particleCount * 3);
+        const phases = new Float32Array(particleCount);
+
+        const colorLavender = new THREE.Color('#aa88ff');
+        const colorIce = new THREE.Color('#64d2ff');
+        const colorWhite = new THREE.Color('#f4f4f8');
+
+        // Parametric (2,3) Torus Knot with hollow tube shell distribution
+        const p = 2, q = 3;
+        for (let i = 0; i < particleCount; i++) {
+          const t = (i / particleCount) * Math.PI * 2 * 3;
+          const rKnot = 2.3 + 0.85 * Math.cos(q * t);
+          const cx = rKnot * Math.cos(p * t);
+          const cy = rKnot * Math.sin(p * t);
+          const cz = 0.95 * Math.sin(q * t);
+
+          // Hollow tube cross-section shell
+          const tubeAngle = Math.random() * Math.PI * 2;
+          const tubeRadius = 0.42 + (Math.random() - 0.5) * 0.22;
+
+          const x = cx + Math.cos(tubeAngle) * tubeRadius;
+          const y = cy + Math.sin(tubeAngle) * tubeRadius;
+          const z = cz + Math.sin(tubeAngle * 1.5) * tubeRadius;
+
+          positions[i * 3] = basePositions[i * 3] = x;
+          positions[i * 3 + 1] = basePositions[i * 3 + 1] = y;
+          positions[i * 3 + 2] = basePositions[i * 3 + 2] = z;
+
+          phases[i] = Math.random() * Math.PI * 2;
+
+          // Blend lavender, ice blue, and soft white highlights
+          const mixRatio = Math.random();
+          const c = mixRatio < 0.55 ? colorLavender : (mixRatio < 0.85 ? colorIce : colorWhite);
+          colors[i * 3] = c.r;
+          colors[i * 3 + 1] = c.g;
+          colors[i * 3 + 2] = c.b;
+        }
+
+        geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+        // Soft glowing circular sprite texture generated procedurally
+        const spriteCanvas = document.createElement('canvas');
+        spriteCanvas.width = 32;
+        spriteCanvas.height = 32;
+        const sCtx = spriteCanvas.getContext('2d');
+        const grad = sCtx.createRadialGradient(16, 16, 0, 16, 16, 16);
+        grad.addColorStop(0, 'rgba(255,255,255,1)');
+        grad.addColorStop(0.4, 'rgba(170,136,255,0.7)');
+        grad.addColorStop(1, 'rgba(0,0,0,0)');
+        sCtx.fillStyle = grad;
+        sCtx.fillRect(0, 0, 32, 32);
+        const particleTex = new THREE.CanvasTexture(spriteCanvas);
+
+        const material = new THREE.PointsMaterial({
+          size: isMobile ? 0.085 : 0.068,
+          map: particleTex,
+          vertexColors: true,
+          transparent: true,
+          opacity: 0.9,
+          blending: THREE.AdditiveBlending,
+          depthWrite: false,
+        });
+
+        const particleCloud = new THREE.Points(geometry, material);
+        scene.add(particleCloud);
+
+        // Cursor fluid interaction state
+        const pointer = { x: 999, y: 999, targetCamX: 0, targetCamY: 0 };
+        const rayPlane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
+        const raycaster = new THREE.Raycaster();
+        const mouseNDC = new THREE.Vector2();
+        const worldCursor = new THREE.Vector3(999, 999, 0);
+
+        const updatePointer = (clientX, clientY) => {
+          const rect = canvas.getBoundingClientRect();
+          mouseNDC.x = ((clientX - rect.left) / rect.width) * 2 - 1;
+          mouseNDC.y = -((clientY - rect.top) / rect.height) * 2 + 1;
+          pointer.targetCamX = mouseNDC.x * 0.75;
+          pointer.targetCamY = mouseNDC.y * 0.55;
+
+          raycaster.setFromCamera(mouseNDC, camera);
+          raycaster.ray.intersectPlane(rayPlane, worldCursor);
+        };
+
+        window.addEventListener('mousemove', (e) => updatePointer(e.clientX, e.clientY), { passive: true });
+        window.addEventListener('touchmove', (e) => {
+          if (e.touches.length > 0) updatePointer(e.touches[0].clientX, e.touches[0].clientY);
+        }, { passive: true });
+
+        // Pause rendering when hero is scrolled completely out of view
+        let heroVisible = true;
+        const observer = new IntersectionObserver((entries) => {
+          heroVisible = entries[0].isIntersecting;
+        }, { threshold: 0.05 });
+        observer.observe(canvas);
+
+        window.addEventListener('resize', () => {
+          if (!canvas.clientWidth || !canvas.clientHeight) return;
+          camera.aspect = canvas.clientWidth / canvas.clientHeight;
+          camera.updateProjectionMatrix();
+          renderer.setSize(canvas.clientWidth, canvas.clientHeight, false);
+        });
+
+        const clock = new THREE.Clock();
+        function animateAxon() {
+          requestAnimationFrame(animateAxon);
+          if (!heroVisible) return;
+
+          const elapsed = clock.getElapsedTime();
+
+          // Smooth camera gaze parallax
+          camera.position.x += (pointer.targetCamX - camera.position.x) * 0.04;
+          camera.position.y += (pointer.targetCamY - camera.position.y) * 0.04;
+          camera.lookAt(0, 0, 0);
+
+          // Gentle sculptural rotation
+          particleCloud.rotation.y = elapsed * 0.14;
+          particleCloud.rotation.x = Math.sin(elapsed * 0.22) * 0.18;
+
+          // Transform cursor into cloud local space for fluid repulsion
+          const invMatrix = new THREE.Matrix4().copy(particleCloud.matrixWorld).invert();
+          const localCursor = worldCursor.clone().applyMatrix4(invMatrix);
+
+          const posAttr = geometry.attributes.position;
+          const arr = posAttr.array;
+
+          for (let i = 0; i < particleCount; i++) {
+            const i3 = i * 3;
+            const ph = phases[i];
+
+            // Curl-like harmonic organic drift
+            const driftX = Math.sin(elapsed * 1.1 + ph) * 0.045;
+            const driftY = Math.cos(elapsed * 0.95 + ph * 1.3) * 0.045;
+            const driftZ = Math.sin(elapsed * 0.8 + ph * 0.7) * 0.045;
+
+            const tx = basePositions[i3] + driftX;
+            const ty = basePositions[i3 + 1] + driftY;
+            const tz = basePositions[i3 + 2] + driftZ;
+
+            // Fluid cursor repulsion force
+            const dx = arr[i3] - localCursor.x;
+            const dy = arr[i3 + 1] - localCursor.y;
+            const dz = arr[i3 + 2] - localCursor.z;
+            const distSq = dx * dx + dy * dy + dz * dz;
+
+            if (distSq < 2.1 && distSq > 0.0001) {
+              const force = (2.1 - distSq) * 0.022;
+              velocities[i3] += dx * force;
+              velocities[i3 + 1] += dy * force;
+              velocities[i3 + 2] += dz * force;
+            }
+
+            // Spring return to sculpted form + damping
+            velocities[i3] += (tx - arr[i3]) * 0.045;
+            velocities[i3 + 1] += (ty - arr[i3 + 1]) * 0.045;
+            velocities[i3 + 2] += (tz - arr[i3 + 2]) * 0.045;
+
+            velocities[i3] *= 0.86;
+            velocities[i3 + 1] *= 0.86;
+            velocities[i3 + 2] *= 0.86;
+
+            arr[i3] += velocities[i3];
+            arr[i3 + 1] += velocities[i3 + 1];
+            arr[i3 + 2] += velocities[i3 + 2];
+          }
+
+          posAttr.needsUpdate = true;
+          renderer.render(scene, camera);
+        }
+
+        animateAxon();
+      }
+
+      /* ------------------------------------------------------------------- */
+      /* 5. PROJECTS SHOWCASE + 3D TILT + INTERACTIVE MODAL                  */
+      /* ------------------------------------------------------------------- */
+      function getProjectThumbnailSVG(type) {
+        if (type === 'excel') {
+          return `<svg viewBox="0 0 320 140" class="w-full h-full">
+            <rect width="320" height="140" fill="#0b1412"/>
+            <g stroke="rgba(52,211,153,0.18)" stroke-width="1">
+              <line x1="0" y1="35" x2="320" y2="35"/><line x1="0" y1="70" x2="320" y2="70"/><line x1="0" y1="105" x2="320" y2="105"/>
+              <line x1="80" y1="0" x2="80" y2="140"/><line x1="160" y1="0" x2="160" y2="140"/><line x1="240" y1="0" x2="240" y2="140"/>
+            </g>
+            <rect x="34" y="82" width="24" height="38" rx="4" fill="#10b981"/>
+            <rect x="74" y="56" width="24" height="64" rx="4" fill="#34d399"/>
+            <rect x="114" y="42" width="24" height="78" rx="4" fill="#6ee7b7"/>
+            <path d="M175 95 L205 68 L235 76 L278 36" stroke="#aa88ff" stroke-width="3" fill="none" stroke-linecap="round"/>
+            <circle cx="278" cy="36" r="5" fill="#64d2ff"/>
+          </svg>`;
+        }
+        if (type === 'python') {
+          return `<svg viewBox="0 0 320 140" class="w-full h-full">
+            <rect width="320" height="140" fill="#0c101d"/>
+            <path d="M20 105 Q80 40 140 80 T260 35 T310 55" stroke="#64d2ff" stroke-width="3" fill="none"/>
+            <path d="M20 115 Q90 75 160 95 T300 65" stroke="#aa88ff" stroke-width="2" stroke-dasharray="4 4" fill="none"/>
+            <circle cx="140" cy="80" r="5" fill="#ffe052"/>
+            <circle cx="260" cy="35" r="5" fill="#64d2ff"/>
+            <text x="24" y="32" fill="#94a3b8" font-family="monospace" font-size="11">df.groupby('subject').mean()</text>
+          </svg>`;
+        }
+        if (type === 'c-inv' || type === 'c-exp') {
+          return `<svg viewBox="0 0 320 140" class="w-full h-full">
+            <rect width="320" height="140" fill="#0d0b1a"/>
+            <rect x="24" y="24" width="272" height="92" rx="10" fill="rgba(170,136,255,0.06)" stroke="rgba(170,136,255,0.25)"/>
+            <text x="38" y="48" fill="#aa88ff" font-family="monospace" font-size="11">struct ${type === 'c-inv' ? 'ProductRecord' : 'ExpenseEntry'} {</text>
+            <text x="52" y="68" fill="#e2e8f0" font-family="monospace" font-size="11">int id; char label[32];</text>
+            <text x="52" y="86" fill="#64d2ff" font-family="monospace" font-size="11">float amount;</text>
+            <text x="38" y="104" fill="#aa88ff" font-family="monospace" font-size="11">};</text>
+          </svg>`;
+        }
+        return `<svg viewBox="0 0 320 140" class="w-full h-full">
+          <rect width="320" height="140" fill="#090910"/>
+          <circle cx="160" cy="70" r="42" stroke="rgba(170,136,255,0.35)" stroke-dasharray="5 5" fill="none"/>
+          <circle cx="160" cy="70" r="22" stroke="#64d2ff" stroke-width="1.5" fill="none"/>
+          <circle cx="160" cy="70" r="4" fill="#aa88ff"/>
+        </svg>`;
+      }
+
+      function renderProjects() {
+        const grid = document.getElementById('projects-grid');
+        if (!grid) return;
+
+        grid.innerHTML = PROJECTS_DATA.map((proj) => `
+          <article class="project-card reveal-up group glass-panel rounded-3xl overflow-hidden flex flex-col justify-between transition-all duration-300 hover:border-lavender/45 shadow-xl shadow-black/40"
+            style="transform-style: preserve-3d;">
+            <div>
+              <div class="relative h-36 w-full overflow-hidden border-b border-white/5">
+                ${getProjectThumbnailSVG(proj.svgType)}
+                <span class="absolute top-3 left-3 font-mono text-[10px] tracking-widest px-2.5 py-1 rounded-full bg-void/80 text-zinc-300 border border-white/10">
+                  ${proj.num}
                 </span>
+              </div>
+
+              <div class="p-6">
+                <span class="inline-block font-mono text-[10px] tracking-wider px-2.5 py-1 rounded-full border ${proj.badgeColor}">
+                  ${proj.tech}
+                </span>
+                <h3 class="font-display text-xl font-bold text-softWhite mt-3 group-hover:text-lavender transition-colors">
+                  ${proj.title}
+                </h3>
+                <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed mt-2.5">
+                  ${proj.description}
+                </p>
+              </div>
+            </div>
+
+            <div class="px-6 pb-6 pt-2 flex items-center justify-between gap-2">
+              <button type="button" data-project-id="${proj.id}"
+                class="btn-view-project px-4 py-2 rounded-full bg-lavender/15 hover:bg-lavender text-lavender hover:text-void font-mono text-xs font-semibold transition-all">
+                View Project
+              </button>
+
+              <a href="${proj.github}" target="_blank" rel="noopener noreferrer"
+                class="px-3.5 py-2 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-zinc-300 hover:text-white font-mono text-xs transition-all flex items-center gap-1.5">
+                <span>GitHub</span>
+                <span>&nearr;</span>
               </a>
             </div>
+          </article>
+        `).join('');
 
-            <div className="relative z-10 max-w-[1200px] mx-auto px-6 pt-8 border-t border-stroke/60 flex flex-col sm:flex-row items-center justify-between gap-6 text-xs text-muted">
-              <div className="flex items-center gap-2">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-                </span>
-                <span>Open for small freelance &amp; collaborative learning</span>
-              </div>
+        // Subtle 3D tilt interaction on desktop
+        document.querySelectorAll('.project-card').forEach((card) => {
+          card.addEventListener('mousemove', (e) => {
+            if (window.innerWidth < 768) return;
+            const rect = card.getBoundingClientRect();
+            const x = (e.clientX - rect.left) / rect.width - 0.5;
+            const y = (e.clientY - rect.top) / rect.height - 0.5;
+            card.style.transform = `perspective(900px) rotateY(${x * 7}deg) rotateX(${-y * 7}deg) translateY(-4px)`;
+          });
+          card.addEventListener('mouseleave', () => {
+            card.style.transform = 'perspective(900px) rotateY(0deg) rotateX(0deg) translateY(0px)';
+          });
+        });
 
-              <div className="flex items-center gap-6">
-                {["LinkedIn", "GitHub", "Email"].map((net) => (
-                  <a
-                    key={net}
-                    href={net === "Email" ? "mailto:abutohabiswas@gmail.com" : `#${net.toLowerCase()}`}
-                    className="hover:text-text-primary transition-colors"
-                  >
-                    {net}
-                  </a>
-                ))}
-              </div>
+        // Open Project Architecture Modal
+        const modal = document.getElementById('project-modal');
+        document.querySelectorAll('.btn-view-project').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            const id = btn.getAttribute('data-project-id');
+            const proj = PROJECTS_DATA.find((p) => p.id === id);
+            if (!proj) return;
 
-              <div>© 2026 MD Abutoha Biswas. All rights reserved.</div>
+            soundEngine.playClick(660);
+            document.getElementById('modal-project-tag').textContent = proj.num;
+            document.getElementById('modal-project-title').textContent = proj.title;
+            document.getElementById('modal-project-tech').textContent = proj.tech;
+            document.getElementById('modal-project-desc').textContent = proj.description;
+            document.getElementById('modal-github-link').href = proj.github;
+            document.getElementById('modal-project-highlights').innerHTML = proj.highlights
+              .map((h) => `<li class="flex items-start gap-2"><span class="text-lavender">&bull;</span><span>${h}</span></li>`)
+              .join('');
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            triggerMiloCelebration(`Exploring "${proj.title}"! Let me know if you want details.`);
+          });
+        });
+
+        const closeModal = () => {
+          modal.classList.add('hidden');
+          modal.classList.remove('flex');
+        };
+        document.getElementById('btn-close-project-modal').addEventListener('click', closeModal);
+        document.getElementById('btn-modal-done').addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) closeModal();
+        });
+      }
+
+      /* ------------------------------------------------------------------- */
+      /* 6. ABOUT ME — INTERACTIVE THREE.JS DIGITAL SCULPTURE                */
+      /* ------------------------------------------------------------------- */
+      function initAboutDigitalSculpture() {
+        const canvas = document.getElementById('about-sculpture-canvas');
+        if (!canvas || !window.THREE) return;
+
+        const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.setSize(canvas.clientWidth, canvas.clientHeight, false);
+
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 50);
+        camera.position.z = 5.2;
+
+        // Crystalline Icosahedron Digital Sculpture + Inner Wireframe Core
+        const outerGeo = new THREE.IcosahedronGeometry(1.65, 1);
+        const outerMat = new THREE.MeshStandardMaterial({
+          color: 0x1a1530,
+          emissive: 0x2b1d52,
+          roughness: 0.25,
+          metalness: 0.85,
+          flatShading: true,
+        });
+        const crystalMesh = new THREE.Mesh(outerGeo, outerMat);
+        scene.add(crystalMesh);
+
+        const wireGeo = new THREE.IcosahedronGeometry(1.72, 1);
+        const wireMat = new THREE.MeshBasicMaterial({
+          color: 0xaa88ff,
+          wireframe: true,
+          transparent: true,
+          opacity: 0.42,
+        });
+        const wireMesh = new THREE.Mesh(wireGeo, wireMat);
+        scene.add(wireMesh);
+
+        const light1 = new THREE.PointLight(0xaa88ff, 2.2, 20);
+        light1.position.set(4, 4, 4);
+        scene.add(light1);
+
+        const light2 = new THREE.PointLight(0x64d2ff, 1.8, 20);
+        light2.position.set(-4, -3, 3);
+        scene.add(light2);
+
+        let isDragging = false;
+        let prevX = 0, prevY = 0;
+
+        canvas.addEventListener('mousedown', (e) => { isDragging = true; prevX = e.clientX; prevY = e.clientY; });
+        window.addEventListener('mouseup', () => { isDragging = false; });
+        window.addEventListener('mousemove', (e) => {
+          if (!isDragging) return;
+          crystalMesh.rotation.y += (e.clientX - prevX) * 0.01;
+          crystalMesh.rotation.x += (e.clientY - prevY) * 0.01;
+          wireMesh.rotation.copy(crystalMesh.rotation);
+          prevX = e.clientX;
+          prevY = e.clientY;
+        });
+
+        let visible = false;
+        const obs = new IntersectionObserver((entries) => { visible = entries[0].isIntersecting; }, { threshold: 0.1 });
+        obs.observe(canvas);
+
+        function animateSculpture() {
+          requestAnimationFrame(animateSculpture);
+          if (!visible) return;
+          if (!isDragging) {
+            crystalMesh.rotation.y += 0.006;
+            crystalMesh.rotation.x += 0.003;
+            wireMesh.rotation.y -= 0.004;
+            wireMesh.rotation.x += 0.003;
+          }
+          renderer.render(scene, camera);
+        }
+        animateSculpture();
+      }
+
+      /* ------------------------------------------------------------------- */
+      /* 7. SCROLL-TRIGGERED ROCKET JOURNEY -> SKILLS UNIVERSE               */
+      /* ------------------------------------------------------------------- */
+      function initRocketJourney() {
+        const zone = document.getElementById('rocket-launch-zone');
+        const canvas = document.getElementById('rocket-journey-canvas');
+        if (!zone || !canvas || !window.THREE) return;
+
+        const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.setSize(canvas.clientWidth, canvas.clientHeight, false);
+
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(50, canvas.clientWidth / canvas.clientHeight, 0.1, 100);
+        camera.position.set(0, 0.5, 7);
+
+        // Starfield + Atmospheric Cloud Particles
+        const starCount = 900;
+        const starGeo = new THREE.BufferGeometry();
+        const starPos = new Float32Array(starCount * 3);
+        for (let i = 0; i < starCount; i++) {
+          starPos[i * 3] = (Math.random() - 0.5) * 28;
+          starPos[i * 3 + 1] = (Math.random() - 0.5) * 28;
+          starPos[i * 3 + 2] = -Math.random() * 20;
+        }
+        starGeo.setAttribute('position', new THREE.BufferAttribute(starPos, 3));
+        const starMat = new THREE.PointsMaterial({ color: 0xf4f4f8, size: 0.07, transparent: true, opacity: 0.85 });
+        const stars = new THREE.Points(starGeo, starMat);
+        scene.add(stars);
+
+        // Distant Ringed Planet in Upper Space
+        const planetGroup = new THREE.Group();
+        const planetMesh = new THREE.Mesh(
+          new THREE.SphereGeometry(1.1, 24, 24),
+          new THREE.MeshStandardMaterial({ color: 0x5b3cc4, emissive: 0x241459, roughness: 0.6 })
+        );
+        const ringMesh = new THREE.Mesh(
+          new THREE.RingGeometry(1.45, 2.05, 36),
+          new THREE.MeshBasicMaterial({ color: 0xaa88ff, side: THREE.DoubleSide, transparent: true, opacity: 0.35 })
+        );
+        ringMesh.rotation.x = Math.PI * 0.38;
+        planetGroup.add(planetMesh, ringMesh);
+        planetGroup.position.set(3.2, 4.5, -6);
+        scene.add(planetGroup);
+
+        // Sleek Futuristic Rocket Vessel Group
+        const rocket = new THREE.Group();
+        const fuselage = new THREE.Mesh(
+          new THREE.CylinderGeometry(0.24, 0.34, 1.8, 20),
+          new THREE.MeshStandardMaterial({ color: 0xf4f4f8, metalness: 0.6, roughness: 0.25 })
+        );
+        const noseCone = new THREE.Mesh(
+          new THREE.ConeGeometry(0.24, 0.65, 20),
+          new THREE.MeshStandardMaterial({ color: 0xaa88ff, metalness: 0.5, roughness: 0.3 })
+        );
+        noseCone.position.y = 1.22;
+
+        const finGeo = new THREE.BoxGeometry(0.95, 0.45, 0.06);
+        const finMat = new THREE.MeshStandardMaterial({ color: 0x64d2ff, metalness: 0.5, roughness: 0.3 });
+        const fins1 = new THREE.Mesh(finGeo, finMat);
+        fins1.position.y = -0.65;
+        const fins2 = fins1.clone();
+        fins2.rotation.y = Math.PI / 2;
+
+        // Thruster Exhaust Plume
+        const flame = new THREE.Mesh(
+          new THREE.ConeGeometry(0.26, 1.1, 16),
+          new THREE.MeshBasicMaterial({ color: 0x64d2ff, transparent: true, opacity: 0.85 })
+        );
+        flame.rotation.x = Math.PI;
+        flame.position.y = -1.45;
+
+        rocket.add(fuselage, noseCone, fins1, fins2, flame);
+        rocket.position.set(0, -1.6, 0);
+        scene.add(rocket);
+
+        const keyLight = new THREE.DirectionalLight(0xffffff, 1.4);
+        keyLight.position.set(4, 6, 5);
+        scene.add(keyLight);
+        scene.add(new THREE.AmbientLight(0xaa88ff, 0.65));
+
+        const stageTitle = document.getElementById('rocket-stage-title');
+        const stageDesc = document.getElementById('rocket-stage-desc');
+        const altKm = document.getElementById('rocket-altitude-km');
+        const zoneBadge = document.getElementById('rocket-zone-badge');
+        const progressFill = document.getElementById('rocket-progress-fill');
+        const overlay = document.getElementById('rocket-atmosphere-overlay');
+
+        window.addEventListener('resize', () => {
+          if (!canvas.clientWidth || !canvas.clientHeight) return;
+          camera.aspect = canvas.clientWidth / canvas.clientHeight;
+          camera.updateProjectionMatrix();
+          renderer.setSize(canvas.clientWidth, canvas.clientHeight, false);
+        });
+
+        let scrollProgress = 0;
+        const updateScrollProgress = () => {
+          const rect = zone.getBoundingClientRect();
+          const scrollable = rect.height - window.innerHeight;
+          if (scrollable <= 0) return;
+          const raw = -rect.top / scrollable;
+          scrollProgress = Math.max(0, Math.min(1, raw));
+
+          // Update HUD
+          progressFill.style.width = `${(scrollProgress * 100).toFixed(1)}%`;
+          altKm.textContent = `${(scrollProgress * 420).toFixed(1)} KM`;
+
+          if (scrollProgress < 0.25) {
+            stageTitle.textContent = 'LAUNCHPAD IGNITION';
+            stageDesc.textContent = 'Main thrusters firing — clearing launch tower.';
+            zoneBadge.textContent = 'TROPOSPHERE // PAD 01';
+            overlay.style.background = 'radial-gradient(circle at 50% 80%, rgba(170,136,255,0.18), rgba(3,3,5,0.88))';
+          } else if (scrollProgress < 0.6) {
+            stageTitle.textContent = 'PIERCING CLOUD LAYERS';
+            stageDesc.textContent = 'Ascending rapidly through upper atmospheric turbulence.';
+            zoneBadge.textContent = 'STRATOSPHERE // MACH 4.2';
+            overlay.style.background = 'radial-gradient(circle at 50% 60%, rgba(100,210,255,0.22), rgba(5,7,18,0.9))';
+          } else if (scrollProgress < 0.88) {
+            stageTitle.textContent = 'ENTERING DEEP SPACE';
+            stageDesc.textContent = 'Zero-gravity achieved — distant ringed worlds visible.';
+            zoneBadge.textContent = 'EXOSPHERE // ORBITAL INSERTION';
+            overlay.style.background = 'radial-gradient(circle at 50% 40%, rgba(124,77,255,0.16), rgba(3,3,5,0.94))';
+          } else {
+            stageTitle.textContent = 'DOCKING AT SKILLS UNIVERSE';
+            stageDesc.textContent = 'Decelerating thrusters — orbital constellation unlocked below.';
+            zoneBadge.textContent = 'ORBIT LOCKED // READY';
+          }
+
+          soundEngine.updateRocketAudio(scrollProgress);
+        };
+
+        window.addEventListener('scroll', updateScrollProgress, { passive: true });
+
+        let visible = false;
+        const obs = new IntersectionObserver((entries) => { visible = entries[0].isIntersecting; }, { threshold: 0.02 });
+        obs.observe(zone);
+
+        const clock = new THREE.Clock();
+        function animateRocket() {
+          requestAnimationFrame(animateRocket);
+          if (!visible) return;
+
+          const t = clock.getElapsedTime();
+
+          // Rocket ascends smoothly with scroll and settles near top-center
+          const targetY = -1.6 + scrollProgress * 2.8;
+          rocket.position.y += (targetY - rocket.position.y) * 0.1;
+          rocket.rotation.y = t * 0.6;
+          rocket.position.x = Math.sin(t * 14) * (scrollProgress > 0.05 && scrollProgress < 0.85 ? 0.025 : 0);
+
+          // Flame intensity pulses during ascent and calms when docking
+          const flameScale = scrollProgress > 0.02 && scrollProgress < 0.92
+            ? 0.85 + Math.sin(t * 30) * 0.25
+            : 0.25;
+          flame.scale.set(1, flameScale, 1);
+
+          // Stars stream downward proportionally to scroll ascent
+          const posArr = starGeo.attributes.position.array;
+          const speed = 0.03 + scrollProgress * 0.28;
+          for (let i = 0; i < starCount; i++) {
+            posArr[i * 3 + 1] -= speed;
+            if (posArr[i * 3 + 1] < -14) posArr[i * 3 + 1] = 14;
+          }
+          starGeo.attributes.position.needsUpdate = true;
+
+          // Distant planet drifts into view in upper orbit
+          planetGroup.position.y = 4.5 - scrollProgress * 3.2;
+          planetGroup.rotation.y = t * 0.15;
+
+          renderer.render(scene, camera);
+        }
+
+        animateRocket();
+      }
+
+      /* ------------------------------------------------------------------- */
+      /* 8. MY SKILLS UNIVERSE RENDERING & INTERACTION                       */
+      /* ------------------------------------------------------------------- */
+      function renderSkillsUniverse() {
+        const grid = document.getElementById('skills-constellation-grid');
+        if (!grid) return;
+
+        const selectSkill = (index) => {
+          state.activeSkillIndex = index;
+          const skill = SKILLS_DATA[index];
+          document.getElementById('skill-detail-icon').innerHTML = skill.svg;
+          document.getElementById('skill-detail-category').textContent = skill.category;
+          document.getElementById('skill-detail-title').textContent = skill.name;
+          document.getElementById('skill-detail-level').textContent = skill.level;
+          document.getElementById('skill-detail-desc').textContent = skill.desc;
+
+          document.querySelectorAll('.skill-node-card').forEach((card, idx) => {
+            if (idx === index) {
+              card.classList.add('border-lavender', 'bg-lavender/10', 'shadow-[0_0_25px_rgba(170,136,255,0.2)]');
+            } else {
+              card.classList.remove('border-lavender', 'bg-lavender/10', 'shadow-[0_0_25px_rgba(170,136,255,0.2)]');
+            }
+          });
+        };
+
+        grid.innerHTML = SKILLS_DATA.map((skill, idx) => `
+          <button type="button" data-skill-idx="${idx}"
+            class="skill-node-card group glass-panel rounded-2xl p-4 sm:p-5 text-left flex items-center gap-3.5 hover:border-lavender/50 hover:-translate-y-1 transition-all duration-300">
+            <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-void/90 border border-white/10 p-2 shrink-0 group-hover:scale-110 transition-transform">
+              ${skill.svg}
             </div>
-          </footer>
-        </div>
-      );
-    }
+            <div class="min-w-0">
+              <div class="font-mono text-[9px] tracking-widest text-zinc-400 uppercase truncate">${skill.category}</div>
+              <div class="font-display text-sm sm:text-base font-bold text-softWhite group-hover:text-lavender transition-colors truncate">
+                ${skill.name}
+              </div>
+            </div>
+          </button>
+        `).join('');
 
-    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+        document.querySelectorAll('.skill-node-card').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            const idx = parseInt(btn.getAttribute('data-skill-idx'), 10);
+            soundEngine.playClick(720);
+            selectSkill(idx);
+          });
+        });
+
+        selectSkill(0);
+      }
+
+      /* ------------------------------------------------------------------- */
+      /* 9. VISUAL PLAYGROUND MINI-LABS                                      */
+      /* ------------------------------------------------------------------- */
+      function initVisualPlayground() {
+        // Lab 1: Cybersecurity Terminal
+        const termForm = document.getElementById('cyber-terminal-form');
+        const termInput = document.getElementById('cyber-terminal-input');
+        const termOutput = document.getElementById('cyber-terminal-output');
+
+        const printTerm = (text, cls = 'text-zinc-300') => {
+          const line = document.createElement('div');
+          line.className = cls;
+          line.textContent = text;
+          termOutput.appendChild(line);
+          termOutput.scrollTop = termOutput.scrollHeight;
+        };
+
+        termForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const cmd = termInput.value.trim().toLowerCase();
+          if (!cmd) return;
+          soundEngine.playClick(600);
+          printTerm(`toha@sec:~$ ${cmd}`, 'text-white');
+          termInput.value = '';
+
+          if (cmd === 'help') {
+            printTerm('Available commands: whoami | skills | projects | scan | clear', 'text-lavender');
+          } else if (cmd === 'whoami') {
+            printTerm('MD ABUTOHA BISWAS — First-Year BCA Data Science Student | Builder & Security Learner.', 'text-iceBlue');
+          } else if (cmd === 'skills') {
+            printTerm('Python, C Programming, Microsoft Excel, Data Science, HTML, CSS, JavaScript, Cybersecurity, Git.', 'text-zinc-300');
+          } else if (cmd === 'projects') {
+            printTerm('[01] Student Performance Dashboard (Excel) | [02] Python Analytics | [03] Inventory in C | [04] Expense Tracker in C', 'text-zinc-300');
+          } else if (cmd === 'scan') {
+            printTerm('[OK] Firewall active | [OK] TLS 1.3 verified | [OK] Zero exposed credentials | Integrity: 100%', 'text-emerald-400');
+          } else if (cmd === 'clear') {
+            termOutput.innerHTML = '';
+          } else {
+            printTerm(`Command not recognized: "${cmd}". Type "help" for valid commands.`, 'text-rose-400');
+          }
+        });
+
+        // Lab 2: Reactive Spreadsheet Engine
+        const inputs = ['score-math', 'score-py', 'score-sec'].map((id) => document.getElementById(id));
+        const recalcSheet = () => {
+          const vals = inputs.map((el) => Math.max(0, Math.min(100, Number(el.value) || 0)));
+          const avg = vals.reduce((a, b) => a + b, 0) / vals.length;
+          document.getElementById('sheet-avg-output').textContent = `${avg.toFixed(1)}%`;
+          const gradeEl = document.getElementById('sheet-grade-output');
+          if (avg >= 85) {
+            gradeEl.textContent = 'DISTINCTION (A)';
+          } else if (avg >= 70) {
+            gradeEl.textContent = 'FIRST CLASS (B)';
+          } else {
+            gradeEl.textContent = 'PASS (C)';
+          }
+        };
+        inputs.forEach((el) => el.addEventListener('input', recalcSheet));
+
+        // Lab 3: Algorithmic Array Sort Visualizer
+        const barsContainer = document.getElementById('algo-bars-container');
+        const algoStatus = document.getElementById('algo-status-text');
+        let arrayData = [];
+
+        const renderBars = (highlightIdx = -1) => {
+          barsContainer.innerHTML = arrayData.map((val, idx) => `
+            <div class="flex-1 rounded-t transition-all duration-150 ${idx === highlightIdx ? 'bg-iceBlue' : 'bg-lavender/75'}"
+              style="height: ${val}%;"></div>
+          `).join('');
+        };
+
+        const shuffleArray = () => {
+          arrayData = Array.from({ length: 18 }, () => Math.floor(18 + Math.random() * 80));
+          algoStatus.textContent = 'ARRAY STATE: UNSORTED [18 ELEMENTS]';
+          renderBars();
+        };
+
+        shuffleArray();
+
+        document.getElementById('btn-shuffle-sort').addEventListener('click', () => {
+          soundEngine.playClick(540);
+          shuffleArray();
+        });
+
+        document.getElementById('btn-run-sort').addEventListener('click', async () => {
+          soundEngine.playClick(760);
+          algoStatus.textContent = 'SORTING // BUBBLE PASS IN PROGRESS...';
+          for (let i = 0; i < arrayData.length; i++) {
+            for (let j = 0; j < arrayData.length - i - 1; j++) {
+              if (arrayData[j] > arrayData[j + 1]) {
+                [arrayData[j], arrayData[j + 1]] = [arrayData[j + 1], arrayData[j]];
+                renderBars(j + 1);
+                await new Promise((r) => setTimeout(r, 22));
+              }
+            }
+          }
+          renderBars(-1);
+          algoStatus.textContent = 'ARRAY STATE: SORTED O(N^2) COMPLETE';
+        });
+
+        // Lab 4: Relational Node Graph Canvas
+        const relCanvas = document.getElementById('relational-lab-canvas');
+        if (relCanvas) {
+          const rCtx = relCanvas.getContext('2d');
+          const nodes = Array.from({ length: 24 }, () => ({
+            x: Math.random() * 300,
+            y: Math.random() * 140,
+            vx: (Math.random() - 0.5) * 0.7,
+            vy: (Math.random() - 0.5) * 0.7,
+          }));
+          let mx = -999, my = -999;
+
+          relCanvas.addEventListener('mousemove', (e) => {
+            const r = relCanvas.getBoundingClientRect();
+            mx = ((e.clientX - r.left) / r.width) * relCanvas.width;
+            my = ((e.clientY - r.top) / r.height) * relCanvas.height;
+          });
+          relCanvas.addEventListener('mouseleave', () => { mx = -999; my = -999; });
+
+          function animateRelGraph() {
+            requestAnimationFrame(animateRelGraph);
+            if (relCanvas.width !== relCanvas.clientWidth) {
+              relCanvas.width = relCanvas.clientWidth;
+              relCanvas.height = relCanvas.clientHeight;
+            }
+            const w = relCanvas.width, h = relCanvas.height;
+            rCtx.clearRect(0, 0, w, h);
+
+            nodes.forEach((n) => {
+              n.x += n.vx;
+              n.y += n.vy;
+              if (n.x < 6 || n.x > w - 6) n.vx *= -1;
+              if (n.y < 6 || n.y > h - 6) n.vy *= -1;
+
+              const dx = n.x - mx, dy = n.y - my;
+              const d = Math.hypot(dx, dy);
+              if (d < 65 && d > 0) {
+                n.x += (dx / d) * 1.5;
+                n.y += (dy / d) * 1.5;
+              }
+            });
+
+            for (let i = 0; i < nodes.length; i++) {
+              for (let j = i + 1; j < nodes.length; j++) {
+                const dist = Math.hypot(nodes[i].x - nodes[j].x, nodes[i].y - nodes[j].y);
+                if (dist < 78) {
+                  rCtx.strokeStyle = `rgba(170, 136, 255, ${(1 - dist / 78) * 0.45})`;
+                  rCtx.lineWidth = 1;
+                  rCtx.beginPath();
+                  rCtx.moveTo(nodes[i].x, nodes[i].y);
+                  rCtx.lineTo(nodes[j].x, nodes[j].y);
+                  rCtx.stroke();
+                }
+              }
+              rCtx.fillStyle = '#64d2ff';
+              rCtx.beginPath();
+              rCtx.arc(nodes[i].x, nodes[i].y, 2.5, 0, Math.PI * 2);
+              rCtx.fill();
+            }
+          }
+          animateRelGraph();
+        }
+      }
+
+      /* ------------------------------------------------------------------- */
+      /* 10. MILO — AI COMPANION (GEMINI API + SPEECH SYNTH & RECOGNITION)   */
+      /* ------------------------------------------------------------------- */
+      const MILO_SYSTEM_PROMPT = `You are MILO, Toha's cute, friendly, helpful little digital copilot on his personal portfolio website ("TOHA — THE CINEMATIC DIGITAL UNIVERSE").
+Keep responses concise (2 to 4 short sentences), warm, slightly playful, and strictly accurate to these verified facts about Toha:
+- Full Name: MD ABUTOHA BISWAS (Brand: TOHA)
+- Education: First-year BCA (Bachelor of Computer Applications) student specializing in Data Science.
+- Subtitle: Data Science / Technology / Creative Developer.
+- Core Skills: Python, C Programming, Microsoft Excel, Data Science, HTML, CSS, JavaScript, Cybersecurity Fundamentals, Git & GitHub.
+- Projects:
+  1. Student Performance Dashboard (Microsoft Excel): Workbook for reviewing student marks, attendance, subject performance and summary insights.
+  2. Student Performance Analytics (Python / Data Analysis): Interactive student-data dashboard with analysis, filters, charts, CSV export and automated tests.
+  3. Inventory Management in C (C Programming): Menu-driven C program to add, view and search product records using structures and arrays.
+  4. Personal Expense Tracker in C (C Programming): Beginner-friendly C programming project for recording and managing personal expenses.
+  5. More Projects Soon (Future Experiments): Exploring data analytics, programming, databases and cybersecurity fundamentals.
+- Links: GitHub (https://github.com/toha-biswas), Portfolio (https://toha-biswas.github.io).
+NEVER invent fake jobs, fake degrees, fake email addresses, phone numbers, or unverified achievements.`;
+
+      function localMiloFallback(userText) {
+        const q = userText.toLowerCase();
+        if (q.includes('who') || q.includes('toha') || q.includes('about')) {
+          return "Toha (MD Abutoha Biswas) is a first-year BCA Data Science student passionate about data analytics, cybersecurity fundamentals, and structured programming in Python and C! 🚀";
+        }
+        if (q.includes('project') || q.includes('built') || q.includes('work')) {
+          return "Toha has built a Student Performance Dashboard in Excel, a Python Student Performance Analytics app with automated tests, plus an Inventory Management system and Personal Expense Tracker in C! ✨";
+        }
+        if (q.includes('skill') || q.includes('tech') || q.includes('language')) {
+          return "Toha's toolkit includes Python, C Programming, Microsoft Excel, Data Science, HTML, CSS, JavaScript, Cybersecurity Fundamentals, and Git & GitHub! Check out the Skills Universe section right after the rocket launch! 🛸";
+        }
+        if (q.includes('website') || q.includes('universe') || q.includes('site')) {
+          return "Welcome to TOHA's Cinematic Digital Universe! It features a WebGL particle field, a Mux car intro, a scroll-triggered rocket launch into the Skills Universe, and interactive playground labs—with me as your copilot! 💜";
+        }
+        return "Heyyy! I'm happy to chat or give you a tour of Toha's projects, BCA Data Science journey, or skills. Ask me anything! 👋";
+      }
+
+      async function askMiloAI(userMessage) {
+        const apiKey = ""; // Runtime-injected environment key
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+
+        const contents = [
+          ...state.miloHistory.slice(-6),
+          { role: 'user', parts: [{ text: userMessage }] }
+        ];
+
+        const payload = {
+          contents,
+          systemInstruction: {
+            parts: [{ text: MILO_SYSTEM_PROMPT }]
+          }
+        };
+
+        for (let attempt = 0; attempt < 3; attempt++) {
+          try {
+            const response = await fetch(apiUrl, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(payload)
+            });
+            if (!response.ok) throw new Error('API status ' + response.status);
+            const data = await response.json();
+            const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+            if (reply) {
+              state.miloHistory.push({ role: 'user', parts: [{ text: userMessage }] });
+              state.miloHistory.push({ role: 'model', parts: [{ text: reply }] });
+              return reply;
+            }
+          } catch (_) {
+            await new Promise((r) => setTimeout(r, Math.pow(2, attempt) * 600));
+          }
+        }
+        return localMiloFallback(userMessage);
+      }
+
+      function miloSpeak(text) {
+        if (!state.miloVoiceEnabled || !('speechSynthesis' in window)) return;
+        window.speechSynthesis.cancel();
+        const cleanText = text.replace(/[\u{1F300}-\u{1FAFF}]/gu, '');
+        const utter = new SpeechSynthesisUtterance(cleanText);
+        utter.rate = 1.04;
+        utter.pitch = 1.18;
+
+        const bar = document.getElementById('milo-speaking-bar');
+        utter.onstart = () => bar.classList.remove('hidden');
+        utter.onend = () => bar.classList.add('hidden');
+        utter.onerror = () => bar.classList.add('hidden');
+
+        window.speechSynthesis.speak(utter);
+      }
+
+      function appendMiloMessage(sender, text, isTyping = false) {
+        const box = document.getElementById('milo-messages');
+        const wrap = document.createElement('div');
+        wrap.className = sender === 'user' ? 'flex justify-end' : 'flex justify-start';
+
+        const bubble = document.createElement('div');
+        bubble.className = sender === 'user'
+          ? 'max-w-[82%] rounded-2xl rounded-br-sm px-3.5 py-2.5 bg-lavender text-void font-medium'
+          : 'max-w-[85%] rounded-2xl rounded-bl-sm px-3.5 py-2.5 bg-white/[0.06] border border-white/10 text-softWhite';
+
+        if (isTyping) {
+          bubble.id = 'milo-typing-indicator';
+          bubble.innerHTML = '<span class="font-mono text-[11px] text-lavender animate-pulse">MILO is thinking...</span>';
+        } else {
+          bubble.textContent = text;
+        }
+
+        wrap.appendChild(bubble);
+        box.appendChild(wrap);
+        box.scrollTop = box.scrollHeight;
+        return bubble;
+      }
+
+      function triggerMiloCelebration(msg) {
+        const mascot = document.getElementById('btn-milo-launcher');
+        mascot.classList.remove('milo-bounce');
+        void mascot.offsetWidth;
+        mascot.classList.add('milo-bounce');
+
+        const ambient = document.getElementById('milo-ambient-bubble');
+        document.getElementById('milo-ambient-text').textContent = msg;
+        ambient.classList.remove('hidden');
+      }
+
+      function scheduleMiloAmbientTip() {
+        const tips = [
+          "Psst... have you checked out the projects?",
+          "Want a quick tour? Click me anytime!",
+          "Scroll down to launch the rocket into Toha's Skills Universe!",
+        ];
+        setTimeout(() => {
+          if (!state.miloOpen) {
+            const tip = tips[Math.floor(Math.random() * tips.length)];
+            document.getElementById('milo-ambient-text').textContent = tip;
+            document.getElementById('milo-ambient-bubble').classList.remove('hidden');
+          }
+        }, 6500);
+      }
+
+      function initMiloCompanion() {
+        const launcher = document.getElementById('btn-milo-launcher');
+        const panel = document.getElementById('milo-chat-panel');
+        const ambientBubble = document.getElementById('milo-ambient-bubble');
+        const form = document.getElementById('milo-chat-form');
+        const input = document.getElementById('milo-chat-input');
+        const eyesGroup = document.getElementById('milo-eyes-group');
+        const eyeL = document.getElementById('milo-eye-left');
+        const eyeR = document.getElementById('milo-eye-right');
+
+        // Initial Greeting Message
+        const initialGreeting = "Heyyy! 👋 I'm MILO, Toha's little digital copilot. How are you doing today?";
+        appendMiloMessage('milo', initialGreeting);
+
+        // Natural Idle Blinking
+        setInterval(() => {
+          if (!eyeL || !eyeR) return;
+          eyeL.setAttribute('ry', '0.6');
+          eyeR.setAttribute('ry', '0.6');
+          setTimeout(() => {
+            eyeL.setAttribute('ry', '5');
+            eyeR.setAttribute('ry', '5');
+          }, 140);
+        }, 3800);
+
+        // Subtle Eye Cursor Tracking
+        window.addEventListener('mousemove', (e) => {
+          if (!eyesGroup) return;
+          const dx = ((e.clientX / window.innerWidth) - 0.5) * 4.5;
+          const dy = ((e.clientY / window.innerHeight) - 0.5) * 3.5;
+          eyesGroup.setAttribute('transform', `translate(${dx.toFixed(1)}, ${dy.toFixed(1)})`);
+        }, { passive: true });
+
+        launcher.addEventListener('click', () => {
+          soundEngine.playClick(780);
+          launcher.classList.remove('milo-bounce');
+          void launcher.offsetWidth;
+          launcher.classList.add('milo-bounce');
+
+          state.miloOpen = !state.miloOpen;
+          if (state.miloOpen) {
+            panel.classList.remove('hidden');
+            ambientBubble.classList.add('hidden');
+          } else {
+            panel.classList.add('hidden');
+          }
+        });
+
+        document.getElementById('btn-milo-close').addEventListener('click', () => {
+          state.miloOpen = false;
+          panel.classList.add('hidden');
+        });
+
+        document.getElementById('btn-dismiss-milo-bubble').addEventListener('click', () => {
+          ambientBubble.classList.add('hidden');
+        });
+
+        document.getElementById('btn-milo-clear').addEventListener('click', () => {
+          state.miloHistory = [];
+          document.getElementById('milo-messages').innerHTML = '';
+          appendMiloMessage('milo', initialGreeting);
+        });
+
+        document.getElementById('btn-milo-greet-voice').addEventListener('click', () => {
+          miloSpeak("Hey there! How are you today? I'm MILO. Nice to meet you! Want me to show you around Toha's digital universe?");
+        });
+
+        document.getElementById('btn-milo-stop-speech').addEventListener('click', () => {
+          if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+          document.getElementById('milo-speaking-bar').classList.add('hidden');
+        });
+
+        const handleUserQuery = async (text) => {
+          if (!text.trim()) return;
+          appendMiloMessage('user', text);
+          const typingEl = appendMiloMessage('milo', '', true);
+          const reply = await askMiloAI(text);
+          typingEl.parentElement.remove();
+          appendMiloMessage('milo', reply);
+          miloSpeak(reply);
+        };
+
+        form.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const text = input.value;
+          input.value = '';
+          handleUserQuery(text);
+        });
+
+        document.querySelectorAll('.milo-chip').forEach((chip) => {
+          chip.addEventListener('click', () => {
+            soundEngine.playClick(680);
+            handleUserQuery(chip.textContent.trim());
+          });
+        });
+
+        // Browser Speech Recognition (activated ONLY on user click)
+        const micBtn = document.getElementById('btn-milo-mic');
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (SpeechRecognition) {
+          const recognition = new SpeechRecognition();
+          recognition.lang = 'en-US';
+          recognition.interimResults = false;
+
+          micBtn.addEventListener('click', () => {
+            try {
+              soundEngine.playClick(820);
+              micBtn.classList.add('bg-rose-500/30', 'text-rose-300', 'border-rose-400');
+              recognition.start();
+            } catch (_) {}
+          });
+
+          recognition.onresult = (event) => {
+            const transcript = event.results[0][0].transcript;
+            handleUserQuery(transcript);
+          };
+
+          recognition.onend = () => {
+            micBtn.classList.remove('bg-rose-500/30', 'text-rose-300', 'border-rose-400');
+          };
+        } else {
+          micBtn.title = 'Speech Recognition not supported in this browser';
+          micBtn.classList.add('opacity-40', 'cursor-not-allowed');
+        }
+      }
+
+      /* ------------------------------------------------------------------- */
+      /* 11. GLOBAL SCROLL REVEALS & TELEMETRY                               */
+      /* ------------------------------------------------------------------- */
+      function initGlobalObservers() {
+        const revealEls = document.querySelectorAll('.reveal-up');
+        const revealObserver = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              revealObserver.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.12 });
+
+        revealEls.forEach((el) => revealObserver.observe(el));
+
+        // Top-right circular progress counter synced to page scroll
+        const scrollCircle = document.getElementById('hero-scroll-circle');
+        const scrollPct = document.getElementById('hero-scroll-pct');
+        window.addEventListener('scroll', () => {
+          const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+          const pct = docHeight > 0 ? Math.min(100, Math.max(0, (window.scrollY / docHeight) * 100)) : 0;
+          if (scrollCircle) {
+            scrollCircle.style.strokeDashoffset = 94.24 - (94.24 * pct) / 100;
+          }
+          if (scrollPct) {
+            scrollPct.textContent = `${Math.round(pct)}%`;
+          }
+        }, { passive: true });
+      }
+
+      /* ------------------------------------------------------------------- */
+      /* BOOTSTRAP APPLICATION ON WINDOW LOAD                                */
+      /* ------------------------------------------------------------------- */
+      window.addEventListener('load', () => {
+        document.getElementById('footer-year').textContent = new Date().getFullYear();
+
+        renderProjects();
+        renderSkillsUniverse();
+        initAxonParticleUniverse();
+        initAboutDigitalSculpture();
+        initRocketJourney();
+        initVisualPlayground();
+        initMiloCompanion();
+        initGlobalObservers();
+
+        // Start Sequence 1: Countdown -> Sequence 2: Car Intro -> Main Universe
+        runCountdownSequence();
+      });
+    })();
   </script>
 </body>
 </html>
