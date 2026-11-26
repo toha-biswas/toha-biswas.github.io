@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GRAVITY — Digital Studio</title>
+  <title>MD ABUTOHA BISWAS (TOHA) — BCA Data Science &amp; Cybersecurity</title>
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -240,6 +240,42 @@
     .min-h-100svh {
       min-height: 100svh;
     }
+
+    /* Orbital Ring Spin & Pulse */
+    @keyframes orbit-spin-slow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    @keyframes orbit-spin-reverse {
+      from { transform: rotate(360deg); }
+      to { transform: rotate(0deg); }
+    }
+    .orbit-ring-cw {
+      animation: orbit-spin-slow 48s linear infinite;
+      transform-origin: 210px 210px;
+    }
+    .orbit-ring-ccw {
+      animation: orbit-spin-reverse 36s linear infinite;
+      transform-origin: 210px 210px;
+    }
+
+    /* Project Modal Transition */
+    #project-modal-backdrop {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    #project-modal-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    #project-modal-card {
+      transform: translateY(20px) scale(0.97);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    #project-modal-backdrop.open #project-modal-card {
+      transform: translateY(0) scale(1);
+    }
   </style>
 </head>
 <body class="selection:bg-[#0E2AC5]/15 selection:text-[#0E2AC5]">
@@ -260,7 +296,7 @@
   >
     <div class="w-full max-w-xs flex flex-col items-center gap-5">
       <div class="flex items-center gap-2.5">
-        <span class="font-display font-black text-base tracking-[0.28em] text-neutral-950 uppercase">GRAVITY</span>
+        <span class="font-display font-black text-base tracking-[0.28em] text-neutral-950 uppercase">TOHA</span>
         <span class="w-1.5 h-1.5 rounded-full bg-[#0E2AC5] animate-ping"></span>
       </div>
 
@@ -288,18 +324,21 @@
     <a
       href="#hero"
       data-scroll-to="0"
-      class="pointer-events-auto font-display font-black text-lg md:text-xl tracking-[0.25em] text-neutral-950 select-none"
+      class="pointer-events-auto inline-flex items-center gap-3 select-none group"
     >
-      GRAVITY
+      <span class="font-display font-black text-lg md:text-xl tracking-[0.25em] text-neutral-950">TOHA</span>
+      <span class="hidden xl:inline-flex items-center px-2.5 py-1 rounded-full border border-white/60 bg-white/35 backdrop-blur-md font-mono text-[9px] tracking-[0.18em] uppercase text-neutral-600">
+        MD ABUTOHA BISWAS
+      </span>
     </a>
 
     <!-- Center Navigation (md+ only) -->
-    <nav class="hidden md:flex items-center gap-12 pointer-events-auto" aria-label="Primary">
-      <a href="#physics" data-scroll-to="1" class="font-raleway text-[14px] font-medium text-neutral-900 transition-opacity duration-200 hover:opacity-60">Works</a>
-      <a href="#physics" data-scroll-to="1" class="font-raleway text-[14px] font-medium text-neutral-900 transition-opacity duration-200 hover:opacity-60">Services</a>
-      <a href="#form" data-scroll-to="2" class="font-raleway text-[14px] font-medium text-neutral-900 transition-opacity duration-200 hover:opacity-60">Team</a>
-      <a href="#release" data-scroll-to="3" class="font-raleway text-[14px] font-medium text-neutral-900 transition-opacity duration-200 hover:opacity-60">Story</a>
-      <a href="#footer" data-scroll-to="4" class="font-raleway text-[14px] font-medium text-neutral-900 transition-opacity duration-200 hover:opacity-60">Contact</a>
+    <nav class="hidden md:flex items-center gap-9 lg:gap-11 pointer-events-auto" aria-label="Primary">
+      <a href="#projects" data-scroll-to="1" class="font-raleway text-[14px] font-medium text-neutral-900 transition-opacity duration-200 hover:opacity-60">Projects</a>
+      <a href="#about" data-scroll-to="2" class="font-raleway text-[14px] font-medium text-neutral-900 transition-opacity duration-200 hover:opacity-60">About</a>
+      <a href="#skills" data-scroll-to="3" class="font-raleway text-[14px] font-medium text-neutral-900 transition-opacity duration-200 hover:opacity-60">Skills</a>
+      <a href="#sandbox" data-scroll-to="4" class="font-raleway text-[14px] font-medium text-neutral-900 transition-opacity duration-200 hover:opacity-60">Sandbox</a>
+      <a href="#connect" data-scroll-to="5" class="font-raleway text-[14px] font-medium text-neutral-900 transition-opacity duration-200 hover:opacity-60">Connect</a>
     </nav>
 
     <!-- Right Controls -->
@@ -325,12 +364,13 @@
         </svg>
       </button>
 
-      <!-- Contact Us Pill -->
+      <!-- Let's Connect Pill -->
       <a
-        href="mailto:hello@gravity.studio"
+        href="#connect"
+        data-scroll-to="5"
         class="group inline-flex items-center gap-3 pl-5 md:pl-6 pr-1.5 py-1.5 rounded-full bg-white/12 backdrop-blur-xl border border-t-white/90 border-b-white/85 border-x-white/10 glass-chrome transition-all duration-200 hover:bg-white/25"
       >
-        <span class="font-raleway text-[13px] md:text-[14px] font-medium text-neutral-950">Contact us</span>
+        <span class="font-raleway text-[13px] md:text-[14px] font-medium text-neutral-950">Let's Connect</span>
         <span class="w-8 h-8 rounded-full blue-orb flex items-center justify-center text-white transition-transform duration-300 group-hover:scale-105">
           <!-- Lucide chevron-right -->
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
@@ -354,7 +394,6 @@
       <!-- Drawer Header -->
       <div class="flex items-center justify-between pb-6 border-b border-neutral-100">
         <div class="flex items-center gap-2.5 text-neutral-950">
-          <!-- Lucide sliders-horizontal -->
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 text-[#0E2AC5]">
             <line x1="21" x2="14" y1="4" y2="4" />
             <line x1="10" x2="3" y1="4" y2="4" />
@@ -375,7 +414,6 @@
           aria-label="Close Studio Controls"
           class="w-9 h-9 rounded-full border border-neutral-200 bg-neutral-50 hover:bg-neutral-100 flex items-center justify-center text-neutral-700 transition-colors cursor-pointer"
         >
-          <!-- Lucide X -->
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
             <path d="M18 6 6 18" />
             <path d="m6 6 12 12" />
@@ -391,7 +429,6 @@
       <!-- Palette Shaders Section -->
       <div class="mt-8">
         <div class="flex items-center gap-2 text-neutral-900 mb-4">
-          <!-- Lucide sparkles -->
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5 text-[#0E2AC5]">
             <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" />
             <path d="M5 3v4" />
@@ -403,7 +440,7 @@
         </div>
 
         <div id="palette-cards" class="flex flex-col gap-3">
-          <!-- Preset 1: Royal Blue & Pearl (id: roseGold) -->
+          <!-- Preset 1: Royal Blue & Pearl -->
           <button
             type="button"
             data-theme-id="roseGold"
@@ -419,7 +456,7 @@
             </p>
           </button>
 
-          <!-- Preset 2: Rose Blush & Crème (id: pinkBlush) -->
+          <!-- Preset 2: Rose Blush & Crème -->
           <button
             type="button"
             data-theme-id="pinkBlush"
@@ -435,7 +472,7 @@
             </p>
           </button>
 
-          <!-- Preset 3: Volt Lime & Slate (id: voltLime) -->
+          <!-- Preset 3: Volt Lime & Slate -->
           <button
             type="button"
             data-theme-id="voltLime"
@@ -451,7 +488,7 @@
             </p>
           </button>
 
-          <!-- Preset 4: Arctic Sky & Crystal (id: arcticBlue) -->
+          <!-- Preset 4: Arctic Sky & Crystal -->
           <button
             type="button"
             data-theme-id="arcticBlue"
@@ -486,7 +523,6 @@
         type="button"
         class="mt-3 w-full py-2.5 px-4 rounded-xl border border-neutral-200 hover:border-neutral-300 bg-neutral-50 hover:bg-neutral-100 text-neutral-800 font-mono text-[10px] tracking-[0.18em] uppercase flex items-center justify-center gap-2 transition-colors cursor-pointer"
       >
-        <!-- Lucide rotate-ccw -->
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5">
           <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
           <path d="M3 3v5h5" />
@@ -496,39 +532,126 @@
     </div>
   </aside>
 
+  <!-- Project Interactive Preview Modal (z-60) -->
+  <div
+    id="project-modal-backdrop"
+    style="z-index: 60;"
+    class="fixed inset-0 bg-neutral-950/45 backdrop-blur-md flex items-center justify-center p-4 sm:p-6"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="modal-project-title"
+  >
+    <div
+      id="project-modal-card"
+      class="w-full max-w-2xl rounded-[1.75rem] bg-white/95 backdrop-blur-2xl border border-white shadow-2xl overflow-hidden text-neutral-900"
+    >
+      <!-- Modal Top Header -->
+      <div class="px-6 sm:px-8 py-5 border-b border-neutral-200/70 flex items-center justify-between gap-4">
+        <div>
+          <div id="modal-project-meta" class="font-mono text-[10px] tracking-[0.22em] uppercase text-[#0E2AC5]">
+            PROJECT 01 // EXCEL ANALYTICS
+          </div>
+          <h3 id="modal-project-title" class="font-raleway font-bold text-xl sm:text-2xl text-neutral-950 mt-1">
+            Student Performance Dashboard
+          </h3>
+        </div>
+        <button
+          id="close-modal-btn"
+          type="button"
+          aria-label="Close Project Preview"
+          class="w-10 h-10 rounded-full border border-neutral-200 bg-neutral-50 hover:bg-neutral-100 flex items-center justify-center text-neutral-700 transition-colors cursor-pointer shrink-0"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
+            <path d="M18 6 6 18" />
+            <path d="m6 6 12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Modal Content Body -->
+      <div id="modal-project-body" class="p-6 sm:p-8 max-h-[65vh] overflow-y-auto space-y-5">
+        <!-- Injected dynamically via JS -->
+      </div>
+
+      <!-- Modal Action Bar -->
+      <div class="px-6 sm:px-8 py-4 bg-neutral-50/90 border-t border-neutral-200/70 flex flex-wrap items-center justify-between gap-3">
+        <a
+          id="modal-github-link"
+          href="https://github.com/toha-biswas"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 px-4 py-2.5 rounded-full border border-neutral-200 bg-white hover:bg-neutral-100 font-mono text-[11px] uppercase tracking-[0.14em] text-neutral-800 transition-colors"
+        >
+          <span>GitHub Repository</span>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5">
+            <path d="M7 7h10v10" />
+            <path d="M7 17 17 7" />
+          </svg>
+        </a>
+
+        <button
+          id="modal-download-btn"
+          type="button"
+          class="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-neutral-950 hover:bg-[#0E2AC5] text-white font-mono text-[11px] uppercase tracking-[0.15em] transition-colors cursor-pointer"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+            <polyline points="7 10 12 15 17 10" />
+            <line x1="12" x2="12" y1="15" y2="3" />
+          </svg>
+          <span id="modal-download-label">Download Source</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification for Downloads -->
+  <div
+    id="download-toast"
+    style="z-index: 70;"
+    class="fixed bottom-6 right-6 translate-y-20 opacity-0 pointer-events-none transition-all duration-300 flex items-center gap-3 px-5 py-3.5 rounded-2xl bg-neutral-950 text-white shadow-xl border border-white/10"
+  >
+    <span class="w-2 h-2 rounded-full bg-[#E1FC03]"></span>
+    <span id="download-toast-text" class="font-mono text-[11px] tracking-[0.12em] uppercase">Downloading file...</span>
+  </div>
+
   <!-- Main Scrolling Document -->
   <main class="relative z-10 pointer-events-none">
 
-    <!-- SECTION 01 — HERO -->
+    <!-- =====================================================================
+         SECTION 01 — HERO
+         ===================================================================== -->
     <section
       id="hero"
       class="hero-fade min-h-100svh flex items-end px-6 md:px-12 pb-12 md:pb-14 pointer-events-none"
     >
       <div class="w-full flex flex-col md:flex-row md:items-end justify-between gap-8">
         <!-- Left Column -->
-        <div class="flex flex-col gap-3.5 items-start pointer-events-auto">
+        <div class="flex flex-col gap-3 items-start pointer-events-auto">
           <span
-            class="hero-eyebrow font-raleway font-medium text-xs md:text-[14px] tracking-[0.05em] uppercase text-[#0E2AC5] mb-4 md:mb-[24px]"
+            class="hero-eyebrow font-raleway font-medium text-xs md:text-[14px] tracking-[0.05em] uppercase text-[#0E2AC5] mb-2 md:mb-4"
           >
-            [ Digital studio ]
+            [ BCA — Data Science &amp; Cybersecurity ]
           </span>
           <h1
-            class="hero-headline font-raleway font-medium text-[2.6rem] leading-[0.95] sm:text-6xl md:text-[90px] md:leading-none tracking-tighter text-neutral-950 md:whitespace-nowrap"
+            class="hero-headline font-raleway font-semibold text-[2.45rem] leading-[0.96] sm:text-6xl md:text-[82px] lg:text-[90px] md:leading-[0.95] tracking-tighter text-neutral-950"
           >
-            Less noise. More gravity.
+            MD ABUTOHA BISWAS
+            <span class="block font-raleway font-normal text-2xl sm:text-4xl md:text-[46px] text-neutral-700 tracking-tight mt-2 md:mt-3">
+              Raw data, clear structure.
+            </span>
           </h1>
         </div>
 
         <!-- Right Column -->
-        <div class="hero-right md:w-[260px] pointer-events-auto">
-          <p class="font-raleway text-[15px] font-medium leading-[1.35] text-neutral-800">
-            We design digital experiences that remove distraction and amplify presence.
+        <div class="hero-right md:w-[290px] pointer-events-auto">
+          <p class="font-raleway text-[15px] font-medium leading-[1.42] text-neutral-800">
+            First-year BCA student building data analytics pipelines, structured C systems, and defensive security fundamentals.
           </p>
           <p class="font-mono text-[10px] tracking-[0.18em] uppercase text-neutral-500 mt-5">
-            © 2026 — Independent digital agency
+            © 2026 — MD ABUTOHA BISWAS (TOHA)
           </p>
           <div class="hidden md:flex items-center gap-2 mt-4 text-neutral-500 animate-pulse">
-            <!-- Lucide arrow-down -->
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5">
               <path d="M12 5v14" />
               <path d="m19 12-7 7-7-7" />
@@ -539,181 +662,1035 @@
       </div>
     </section>
 
-    <!-- SECTION 02 — DROP / Physics -->
+    <!-- =====================================================================
+         SECTION 02 — SELECTED BUILDS / PROJECTS (Replacing "When structure lets go")
+         ===================================================================== -->
     <section
-      id="physics"
-      class="min-h-100svh flex items-center pt-32 md:pt-40 pb-40 px-6 md:px-12 pointer-events-none"
+      id="projects"
+      class="min-h-100svh flex flex-col justify-center py-28 md:py-36 px-6 md:px-12 pointer-events-none"
     >
-      <div class="w-full grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
-        <!-- Left (7 Cols) -->
-        <div class="lg:col-span-7 pointer-events-auto">
+      <div class="w-full max-w-7xl mx-auto">
+        <!-- Section Header -->
+        <div class="max-w-3xl pointer-events-auto">
           <div
             class="reveal font-mono text-[11px] tracking-[0.25em] uppercase text-[#0E2AC5]/80"
             style="--reveal-delay: 0s;"
           >
-            [ 02 — Physics ]
+            [ 02 — Selected Builds ]
           </div>
 
           <h2
-            class="reveal font-raleway font-medium text-[2.6rem] leading-[1.0] sm:text-6xl md:text-[80px] md:leading-[0.92] tracking-tight text-neutral-950 mt-6"
-            style="--reveal-delay: 0.1s;"
+            class="reveal font-raleway font-medium text-[2.6rem] leading-[1.0] sm:text-6xl md:text-[78px] md:leading-[0.94] tracking-tight text-neutral-950 mt-5"
+            style="--reveal-delay: 0.08s;"
           >
-            When structure<br />lets go.
+            When raw data<br />finds structure.
           </h2>
 
           <p
-            class="reveal mt-8 max-w-lg font-raleway text-[16px] md:text-[19px] leading-[1.55] text-neutral-700"
-            style="--reveal-delay: 0.2s;"
+            class="reveal mt-6 max-w-2xl font-raleway text-[16px] md:text-[19px] leading-[1.55] text-neutral-700"
+            style="--reveal-delay: 0.16s;"
           >
-            Keep scrolling and the field surrenders to gravity. Every sphere obeys real simulated physics — mass, momentum, restitution — tumbling down and bouncing off the floor until the energy finally settles.
+            Practical data analytics workbooks, Python visualization pipelines, and structured C systems built from first principles.
           </p>
         </div>
 
-        <!-- Right (5 Cols): Three Glass Stat Cards -->
-        <div
-          class="reveal lg:col-span-5 lg:pt-3 flex flex-col gap-3.5 pointer-events-auto"
-          style="--reveal-delay: 0.25s;"
-        >
-          <!-- Card 01 -->
-          <div class="p-[1px] rounded-[1.4rem] bg-gradient-to-b from-white/80 via-white/30 to-white/10 stat-card-ring transition-transform duration-300 hover:-translate-y-0.5">
-            <div class="relative rounded-[1.35rem] bg-white/25 backdrop-blur-xl px-6 py-5 overflow-hidden">
-              <div class="absolute top-0 left-4 right-4 h-[1px] bg-gradient-to-r from-transparent via-white/90 to-transparent"></div>
-              <div class="flex items-center justify-between">
-                <div class="flex items-center gap-2.5">
-                  <span class="font-mono text-[10px] text-neutral-500">01</span>
-                  <span class="font-mono text-[10px] uppercase tracking-wider text-neutral-400">Solver</span>
-                </div>
-                <span class="w-2 h-2 rounded-full stat-dot"></span>
-              </div>
-              <div class="mt-3 font-raleway text-[18px] font-semibold text-neutral-950">
-                Verlet · 4 sub-steps
-              </div>
-              <div class="mt-1 font-raleway text-[13px] text-neutral-500">
-                Stable stacking at 60fps
-              </div>
-            </div>
-          </div>
+        <!-- 5 Interactive Project Cards Grid -->
+        <div class="mt-12 md:mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pointer-events-auto">
 
-          <!-- Card 02 -->
-          <div class="p-[1px] rounded-[1.4rem] bg-gradient-to-b from-white/80 via-white/30 to-white/10 stat-card-ring transition-transform duration-300 hover:-translate-y-0.5">
-            <div class="relative rounded-[1.35rem] bg-white/25 backdrop-blur-xl px-6 py-5 overflow-hidden">
-              <div class="absolute top-0 left-4 right-4 h-[1px] bg-gradient-to-r from-transparent via-white/90 to-transparent"></div>
-              <div class="flex items-center justify-between">
-                <div class="flex items-center gap-2.5">
-                  <span class="font-mono text-[10px] text-neutral-500">02</span>
-                  <span class="font-mono text-[10px] uppercase tracking-wider text-neutral-400">Restitution</span>
-                </div>
-                <span class="w-2 h-2 rounded-full stat-dot"></span>
-              </div>
-              <div class="mt-3 font-raleway text-[18px] font-semibold text-neutral-950">
-                0.65 — bouncy
-              </div>
-              <div class="mt-1 font-raleway text-[13px] text-neutral-500">
-                Energy lost on every contact
-              </div>
-            </div>
-          </div>
+          <!-- PROJECT 01: Student Performance Dashboard (Excel) -->
+          <article
+            class="reveal group p-[1px] rounded-[1.5rem] bg-gradient-to-b from-white/85 via-white/35 to-white/15 stat-card-ring transition-all duration-300 hover:-translate-y-1 flex flex-col"
+            style="--reveal-delay: 0.1s;"
+          >
+            <div class="relative flex-1 rounded-[1.45rem] bg-white/35 backdrop-blur-xl p-5 sm:p-6 flex flex-col justify-between overflow-hidden">
+              <div class="absolute top-0 left-6 right-6 h-[1px] bg-gradient-to-r from-transparent via-white/95 to-transparent"></div>
 
-          <!-- Card 03 -->
-          <div class="p-[1px] rounded-[1.4rem] bg-gradient-to-b from-white/80 via-white/30 to-white/10 stat-card-ring transition-transform duration-300 hover:-translate-y-0.5">
-            <div class="relative rounded-[1.35rem] bg-white/25 backdrop-blur-xl px-6 py-5 overflow-hidden">
-              <div class="absolute top-0 left-4 right-4 h-[1px] bg-gradient-to-r from-transparent via-white/90 to-transparent"></div>
-              <div class="flex items-center justify-between">
-                <div class="flex items-center gap-2.5">
-                  <span class="font-mono text-[10px] text-neutral-500">03</span>
-                  <span class="font-mono text-[10px] uppercase tracking-wider text-neutral-400">Bodies</span>
+              <div>
+                <!-- Custom SVG Visual Thumbnail: Excel Workbook & Charts -->
+                <div class="relative w-full h-40 rounded-2xl bg-gradient-to-br from-emerald-950 via-teal-950 to-neutral-900 p-4 overflow-hidden border border-white/20 shadow-inner">
+                  <svg viewBox="0 0 320 130" class="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Spreadsheet Grid -->
+                    <rect x="8" y="8" width="175" height="114" rx="8" fill="rgba(255,255,255,0.06)" stroke="rgba(16,185,129,0.35)" />
+                    <line x1="8" y1="30" x2="183" y2="30" stroke="rgba(16,185,129,0.35)" />
+                    <line x1="8" y1="52" x2="183" y2="52" stroke="rgba(255,255,255,0.1)" />
+                    <line x1="8" y1="74" x2="183" y2="74" stroke="rgba(255,255,255,0.1)" />
+                    <line x1="8" y1="96" x2="183" y2="96" stroke="rgba(255,255,255,0.1)" />
+                    <line x1="68" y1="8" x2="68" y2="122" stroke="rgba(255,255,255,0.1)" />
+                    <line x1="126" y1="8" x2="126" y2="122" stroke="rgba(255,255,255,0.1)" />
+                    <text x="16" y="22" fill="#6EE7B7" font-family="JetBrains Mono" font-size="8" font-weight="700">STUDENT</text>
+                    <text x="76" y="22" fill="#6EE7B7" font-family="JetBrains Mono" font-size="8" font-weight="700">ATTEND%</text>
+                    <text x="134" y="22" fill="#6EE7B7" font-family="JetBrains Mono" font-size="8" font-weight="700">AVG_GPA</text>
+                    <text x="16" y="44" fill="#E5E7EB" font-family="JetBrains Mono" font-size="8">BCA_01</text>
+                    <text x="76" y="44" fill="#A7F3D0" font-family="JetBrains Mono" font-size="8">94.5%</text>
+                    <text x="134" y="44" fill="#34D399" font-family="JetBrains Mono" font-size="8">9.20</text>
+                    <text x="16" y="66" fill="#E5E7EB" font-family="JetBrains Mono" font-size="8">BCA_02</text>
+                    <text x="76" y="66" fill="#A7F3D0" font-family="JetBrains Mono" font-size="8">88.0%</text>
+                    <text x="134" y="66" fill="#34D399" font-family="JetBrains Mono" font-size="8">8.65</text>
+                    <text x="16" y="88" fill="#E5E7EB" font-family="JetBrains Mono" font-size="8">BCA_03</text>
+                    <text x="76" y="88" fill="#FDE68A" font-family="JetBrains Mono" font-size="8">79.2%</text>
+                    <text x="134" y="88" fill="#FBBF24" font-family="JetBrains Mono" font-size="8">7.80</text>
+                    <text x="16" y="110" fill="#34D399" font-family="JetBrains Mono" font-size="8" font-weight="700">=AVERAGE()</text>
+                    <text x="134" y="110" fill="#FFFFFF" font-family="JetBrains Mono" font-size="8" font-weight="700">8.55</text>
+                    <!-- Mini Bar Chart -->
+                    <rect x="195" y="8" width="117" height="114" rx="8" fill="rgba(255,255,255,0.06)" stroke="rgba(16,185,129,0.25)" />
+                    <rect x="210" y="62" width="14" height="44" rx="3" fill="#10B981" />
+                    <rect x="232" y="42" width="14" height="64" rx="3" fill="#34D399" />
+                    <rect x="254" y="52" width="14" height="54" rx="3" fill="#6EE7B7" />
+                    <rect x="276" y="28" width="14" height="78" rx="3" fill="#E1FC03" />
+                    <text x="208" y="23" fill="#A7F3D0" font-family="JetBrains Mono" font-size="7.5">INSIGHTS.XLSX</text>
+                  </svg>
                 </div>
-                <span class="w-2 h-2 rounded-full stat-dot"></span>
+
+                <!-- Meta Row -->
+                <div class="mt-5 flex items-center justify-between">
+                  <span class="font-mono text-[10px] tracking-[0.2em] uppercase text-[#0E2AC5] font-bold">PROJECT 01</span>
+                  <span class="font-mono text-[10px] tracking-[0.12em] uppercase px-2.5 py-0.5 rounded-full bg-white/60 text-neutral-700 border border-white/80">
+                    Excel / Analytics
+                  </span>
+                </div>
+
+                <!-- Title & Description -->
+                <h3 class="mt-3 font-raleway font-bold text-xl text-neutral-950">
+                  Student Performance Dashboard
+                </h3>
+                <p class="mt-2 font-raleway text-[14px] leading-[1.55] text-neutral-700">
+                  An Excel workbook for reviewing student marks, attendance, subject performance and summary insights.
+                </p>
+
+                <!-- Formula Badge -->
+                <div class="mt-3.5 px-3 py-2 rounded-xl bg-neutral-950/90 text-emerald-300 font-mono text-[11px] overflow-x-auto">
+                  =IF(AVERAGE(C2:F2)&gt;=85,"Distinction","Pass")
+                </div>
               </div>
-              <div class="mt-3 font-raleway text-[18px] font-semibold text-neutral-950">
-                Real-time GPU
-              </div>
-              <div class="mt-1 font-raleway text-[13px] text-neutral-500">
-                No pre-baked animation
+
+              <!-- Card Action Buttons -->
+              <div class="mt-6 pt-4 border-t border-neutral-900/10 flex flex-wrap items-center justify-between gap-2">
+                <div class="flex items-center gap-2">
+                  <button
+                    type="button"
+                    data-preview-project="0"
+                    class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-neutral-950 text-white hover:bg-[#0E2AC5] font-mono text-[10px] uppercase tracking-[0.14em] transition-colors cursor-pointer"
+                  >
+                    <span>View Project</span>
+                    <span>↗</span>
+                  </button>
+                  <a
+                    href="https://github.com/toha-biswas"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center gap-1 px-3 py-2 rounded-full border border-neutral-900/15 bg-white/60 hover:bg-white text-neutral-900 font-mono text-[10px] uppercase tracking-[0.14em] transition-colors"
+                  >
+                    <span>GitHub</span>
+                    <span>↗</span>
+                  </a>
+                </div>
+
+                <button
+                  type="button"
+                  data-download-project="0"
+                  title="Download Student Performance Workbook (.csv)"
+                  class="inline-flex items-center gap-1.5 px-3 py-2 rounded-full border border-[#0E2AC5]/30 bg-[#0E2AC5]/10 hover:bg-[#0E2AC5] text-[#0E2AC5] hover:text-white font-mono text-[10px] uppercase tracking-[0.14em] font-semibold transition-colors cursor-pointer"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="w-3 h-3">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                    <polyline points="7 10 12 15 17 10" />
+                    <line x1="12" x2="12" y1="15" y2="3" />
+                  </svg>
+                  <span>Download</span>
+                </button>
               </div>
             </div>
-          </div>
+          </article>
+
+          <!-- PROJECT 02: Student Performance Analytics (Python / Data Analysis) -->
+          <article
+            class="reveal group p-[1px] rounded-[1.5rem] bg-gradient-to-b from-white/85 via-white/35 to-white/15 stat-card-ring transition-all duration-300 hover:-translate-y-1 flex flex-col"
+            style="--reveal-delay: 0.16s;"
+          >
+            <div class="relative flex-1 rounded-[1.45rem] bg-white/35 backdrop-blur-xl p-5 sm:p-6 flex flex-col justify-between overflow-hidden">
+              <div class="absolute top-0 left-6 right-6 h-[1px] bg-gradient-to-r from-transparent via-white/95 to-transparent"></div>
+
+              <div>
+                <!-- Custom SVG Visual Thumbnail: Python Pandas & Visualization Pipeline -->
+                <div class="relative w-full h-40 rounded-2xl bg-gradient-to-br from-[#071338] via-[#0e2ac5] to-indigo-950 p-4 overflow-hidden border border-white/20 shadow-inner">
+                  <svg viewBox="0 0 320 130" class="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="8" y="8" width="304" height="114" rx="10" fill="rgba(5,10,30,0.55)" stroke="rgba(147,197,253,0.3)" />
+                    <!-- Trendline Curve -->
+                    <path d="M24 96 C65 88, 92 48, 138 56 C182 64, 215 24, 294 26" stroke="#E1FC03" stroke-width="2.5" stroke-linecap="round" />
+                    <path d="M24 96 C65 88, 92 48, 138 56 C182 64, 215 24, 294 26 L294 110 L24 110 Z" fill="url(#pyGrad)" opacity="0.28" />
+                    <defs>
+                      <linearGradient id="pyGrad" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#E1FC03" />
+                        <stop offset="100%" stop-color="#0E2AC5" stop-opacity="0" />
+                      </linearGradient>
+                    </defs>
+                    <circle cx="92" cy="64" r="4" fill="#FFFFFF" stroke="#0E2AC5" stroke-width="2" />
+                    <circle cx="138" cy="56" r="4" fill="#FFFFFF" stroke="#0E2AC5" stroke-width="2" />
+                    <circle cx="215" cy="34" r="4" fill="#E1FC03" />
+                    <circle cx="294" cy="26" r="4.5" fill="#E1FC03" />
+                    <text x="22" y="25" fill="#93C5FD" font-family="JetBrains Mono" font-size="8.5" font-weight="700">PANDAS PIPELINE // PYTEST PASSED</text>
+                    <text x="22" y="39" fill="#E0E7FF" font-family="JetBrains Mono" font-size="8">mean_score: 89.4 | std_dev: 4.12</text>
+                  </svg>
+                </div>
+
+                <!-- Meta Row -->
+                <div class="mt-5 flex items-center justify-between">
+                  <span class="font-mono text-[10px] tracking-[0.2em] uppercase text-[#0E2AC5] font-bold">PROJECT 02</span>
+                  <span class="font-mono text-[10px] tracking-[0.12em] uppercase px-2.5 py-0.5 rounded-full bg-white/60 text-neutral-700 border border-white/80">
+                    Python / Data Analysis
+                  </span>
+                </div>
+
+                <!-- Title & Description -->
+                <h3 class="mt-3 font-raleway font-bold text-xl text-neutral-950">
+                  Student Performance Analytics
+                </h3>
+                <p class="mt-2 font-raleway text-[14px] leading-[1.55] text-neutral-700">
+                  An interactive student-data dashboard with analysis, filters, charts, CSV export and automated tests.
+                </p>
+
+                <!-- Verbatim Code Snippet -->
+                <div class="mt-3.5 px-3 py-2 rounded-xl bg-neutral-950/90 text-sky-300 font-mono text-[11px] overflow-x-auto">
+                  df.groupby('subject').mean()
+                </div>
+              </div>
+
+              <!-- Card Action Buttons -->
+              <div class="mt-6 pt-4 border-t border-neutral-900/10 flex flex-wrap items-center justify-between gap-2">
+                <div class="flex items-center gap-2">
+                  <button
+                    type="button"
+                    data-preview-project="1"
+                    class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-neutral-950 text-white hover:bg-[#0E2AC5] font-mono text-[10px] uppercase tracking-[0.14em] transition-colors cursor-pointer"
+                  >
+                    <span>View Project</span>
+                    <span>↗</span>
+                  </button>
+                  <a
+                    href="https://github.com/toha-biswas"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center gap-1 px-3 py-2 rounded-full border border-neutral-900/15 bg-white/60 hover:bg-white text-neutral-900 font-mono text-[10px] uppercase tracking-[0.14em] transition-colors"
+                  >
+                    <span>GitHub</span>
+                    <span>↗</span>
+                  </a>
+                </div>
+
+                <button
+                  type="button"
+                  data-download-project="1"
+                  title="Download Python Analytics Script (.py)"
+                  class="inline-flex items-center gap-1.5 px-3 py-2 rounded-full border border-[#0E2AC5]/30 bg-[#0E2AC5]/10 hover:bg-[#0E2AC5] text-[#0E2AC5] hover:text-white font-mono text-[10px] uppercase tracking-[0.14em] font-semibold transition-colors cursor-pointer"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="w-3 h-3">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                    <polyline points="7 10 12 15 17 10" />
+                    <line x1="12" x2="12" y1="15" y2="3" />
+                  </svg>
+                  <span>Download</span>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- PROJECT 03: Inventory Management in C -->
+          <article
+            class="reveal group p-[1px] rounded-[1.5rem] bg-gradient-to-b from-white/85 via-white/35 to-white/15 stat-card-ring transition-all duration-300 hover:-translate-y-1 flex flex-col"
+            style="--reveal-delay: 0.22s;"
+          >
+            <div class="relative flex-1 rounded-[1.45rem] bg-white/35 backdrop-blur-xl p-5 sm:p-6 flex flex-col justify-between overflow-hidden">
+              <div class="absolute top-0 left-6 right-6 h-[1px] bg-gradient-to-r from-transparent via-white/95 to-transparent"></div>
+
+              <div>
+                <!-- Custom SVG Visual Thumbnail: C Struct Memory Layout -->
+                <div class="relative w-full h-40 rounded-2xl bg-gradient-to-br from-neutral-950 via-slate-900 to-zinc-900 p-4 overflow-hidden border border-white/20 shadow-inner">
+                  <svg viewBox="0 0 320 130" class="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <text x="12" y="20" fill="#94A3B8" font-family="JetBrains Mono" font-size="8" font-weight="700">MEMORY LAYOUT // sizeof(ProductRecord) = 40B</text>
+                    <!-- Memory Blocks -->
+                    <rect x="12" y="32" width="68" height="44" rx="6" fill="rgba(47,105,255,0.25)" stroke="#5175FF" />
+                    <text x="20" y="49" fill="#93C5FD" font-family="JetBrains Mono" font-size="8">int id</text>
+                    <text x="20" y="64" fill="#FFFFFF" font-family="JetBrains Mono" font-size="8.5" font-weight="700">4 bytes</text>
+
+                    <rect x="88" y="32" width="136" height="44" rx="6" fill="rgba(225,252,3,0.14)" stroke="#E1FC03" />
+                    <text x="98" y="49" fill="#FEF08A" font-family="JetBrains Mono" font-size="8">char label[32]</text>
+                    <text x="98" y="64" fill="#FFFFFF" font-family="JetBrains Mono" font-size="8.5" font-weight="700">32 bytes</text>
+
+                    <rect x="232" y="32" width="76" height="44" rx="6" fill="rgba(255,166,179,0.2)" stroke="#FFA6B3" />
+                    <text x="240" y="49" fill="#FECDD3" font-family="JetBrains Mono" font-size="8">float amt</text>
+                    <text x="240" y="64" fill="#FFFFFF" font-family="JetBrains Mono" font-size="8.5" font-weight="700">4 bytes</text>
+
+                    <rect x="12" y="88" width="296" height="28" rx="6" fill="rgba(255,255,255,0.05)" />
+                    <text x="20" y="105" fill="#CBD5E1" font-family="JetBrains Mono" font-size="8">[1] ADD  [2] VIEW ALL  [3] LINEAR SEARCH BY ID</text>
+                  </svg>
+                </div>
+
+                <!-- Meta Row -->
+                <div class="mt-5 flex items-center justify-between">
+                  <span class="font-mono text-[10px] tracking-[0.2em] uppercase text-[#0E2AC5] font-bold">PROJECT 03</span>
+                  <span class="font-mono text-[10px] tracking-[0.12em] uppercase px-2.5 py-0.5 rounded-full bg-white/60 text-neutral-700 border border-white/80">
+                    C Programming
+                  </span>
+                </div>
+
+                <!-- Title & Description -->
+                <h3 class="mt-3 font-raleway font-bold text-xl text-neutral-950">
+                  Inventory Management in C
+                </h3>
+                <p class="mt-2 font-raleway text-[14px] leading-[1.55] text-neutral-700">
+                  A menu-driven C program to add, view and search product records using structures and arrays.
+                </p>
+
+                <!-- Verbatim Struct Code Block -->
+                <pre class="mt-3.5 px-3 py-2.5 rounded-xl bg-neutral-950/90 text-amber-200 font-mono text-[10.5px] leading-[1.45] overflow-x-auto">struct ProductRecord {
+  int id; char label[32];
+  float amount;
+};</pre>
+              </div>
+
+              <!-- Card Action Buttons -->
+              <div class="mt-6 pt-4 border-t border-neutral-900/10 flex flex-wrap items-center justify-between gap-2">
+                <div class="flex items-center gap-2">
+                  <button
+                    type="button"
+                    data-preview-project="2"
+                    class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-neutral-950 text-white hover:bg-[#0E2AC5] font-mono text-[10px] uppercase tracking-[0.14em] transition-colors cursor-pointer"
+                  >
+                    <span>View Project</span>
+                    <span>↗</span>
+                  </button>
+                  <a
+                    href="https://github.com/toha-biswas"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center gap-1 px-3 py-2 rounded-full border border-neutral-900/15 bg-white/60 hover:bg-white text-neutral-900 font-mono text-[10px] uppercase tracking-[0.14em] transition-colors"
+                  >
+                    <span>GitHub</span>
+                    <span>↗</span>
+                  </a>
+                </div>
+
+                <button
+                  type="button"
+                  data-download-project="2"
+                  title="Download Inventory Management C Source (.c)"
+                  class="inline-flex items-center gap-1.5 px-3 py-2 rounded-full border border-[#0E2AC5]/30 bg-[#0E2AC5]/10 hover:bg-[#0E2AC5] text-[#0E2AC5] hover:text-white font-mono text-[10px] uppercase tracking-[0.14em] font-semibold transition-colors cursor-pointer"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="w-3 h-3">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                    <polyline points="7 10 12 15 17 10" />
+                    <line x1="12" x2="12" y1="15" y2="3" />
+                  </svg>
+                  <span>Download</span>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- PROJECT 04: Personal Expense Tracker in C -->
+          <article
+            class="reveal group p-[1px] rounded-[1.5rem] bg-gradient-to-b from-white/85 via-white/35 to-white/15 stat-card-ring transition-all duration-300 hover:-translate-y-1 flex flex-col"
+            style="--reveal-delay: 0.28s;"
+          >
+            <div class="relative flex-1 rounded-[1.45rem] bg-white/35 backdrop-blur-xl p-5 sm:p-6 flex flex-col justify-between overflow-hidden">
+              <div class="absolute top-0 left-6 right-6 h-[1px] bg-gradient-to-r from-transparent via-white/95 to-transparent"></div>
+
+              <div>
+                <!-- Custom SVG Visual Thumbnail: Expense Ledger & Category Breakdown -->
+                <div class="relative w-full h-40 rounded-2xl bg-gradient-to-br from-[#2a0818] via-[#4c0d29] to-neutral-950 p-4 overflow-hidden border border-white/20 shadow-inner">
+                  <svg viewBox="0 0 320 130" class="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <text x="12" y="20" fill="#FDA4AF" font-family="JetBrains Mono" font-size="8" font-weight="700">EXPENSE_LEDGER.C // CLI TRACKER</text>
+                    <!-- Ledger Rows -->
+                    <rect x="12" y="30" width="185" height="22" rx="5" fill="rgba(255,255,255,0.07)" />
+                    <text x="20" y="44" fill="#FFE4E6" font-family="JetBrains Mono" font-size="8">#101  Books &amp; Notes</text>
+                    <text x="148" y="44" fill="#FB7185" font-family="JetBrains Mono" font-size="8" font-weight="700">₹450</text>
+
+                    <rect x="12" y="57" width="185" height="22" rx="5" fill="rgba(255,255,255,0.07)" />
+                    <text x="20" y="71" fill="#FFE4E6" font-family="JetBrains Mono" font-size="8">#102  Campus Transit</text>
+                    <text x="148" y="71" fill="#FB7185" font-family="JetBrains Mono" font-size="8" font-weight="700">₹180</text>
+
+                    <rect x="12" y="84" width="185" height="22" rx="5" fill="rgba(255,255,255,0.07)" />
+                    <text x="20" y="98" fill="#FFE4E6" font-family="JetBrains Mono" font-size="8">#103  Lab Printouts</text>
+                    <text x="148" y="98" fill="#FB7185" font-family="JetBrains Mono" font-size="8" font-weight="700">₹120</text>
+
+                    <!-- Donut Summary -->
+                    <circle cx="255" cy="68" r="30" stroke="rgba(255,255,255,0.12)" stroke-width="8" />
+                    <circle cx="255" cy="68" r="30" stroke="#FB7185" stroke-width="8" stroke-dasharray="120 190" stroke-linecap="round" />
+                    <text x="236" y="71" fill="#FFFFFF" font-family="JetBrains Mono" font-size="8.5" font-weight="700">₹750</text>
+                  </svg>
+                </div>
+
+                <!-- Meta Row -->
+                <div class="mt-5 flex items-center justify-between">
+                  <span class="font-mono text-[10px] tracking-[0.2em] uppercase text-[#0E2AC5] font-bold">PROJECT 04</span>
+                  <span class="font-mono text-[10px] tracking-[0.12em] uppercase px-2.5 py-0.5 rounded-full bg-white/60 text-neutral-700 border border-white/80">
+                    C Programming
+                  </span>
+                </div>
+
+                <!-- Title & Description -->
+                <h3 class="mt-3 font-raleway font-bold text-xl text-neutral-950">
+                  Personal Expense Tracker in C
+                </h3>
+                <p class="mt-2 font-raleway text-[14px] leading-[1.55] text-neutral-700">
+                  A beginner-friendly C programming project for recording and managing personal expenses.
+                </p>
+
+                <!-- Verbatim Struct Code Block -->
+                <pre class="mt-3.5 px-3 py-2.5 rounded-xl bg-neutral-950/90 text-rose-200 font-mono text-[10.5px] leading-[1.45] overflow-x-auto">struct ExpenseEntry {
+  int id; char label[32];
+  float amount;
+};</pre>
+              </div>
+
+              <!-- Card Action Buttons -->
+              <div class="mt-6 pt-4 border-t border-neutral-900/10 flex flex-wrap items-center justify-between gap-2">
+                <div class="flex items-center gap-2">
+                  <button
+                    type="button"
+                    data-preview-project="3"
+                    class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-neutral-950 text-white hover:bg-[#0E2AC5] font-mono text-[10px] uppercase tracking-[0.14em] transition-colors cursor-pointer"
+                  >
+                    <span>View Project</span>
+                    <span>↗</span>
+                  </button>
+                  <a
+                    href="https://github.com/toha-biswas"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center gap-1 px-3 py-2 rounded-full border border-neutral-900/15 bg-white/60 hover:bg-white text-neutral-900 font-mono text-[10px] uppercase tracking-[0.14em] transition-colors"
+                  >
+                    <span>GitHub</span>
+                    <span>↗</span>
+                  </a>
+                </div>
+
+                <button
+                  type="button"
+                  data-download-project="3"
+                  title="Download Expense Tracker C Source (.c)"
+                  class="inline-flex items-center gap-1.5 px-3 py-2 rounded-full border border-[#0E2AC5]/30 bg-[#0E2AC5]/10 hover:bg-[#0E2AC5] text-[#0E2AC5] hover:text-white font-mono text-[10px] uppercase tracking-[0.14em] font-semibold transition-colors cursor-pointer"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="w-3 h-3">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                    <polyline points="7 10 12 15 17 10" />
+                    <line x1="12" x2="12" y1="15" y2="3" />
+                  </svg>
+                  <span>Download</span>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- PROJECT 05: Future Experiments -->
+          <article
+            class="reveal group p-[1px] rounded-[1.5rem] bg-gradient-to-b from-white/85 via-white/35 to-white/15 stat-card-ring transition-all duration-300 hover:-translate-y-1 flex flex-col md:col-span-2 lg:col-span-2"
+            style="--reveal-delay: 0.34s;"
+          >
+            <div class="relative flex-1 rounded-[1.45rem] bg-white/35 backdrop-blur-xl p-5 sm:p-6 flex flex-col justify-between overflow-hidden">
+              <div class="absolute top-0 left-6 right-6 h-[1px] bg-gradient-to-r from-transparent via-white/95 to-transparent"></div>
+
+              <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+                <!-- Custom SVG Visual Thumbnail: Cybersecurity & Database Radar -->
+                <div class="md:col-span-5 relative w-full h-40 rounded-2xl bg-gradient-to-br from-[#061826] via-[#0b2942] to-neutral-950 p-4 overflow-hidden border border-white/20 shadow-inner">
+                  <svg viewBox="0 0 280 130" class="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="140" cy="65" r="52" stroke="rgba(150,229,255,0.2)" stroke-dasharray="3 3" />
+                    <circle cx="140" cy="65" r="34" stroke="rgba(150,229,255,0.32)" />
+                    <circle cx="140" cy="65" r="16" stroke="#96E5FF" stroke-width="1.5" />
+                    <line x1="140" y1="13" x2="140" y2="117" stroke="rgba(150,229,255,0.18)" />
+                    <line x1="88" y1="65" x2="192" y2="65" stroke="rgba(150,229,255,0.18)" />
+                    <circle cx="164" cy="44" r="3.5" fill="#E1FC03" />
+                    <circle cx="114" cy="82" r="3" fill="#96E5FF" />
+                    <text x="12" y="20" fill="#96E5FF" font-family="JetBrains Mono" font-size="8" font-weight="700">R&amp;D LAB // SQL + SEC</text>
+                    <text x="12" y="118" fill="#BAE6FD" font-family="JetBrains Mono" font-size="7.5">STATUS: ACTIVE EXPLORATION</text>
+                  </svg>
+                </div>
+
+                <div class="md:col-span-7">
+                  <!-- Meta Row -->
+                  <div class="flex items-center justify-between">
+                    <span class="font-mono text-[10px] tracking-[0.2em] uppercase text-[#0E2AC5] font-bold">PROJECT 05</span>
+                    <span class="font-mono text-[10px] tracking-[0.12em] uppercase px-2.5 py-0.5 rounded-full bg-white/60 text-neutral-700 border border-white/80">
+                      Future Experiments
+                    </span>
+                  </div>
+
+                  <!-- Title & Description -->
+                  <h3 class="mt-3 font-raleway font-bold text-xl sm:text-2xl text-neutral-950">
+                    More Projects Soon
+                  </h3>
+                  <p class="mt-2 font-raleway text-[14px] sm:text-[15px] leading-[1.55] text-neutral-700">
+                    Exploring new projects in data analytics, programming, databases and cybersecurity fundamentals.
+                  </p>
+
+                  <div class="mt-3.5 flex flex-wrap gap-2">
+                    <span class="font-mono text-[10px] px-2.5 py-1 rounded-lg bg-neutral-950/90 text-sky-300">SQL &amp; Relational DB</span>
+                    <span class="font-mono text-[10px] px-2.5 py-1 rounded-lg bg-neutral-950/90 text-lime-300">Log Auditing</span>
+                    <span class="font-mono text-[10px] px-2.5 py-1 rounded-lg bg-neutral-950/90 text-rose-300">Packet Telemetry</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Card Action Buttons -->
+              <div class="mt-6 pt-4 border-t border-neutral-900/10 flex flex-wrap items-center justify-between gap-2">
+                <div class="flex items-center gap-2">
+                  <button
+                    type="button"
+                    data-preview-project="4"
+                    class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-neutral-950 text-white hover:bg-[#0E2AC5] font-mono text-[10px] uppercase tracking-[0.14em] transition-colors cursor-pointer"
+                  >
+                    <span>View Project</span>
+                    <span>↗</span>
+                  </button>
+                  <a
+                    href="https://github.com/toha-biswas"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center gap-1 px-3 py-2 rounded-full border border-neutral-900/15 bg-white/60 hover:bg-white text-neutral-900 font-mono text-[10px] uppercase tracking-[0.14em] transition-colors"
+                  >
+                    <span>GitHub</span>
+                    <span>↗</span>
+                  </a>
+                </div>
+
+                <button
+                  type="button"
+                  data-download-project="4"
+                  title="Download R&D Roadmap & Starter Notes (.md)"
+                  class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full border border-[#0E2AC5]/30 bg-[#0E2AC5]/10 hover:bg-[#0E2AC5] text-[#0E2AC5] hover:text-white font-mono text-[10px] uppercase tracking-[0.14em] font-semibold transition-colors cursor-pointer"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="w-3 h-3">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                    <polyline points="7 10 12 15 17 10" />
+                    <line x1="12" x2="12" y1="15" y2="3" />
+                  </svg>
+                  <span>Download Roadmap</span>
+                </button>
+              </div>
+            </div>
+          </article>
+
         </div>
       </div>
     </section>
 
-    <!-- SECTION 03 — SHAPE / Form -->
+    <!-- =====================================================================
+         SECTION 03 — ABOUT ME (Heart silhouette assembly on scroll)
+         ===================================================================== -->
     <section
-      id="form"
-      class="min-h-100svh flex flex-col justify-between py-36 md:py-44 px-6 md:px-12 pointer-events-none"
+      id="about"
+      class="min-h-100svh flex flex-col justify-between py-28 md:py-36 px-6 md:px-12 pointer-events-none"
     >
-      <!-- Top Left -->
-      <div class="pointer-events-auto">
-        <div
-          class="reveal font-mono text-[11px] tracking-[0.25em] uppercase text-[#0E2AC5]/80"
-          style="--reveal-delay: 0s;"
-        >
-          [ 03 — Form ]
+      <div class="w-full max-w-7xl mx-auto">
+        <!-- Top Header & Quote -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-end pointer-events-auto">
+          <div class="lg:col-span-6">
+            <div
+              class="reveal font-mono text-[11px] tracking-[0.25em] uppercase text-[#0E2AC5]/80"
+              style="--reveal-delay: 0s;"
+            >
+              [ 03 — About Me ]
+            </div>
+            <h2
+              class="reveal mt-5 font-raleway font-medium text-[2.6rem] leading-[1.0] sm:text-6xl md:text-[78px] md:leading-[0.94] tracking-tight text-neutral-950"
+              style="--reveal-delay: 0.1s;"
+            >
+              Clarity over<br />clutter.
+            </h2>
+          </div>
+
+          <div class="lg:col-span-6">
+            <blockquote
+              class="reveal p-6 sm:p-7 rounded-[1.5rem] border border-white/75 bg-white/35 backdrop-blur-xl stat-card-ring font-raleway text-[16px] md:text-[18px] leading-[1.6] text-neutral-800"
+              style="--reveal-delay: 0.16s;"
+            >
+              "I'm a first-year BCA student, building a strong foundation in data science, cybersecurity, and programming. I enjoy turning raw, messy information into something clear and useful — that's what most of the projects below are about."
+            </blockquote>
+          </div>
         </div>
-        <h2
-          class="reveal mt-6 max-w-2xl font-raleway font-medium text-[2.6rem] leading-[1.0] sm:text-6xl md:text-[80px] md:leading-[0.92] tracking-tight text-neutral-950"
-          style="--reveal-delay: 0.1s;"
-        >
-          Chaos, then form.
-        </h2>
-      </div>
 
-      <!-- Bottom Right-Aligned -->
-      <div class="self-end max-w-sm text-left md:text-right mt-24 md:mt-0 pointer-events-auto">
-        <p
-          class="reveal font-raleway text-[16px] md:text-[19px] leading-[1.55] text-neutral-700"
-          style="--reveal-delay: 0.15s;"
-        >
-          Out of free-fall, the field reassembles — every bubble finding its place in a single shape. Move your cursor through it and watch the order ripple, scatter, and recover.
-        </p>
+        <!-- 4 Glassmorphic Pillar Cards -->
+        <div class="mt-12 md:mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 pointer-events-auto">
+          <!-- Pillar 01 -->
+          <div
+            class="reveal p-[1px] rounded-[1.4rem] bg-gradient-to-b from-white/85 via-white/35 to-white/10 stat-card-ring transition-transform duration-300 hover:-translate-y-0.5"
+            style="--reveal-delay: 0.18s;"
+          >
+            <div class="relative h-full rounded-[1.35rem] bg-white/30 backdrop-blur-xl px-6 py-6 overflow-hidden">
+              <div class="absolute top-0 left-4 right-4 h-[1px] bg-gradient-to-r from-transparent via-white/90 to-transparent"></div>
+              <div class="flex items-center justify-between">
+                <span class="font-mono text-[10px] tracking-[0.18em] uppercase text-[#0E2AC5] font-bold">01 // EDUCATION</span>
+                <span class="w-2 h-2 rounded-full stat-dot"></span>
+              </div>
+              <h3 class="mt-4 font-raleway text-[18px] font-bold text-neutral-950">
+                BCA — Data Science
+              </h3>
+              <p class="mt-2 font-raleway text-[14px] leading-[1.55] text-neutral-700">
+                First-year undergraduate building strong mathematical, statistical, and computational foundations.
+              </p>
+            </div>
+          </div>
 
-        <div
-          class="reveal mt-7 inline-flex items-center gap-2 px-4 py-2.5 rounded-full border border-white/55 bg-white/35 backdrop-blur-md text-neutral-700"
-          style="--reveal-delay: 0.28s;"
-        >
-          <!-- Lucide mouse-pointer -->
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5 text-[#0E2AC5]">
-            <path d="m3 3 7.07 16.97 2.51-7.39 7.39-2.51L3 3z" />
-            <path d="m13 13 6 6" />
-          </svg>
-          <span class="font-mono text-[10px] uppercase tracking-[0.2em]">Swipe through it</span>
+          <!-- Pillar 02 -->
+          <div
+            class="reveal p-[1px] rounded-[1.4rem] bg-gradient-to-b from-white/85 via-white/35 to-white/10 stat-card-ring transition-transform duration-300 hover:-translate-y-0.5"
+            style="--reveal-delay: 0.24s;"
+          >
+            <div class="relative h-full rounded-[1.35rem] bg-white/30 backdrop-blur-xl px-6 py-6 overflow-hidden">
+              <div class="absolute top-0 left-4 right-4 h-[1px] bg-gradient-to-r from-transparent via-white/90 to-transparent"></div>
+              <div class="flex items-center justify-between">
+                <span class="font-mono text-[10px] tracking-[0.18em] uppercase text-[#0E2AC5] font-bold">02 // TECH INTERESTS</span>
+                <span class="w-2 h-2 rounded-full stat-dot"></span>
+              </div>
+              <h3 class="mt-4 font-raleway text-[18px] font-bold text-neutral-950">
+                Analytics &amp; Cybersecurity
+              </h3>
+              <p class="mt-2 font-raleway text-[14px] leading-[1.55] text-neutral-700">
+                Passionate about data pipelines, structured programming in C &amp; Python, and defensive security fundamentals.
+              </p>
+            </div>
+          </div>
+
+          <!-- Pillar 03 -->
+          <div
+            class="reveal p-[1px] rounded-[1.4rem] bg-gradient-to-b from-white/85 via-white/35 to-white/10 stat-card-ring transition-transform duration-300 hover:-translate-y-0.5"
+            style="--reveal-delay: 0.30s;"
+          >
+            <div class="relative h-full rounded-[1.35rem] bg-white/30 backdrop-blur-xl px-6 py-6 overflow-hidden">
+              <div class="absolute top-0 left-4 right-4 h-[1px] bg-gradient-to-r from-transparent via-white/90 to-transparent"></div>
+              <div class="flex items-center justify-between">
+                <span class="font-mono text-[10px] tracking-[0.18em] uppercase text-[#0E2AC5] font-bold">03 // LEARNING JOURNEY</span>
+                <span class="w-2 h-2 rounded-full stat-dot"></span>
+              </div>
+              <h3 class="mt-4 font-raleway text-[18px] font-bold text-neutral-950">
+                First-Principles Mastery
+              </h3>
+              <p class="mt-2 font-raleway text-[14px] leading-[1.55] text-neutral-700">
+                From manual memory structures in C to automated Python test suites and executive Excel dashboards.
+              </p>
+            </div>
+          </div>
+
+          <!-- Pillar 04 -->
+          <div
+            class="reveal p-[1px] rounded-[1.4rem] bg-gradient-to-b from-white/85 via-white/35 to-white/10 stat-card-ring transition-transform duration-300 hover:-translate-y-0.5"
+            style="--reveal-delay: 0.36s;"
+          >
+            <div class="relative h-full rounded-[1.35rem] bg-white/30 backdrop-blur-xl px-6 py-6 overflow-hidden">
+              <div class="absolute top-0 left-4 right-4 h-[1px] bg-gradient-to-r from-transparent via-white/90 to-transparent"></div>
+              <div class="flex items-center justify-between">
+                <span class="font-mono text-[10px] tracking-[0.18em] uppercase text-[#0E2AC5] font-bold">04 // PRACTICAL BUILDS</span>
+                <span class="w-2 h-2 rounded-full stat-dot"></span>
+              </div>
+              <h3 class="mt-4 font-raleway text-[18px] font-bold text-neutral-950">
+                Clarity Over Clutter
+              </h3>
+              <p class="mt-2 font-raleway text-[14px] leading-[1.55] text-neutral-700">
+                Focused on creating reliable software utilities that solve real academic and personal workflow problems.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom Swipe Interaction Pill -->
+        <div class="mt-10 flex justify-start md:justify-end pointer-events-auto">
+          <div
+            class="reveal inline-flex items-center gap-2 px-4 py-2.5 rounded-full border border-white/65 bg-white/40 backdrop-blur-md text-neutral-700"
+            style="--reveal-delay: 0.4s;"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5 text-[#0E2AC5]">
+              <path d="m3 3 7.07 16.97 2.51-7.39 7.39-2.51L3 3z" />
+              <path d="m13 13 6 6" />
+            </svg>
+            <span class="font-mono text-[10px] uppercase tracking-[0.2em]">Swipe through it</span>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- SECTION 04 — RELEASE -->
+    <!-- =====================================================================
+         SECTION 04 — MY SKILLS UNIVERSE (ORBITAL DOCKING COMPLETE)
+         ===================================================================== -->
     <section
-      id="release"
-      class="min-h-100svh flex flex-col items-center justify-center text-center py-36 md:py-44 px-6 md:px-12 pointer-events-none"
+      id="skills"
+      class="min-h-100svh flex flex-col justify-center py-28 md:py-36 px-6 md:px-12 pointer-events-none"
     >
-      <div class="max-w-3xl pointer-events-auto">
-        <div
-          class="reveal font-mono text-[11px] tracking-[0.25em] uppercase text-[#0E2AC5]/80"
-          style="--reveal-delay: 0s;"
-        >
-          [ 04 — Release ]
+      <div class="w-full max-w-7xl mx-auto">
+        <!-- Header -->
+        <div class="max-w-3xl pointer-events-auto">
+          <div
+            class="reveal inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.25em] uppercase text-[#0E2AC5]/90"
+            style="--reveal-delay: 0s;"
+          >
+            <span class="w-2 h-2 rounded-full bg-[#0E2AC5] animate-pulse"></span>
+            <span>[ 04 — Orbital Docking Complete ]</span>
+          </div>
+
+          <h2
+            class="reveal mt-5 font-raleway font-semibold text-[2.6rem] leading-[1.0] sm:text-6xl md:text-[74px] md:leading-[0.95] tracking-tight text-neutral-950"
+            style="--reveal-delay: 0.08s;"
+          >
+            MY SKILLS UNIVERSE
+          </h2>
+
+          <p
+            class="reveal mt-5 max-w-xl font-raleway text-[16px] md:text-[18px] leading-[1.55] text-neutral-700"
+            style="--reveal-delay: 0.14s;"
+          >
+            Select any orbital node to inspect core competencies, tooling, and hands-on applications.
+          </p>
         </div>
 
-        <h2
-          class="reveal mt-7 font-raleway font-medium text-[2.8rem] leading-[1.0] sm:text-7xl md:text-[88px] md:leading-[0.92] tracking-tight text-neutral-950"
-          style="--reveal-delay: 0.12s;"
-        >
-          And then,<br />weightless.
-        </h2>
+        <!-- Orbital Constellation + Competency Inspector Grid -->
+        <div class="mt-12 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center pointer-events-auto">
 
-        <p
-          class="reveal mt-8 mx-auto max-w-md font-raleway text-[16px] md:text-[19px] leading-[1.55] text-neutral-700"
-          style="--reveal-delay: 0.24s;"
-        >
-          The whole field lifts off the screen and rushes past you — every sphere accelerating into the lens until nothing remains but light. Less noise.
-        </p>
+          <!-- Left 7 Cols: Interactive Orbital Diagram + Node Pills -->
+          <div class="reveal lg:col-span-7 flex flex-col items-center" style="--reveal-delay: 0.2s;">
+            <!-- Interactive SVG Orbital Map (Desktop/Tablet) -->
+            <div class="relative w-full max-w-[420px] aspect-square flex items-center justify-center">
+              <svg viewBox="0 0 420 420" class="w-full h-full overflow-visible" aria-label="Skills Orbital Diagram">
+                <!-- Ambient Core Glow -->
+                <defs>
+                  <radialGradient id="coreOrbitGlow" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="#2F69FF" stop-opacity="0.28" />
+                    <stop offset="70%" stop-color="#2F69FF" stop-opacity="0.04" />
+                    <stop offset="100%" stop-color="#2F69FF" stop-opacity="0" />
+                  </radialGradient>
+                </defs>
+                <circle cx="210" cy="210" r="195" fill="url(#coreOrbitGlow)" />
+
+                <!-- Concentric Orbital Rings -->
+                <circle cx="210" cy="210" r="88" fill="none" stroke="rgba(14,42,197,0.22)" stroke-width="1.2" stroke-dasharray="4 4" class="orbit-ring-cw" />
+                <circle cx="210" cy="210" r="142" fill="none" stroke="rgba(14,42,197,0.18)" stroke-width="1.2" />
+                <circle cx="210" cy="210" r="192" fill="none" stroke="rgba(14,42,197,0.14)" stroke-width="1.2" stroke-dasharray="6 6" class="orbit-ring-ccw" />
+
+                <!-- Center Hub -->
+                <circle cx="210" cy="210" r="38" fill="#0A0A0A" />
+                <circle cx="210" cy="210" r="33" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+                <text x="210" y="207" text-anchor="middle" fill="#FFFFFF" font-family="Space Grotesk" font-size="11" font-weight="900" letter-spacing="2">TOHA</text>
+                <text x="210" y="220" text-anchor="middle" fill="#93C5FD" font-family="JetBrains Mono" font-size="7.5">CORE</text>
+
+                <!-- Dynamic Orbital Node Markers injected by JS -->
+                <g id="orbital-svg-nodes"></g>
+              </svg>
+            </div>
+
+            <!-- Accessible Grid of All 9 Competency Nodes -->
+            <div id="skills-node-pills" class="mt-4 w-full grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+
+          <!-- Right 5 Cols: Competency Inspector Card -->
+          <div class="reveal lg:col-span-5" style="--reveal-delay: 0.28s;">
+            <div class="p-[1px] rounded-[1.75rem] bg-gradient-to-b from-white/90 via-white/40 to-white/15 stat-card-ring">
+              <div class="relative rounded-[1.7rem] bg-white/45 backdrop-blur-2xl p-7 sm:p-8 overflow-hidden">
+                <div class="absolute top-0 left-8 right-8 h-[1px] bg-gradient-to-r from-transparent via-white to-transparent"></div>
+
+                <!-- Category & Core Badge -->
+                <div class="flex flex-wrap items-center justify-between gap-2">
+                  <span id="skill-inspector-category" class="font-mono text-[10px] tracking-[0.22em] uppercase text-[#0E2AC5] font-bold">
+                    DATA &amp; SCRIPTING
+                  </span>
+                  <span id="skill-inspector-badge" class="font-mono text-[10px] tracking-[0.16em] uppercase px-3 py-1 rounded-full bg-neutral-950 text-white">
+                    CORE LANGUAGE
+                  </span>
+                </div>
+
+                <!-- Skill Title -->
+                <h3 id="skill-inspector-title" class="mt-5 font-raleway font-bold text-3xl sm:text-4xl text-neutral-950 tracking-tight">
+                  Python
+                </h3>
+
+                <!-- Detailed Application Copy -->
+                <p id="skill-inspector-desc" class="mt-4 font-raleway text-[15px] sm:text-[16px] leading-[1.65] text-neutral-700">
+                  Used for data cleaning, statistical analysis, student performance analytics dashboards, CSV pipelines, and automated unit tests.
+                </p>
+
+                <!-- Tooling / Application Chips -->
+                <div class="mt-6 pt-5 border-t border-neutral-900/10">
+                  <div class="font-mono text-[9.5px] tracking-[0.2em] uppercase text-neutral-500 mb-3">
+                    HANDS-ON TOOLING &amp; APPLICATIONS
+                  </div>
+                  <div id="skill-inspector-tags" class="flex flex-wrap gap-2">
+                    <!-- Populated by JS -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
       </div>
     </section>
 
-    <!-- FOOTER -->
+    <!-- =====================================================================
+         SECTION 05 — EXPERIMENTAL SANDBOX // 05 (VISUAL PLAYGROUND)
+         ===================================================================== -->
+    <section
+      id="sandbox"
+      class="min-h-100svh flex flex-col justify-center py-28 md:py-36 px-6 md:px-12 pointer-events-none"
+    >
+      <div class="w-full max-w-7xl mx-auto">
+        <!-- Section Header -->
+        <div class="max-w-3xl pointer-events-auto">
+          <div
+            class="reveal font-mono text-[11px] tracking-[0.25em] uppercase text-[#0E2AC5]/80"
+            style="--reveal-delay: 0s;"
+          >
+            [ EXPERIMENTAL SANDBOX // 05 ]
+          </div>
+
+          <h2
+            class="reveal mt-5 font-raleway font-semibold text-[2.6rem] leading-[1.0] sm:text-6xl md:text-[74px] md:leading-[0.95] tracking-tight text-neutral-950"
+            style="--reveal-delay: 0.08s;"
+          >
+            VISUAL PLAYGROUND
+          </h2>
+
+          <p
+            class="reveal mt-5 max-w-2xl font-raleway text-[16px] md:text-[18px] leading-[1.55] text-neutral-700"
+            style="--reveal-delay: 0.14s;"
+          >
+            Interactive mini-environments exploring cybersecurity terminals, spreadsheet formulas, algorithmic sorting, and relational matrices.
+          </p>
+        </div>
+
+        <!-- 2x2 Grid of 4 Interactive Labs -->
+        <div class="mt-12 grid grid-cols-1 lg:grid-cols-2 gap-6 pointer-events-auto">
+
+          <!-- LAB 01 // CYBERSECURITY TERMINAL -->
+          <div
+            class="reveal p-[1px] rounded-[1.6rem] bg-gradient-to-b from-white/85 via-white/35 to-white/15 stat-card-ring"
+            style="--reveal-delay: 0.15s;"
+          >
+            <div class="h-full rounded-[1.55rem] bg-white/35 backdrop-blur-xl p-5 sm:p-6 flex flex-col justify-between">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <div>
+                  <div class="font-mono text-[10px] tracking-[0.2em] uppercase text-[#0E2AC5] font-bold">
+                    LAB 01 // CYBERSECURITY TERMINAL
+                  </div>
+                  <h3 class="mt-1 font-raleway font-bold text-xl text-neutral-950">Cybersecurity Matrix</h3>
+                </div>
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-950 text-emerald-300 font-mono text-[9.5px] tracking-[0.18em] uppercase">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+                  LIVE SHELL
+                </span>
+              </div>
+
+              <!-- Dark Terminal Shell -->
+              <div class="mt-4 rounded-2xl bg-neutral-950 border border-white/10 p-4 font-mono text-[11.5px] text-emerald-300 flex flex-col justify-between h-64">
+                <div id="term-output" class="overflow-y-auto space-y-1.5 pr-1 leading-relaxed text-neutral-200">
+                  <div class="text-emerald-400">TOHA-SEC OS [Version 1.0.4] — Type help, whoami, scan, or skills.</div>
+                </div>
+
+                <div class="mt-3 pt-2.5 border-t border-white/10">
+                  <!-- Quick Command Chips -->
+                  <div class="flex flex-wrap gap-1.5 mb-2.5">
+                    <button type="button" data-term-cmd="help" class="px-2 py-0.5 rounded bg-white/10 hover:bg-white/20 text-[10px] text-neutral-300 cursor-pointer">help</button>
+                    <button type="button" data-term-cmd="whoami" class="px-2 py-0.5 rounded bg-white/10 hover:bg-white/20 text-[10px] text-neutral-300 cursor-pointer">whoami</button>
+                    <button type="button" data-term-cmd="scan" class="px-2 py-0.5 rounded bg-white/10 hover:bg-white/20 text-[10px] text-emerald-300 cursor-pointer">scan</button>
+                    <button type="button" data-term-cmd="skills" class="px-2 py-0.5 rounded bg-white/10 hover:bg-white/20 text-[10px] text-neutral-300 cursor-pointer">skills</button>
+                    <button type="button" data-term-cmd="clear" class="px-2 py-0.5 rounded bg-white/10 hover:bg-white/20 text-[10px] text-neutral-400 cursor-pointer">clear</button>
+                  </div>
+
+                  <form id="term-form" class="flex items-center gap-2">
+                    <label for="term-input" class="text-emerald-400 shrink-0 select-none">toha@sec:~$</label>
+                    <input
+                      id="term-input"
+                      type="text"
+                      autocomplete="off"
+                      placeholder="Enter command (e.g. scan)..."
+                      class="w-full bg-transparent text-white placeholder-neutral-500 focus:outline-none text-[11.5px]"
+                    />
+                    <button
+                      type="submit"
+                      class="px-3 py-1 rounded-lg bg-[#0E2AC5] hover:bg-blue-500 text-white text-[10px] font-bold tracking-[0.15em] uppercase transition-colors cursor-pointer shrink-0"
+                    >
+                      RUN
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- LAB 02 // SPREADSHEET ANALYTICS ENGINE -->
+          <div
+            class="reveal p-[1px] rounded-[1.6rem] bg-gradient-to-b from-white/85 via-white/35 to-white/15 stat-card-ring"
+            style="--reveal-delay: 0.2s;"
+          >
+            <div class="h-full rounded-[1.55rem] bg-white/35 backdrop-blur-xl p-5 sm:p-6 flex flex-col justify-between">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <div>
+                  <div class="font-mono text-[10px] tracking-[0.2em] uppercase text-[#0E2AC5] font-bold">
+                    LAB 02 // SPREADSHEET ANALYTICS ENGINE
+                  </div>
+                  <h3 class="mt-1 font-raleway font-bold text-xl text-neutral-950">Spreadsheet Analytics</h3>
+                </div>
+                <span class="px-3 py-1 rounded-full bg-white/70 border border-white text-neutral-800 font-mono text-[9.5px] tracking-[0.18em] uppercase font-semibold">
+                  REACTIVE FORMULAS
+                </span>
+              </div>
+
+              <p class="mt-2.5 font-raleway text-[13.5px] text-neutral-700">
+                Adjust student subject scores below to compute live mean, grade classification, and distribution bars.
+              </p>
+
+              <!-- Interactive Inputs & Distribution Bars -->
+              <div class="mt-4 space-y-3.5">
+                <!-- Subject 1: DATA STRUCT -->
+                <div class="p-3 rounded-xl bg-white/55 border border-white/80">
+                  <div class="flex items-center justify-between gap-3">
+                    <label for="score-ds" class="font-mono text-[11px] font-bold tracking-[0.14em] text-neutral-800">DATA STRUCT</label>
+                    <div class="flex items-center gap-2">
+                      <input id="slider-ds" type="range" min="0" max="100" value="88" class="w-24 sm:w-32 accent-[#0E2AC5] cursor-pointer" />
+                      <input id="score-ds" type="number" min="0" max="100" value="88" class="w-14 px-2 py-1 rounded-lg bg-white border border-neutral-200 font-mono text-[12px] font-bold text-right text-neutral-950" />
+                    </div>
+                  </div>
+                  <div class="mt-2 w-full h-1.5 rounded-full bg-neutral-200/80 overflow-hidden">
+                    <div id="bar-ds" class="h-full bg-[#0E2AC5] rounded-full transition-all duration-150" style="width: 88%;"></div>
+                  </div>
+                </div>
+
+                <!-- Subject 2: PYTHON LAB -->
+                <div class="p-3 rounded-xl bg-white/55 border border-white/80">
+                  <div class="flex items-center justify-between gap-3">
+                    <label for="score-py" class="font-mono text-[11px] font-bold tracking-[0.14em] text-neutral-800">PYTHON LAB</label>
+                    <div class="flex items-center gap-2">
+                      <input id="slider-py" type="range" min="0" max="100" value="94" class="w-24 sm:w-32 accent-[#0E2AC5] cursor-pointer" />
+                      <input id="score-py" type="number" min="0" max="100" value="94" class="w-14 px-2 py-1 rounded-lg bg-white border border-neutral-200 font-mono text-[12px] font-bold text-right text-neutral-950" />
+                    </div>
+                  </div>
+                  <div class="mt-2 w-full h-1.5 rounded-full bg-neutral-200/80 overflow-hidden">
+                    <div id="bar-py" class="h-full bg-emerald-500 rounded-full transition-all duration-150" style="width: 94%;"></div>
+                  </div>
+                </div>
+
+                <!-- Subject 3: CYBER SEC -->
+                <div class="p-3 rounded-xl bg-white/55 border border-white/80">
+                  <div class="flex items-center justify-between gap-3">
+                    <label for="score-cs" class="font-mono text-[11px] font-bold tracking-[0.14em] text-neutral-800">CYBER SEC</label>
+                    <div class="flex items-center gap-2">
+                      <input id="slider-cs" type="range" min="0" max="100" value="85" class="w-24 sm:w-32 accent-[#0E2AC5] cursor-pointer" />
+                      <input id="score-cs" type="number" min="0" max="100" value="85" class="w-14 px-2 py-1 rounded-lg bg-white border border-neutral-200 font-mono text-[12px] font-bold text-right text-neutral-950" />
+                    </div>
+                  </div>
+                  <div class="mt-2 w-full h-1.5 rounded-full bg-neutral-200/80 overflow-hidden">
+                    <div id="bar-cs" class="h-full bg-indigo-500 rounded-full transition-all duration-150" style="width: 85%;"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Live Formula Output Bar -->
+              <div class="mt-4 pt-3.5 border-t border-neutral-900/10 flex flex-wrap items-center justify-between gap-3">
+                <div>
+                  <div class="font-mono text-[9.5px] tracking-[0.18em] uppercase text-neutral-500">COMPUTED AVERAGE</div>
+                  <div id="computed-avg" class="font-display font-black text-2xl text-neutral-950">89.0%</div>
+                </div>
+                <div class="text-right">
+                  <div class="font-mono text-[9.5px] tracking-[0.18em] uppercase text-neutral-500">STATUS</div>
+                  <div id="computed-status" class="inline-block mt-0.5 px-3 py-1 rounded-full bg-neutral-950 text-[#E1FC03] font-mono text-[10.5px] font-bold tracking-[0.14em]">
+                    DISTINCTION (A)
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- LAB 03 // ALGORITHMIC LOGIC (C / ARRAY SORT) -->
+          <div
+            class="reveal p-[1px] rounded-[1.6rem] bg-gradient-to-b from-white/85 via-white/35 to-white/15 stat-card-ring"
+            style="--reveal-delay: 0.25s;"
+          >
+            <div class="h-full rounded-[1.55rem] bg-white/35 backdrop-blur-xl p-5 sm:p-6 flex flex-col justify-between">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <div>
+                  <div class="font-mono text-[10px] tracking-[0.2em] uppercase text-[#0E2AC5] font-bold">
+                    LAB 03 // ALGORITHMIC LOGIC (C / ARRAY SORT)
+                  </div>
+                  <h3 class="mt-1 font-raleway font-bold text-xl text-neutral-950">Algorithmic Logic</h3>
+                </div>
+                <span id="sort-state-label" class="px-3 py-1 rounded-full bg-white/70 border border-white text-neutral-800 font-mono text-[9.5px] tracking-[0.14em] uppercase font-semibold">
+                  ARRAY STATE: UNSORTED [18 ELEMENTS]
+                </span>
+              </div>
+
+              <!-- Visual 18-Element Array Bars -->
+              <div
+                id="sort-bars-container"
+                class="mt-5 h-44 rounded-2xl bg-neutral-950 p-4 flex items-end justify-between gap-1.5 border border-white/10"
+                aria-label="18 Element Array Sorting Visualizer"
+              >
+                <!-- 18 bars injected by JS -->
+              </div>
+
+              <!-- Controls -->
+              <div class="mt-5 flex items-center justify-between gap-3">
+                <button
+                  id="sort-array-btn"
+                  type="button"
+                  class="flex-1 py-2.5 px-4 rounded-full bg-neutral-950 hover:bg-[#0E2AC5] text-white font-mono text-[10.5px] tracking-[0.18em] uppercase font-bold transition-colors cursor-pointer"
+                >
+                  SORT ARRAY
+                </button>
+                <button
+                  id="shuffle-array-btn"
+                  type="button"
+                  class="py-2.5 px-5 rounded-full border border-neutral-900/15 bg-white/70 hover:bg-white text-neutral-900 font-mono text-[10.5px] tracking-[0.18em] uppercase font-semibold transition-colors cursor-pointer"
+                >
+                  SHUFFLE
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- LAB 04 // RELATIONAL NODE GRAPH -->
+          <div
+            class="reveal p-[1px] rounded-[1.6rem] bg-gradient-to-b from-white/85 via-white/35 to-white/15 stat-card-ring"
+            style="--reveal-delay: 0.3s;"
+          >
+            <div class="h-full rounded-[1.55rem] bg-white/35 backdrop-blur-xl p-5 sm:p-6 flex flex-col justify-between">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <div>
+                  <div class="font-mono text-[10px] tracking-[0.2em] uppercase text-[#0E2AC5] font-bold">
+                    LAB 04 // RELATIONAL NODE GRAPH
+                  </div>
+                  <h3 class="mt-1 font-raleway font-bold text-xl text-neutral-950">Relational Structures</h3>
+                </div>
+                <span class="px-3 py-1 rounded-full bg-white/70 border border-white text-neutral-800 font-mono text-[9.5px] tracking-[0.16em] uppercase font-semibold">
+                  INTERACTIVE FIELD
+                </span>
+              </div>
+
+              <!-- Interactive Canvas Graph -->
+              <div id="graph-canvas-wrap" class="relative mt-4 h-44 rounded-2xl bg-neutral-950 overflow-hidden border border-white/10">
+                <canvas id="relational-canvas" class="block w-full h-full cursor-crosshair"></canvas>
+                <div class="pointer-events-none absolute top-3 left-3.5 font-mono text-[9.5px] tracking-[0.16em] uppercase text-sky-300/90">
+                  TOPOLOGY: 24 CONNECTED ENTITIES
+                </div>
+                <div class="pointer-events-none absolute bottom-3 right-3.5 font-mono text-[9.5px] tracking-[0.16em] uppercase text-white/60">
+                  MOVE CURSOR TO PERTURB
+                </div>
+              </div>
+
+              <div class="mt-4 flex items-center justify-between font-mono text-[10px] tracking-[0.15em] uppercase text-neutral-600">
+                <span>NODES: 24 · EDGES: DYNAMIC</span>
+                <span>SPRING DAMPING: 0.92</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         SECTION 06 & FOOTER — TRANSMISSION // 06 (LET'S CONNECT)
+         ===================================================================== -->
     <footer
-      id="footer"
-      class="relative bg-neutral-950 text-white rounded-t-[2.5rem] md:rounded-t-[4rem] overflow-hidden z-10 pointer-events-auto"
+      id="connect"
+      class="relative bg-neutral-950 text-white rounded-t-[2.5rem] md:rounded-t-[4rem] overflow-hidden z-10 pointer-events-auto mt-12"
     >
       <!-- Ambient Glow Blooms -->
       <div
@@ -738,9 +1715,9 @@
           <span class="w-2.5 h-2.5 rounded-full bg-[#2f69ff] inline-block shrink-0"></span>
           <span class="px-8">More gravity</span>
           <span class="w-2.5 h-2.5 rounded-full bg-[#2f69ff] inline-block shrink-0"></span>
-          <span class="px-8">Design with weight</span>
+          <span class="px-8">Data Science &amp; Security</span>
           <span class="w-2.5 h-2.5 rounded-full bg-[#2f69ff] inline-block shrink-0"></span>
-          <span class="px-8">Let's build</span>
+          <span class="px-8">Structured Code</span>
           <span class="w-2.5 h-2.5 rounded-full bg-[#2f69ff] inline-block shrink-0"></span>
 
           <!-- Repeat 2 (Seamless Loop) -->
@@ -748,210 +1725,140 @@
           <span class="w-2.5 h-2.5 rounded-full bg-[#2f69ff] inline-block shrink-0"></span>
           <span class="px-8">More gravity</span>
           <span class="w-2.5 h-2.5 rounded-full bg-[#2f69ff] inline-block shrink-0"></span>
-          <span class="px-8">Design with weight</span>
+          <span class="px-8">Data Science &amp; Security</span>
           <span class="w-2.5 h-2.5 rounded-full bg-[#2f69ff] inline-block shrink-0"></span>
-          <span class="px-8">Let's build</span>
+          <span class="px-8">Structured Code</span>
           <span class="w-2.5 h-2.5 rounded-full bg-[#2f69ff] inline-block shrink-0"></span>
         </div>
       </div>
 
-      <!-- Footer Body -->
-      <div class="relative z-10 px-6 md:px-12 pt-16 md:pt-24 pb-10">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
-          <!-- CTA Left (5 Cols) -->
-          <div class="lg:col-span-5 reveal" style="--reveal-delay: 0s;">
-            <div class="font-mono text-[11px] tracking-[0.25em] uppercase text-white/40">
-              [ Let's collaborate ]
+      <!-- Transmission // 06 Body -->
+      <div class="relative z-10 px-6 md:px-12 pt-16 md:pt-24 pb-10 max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+          <!-- Left 6 Cols: Transmission Heading & Message -->
+          <div class="lg:col-span-6 reveal" style="--reveal-delay: 0s;">
+            <div class="font-mono text-[11px] tracking-[0.25em] uppercase text-[#5175ff]">
+              [ TRANSMISSION // 06 ]
             </div>
 
-            <h3 class="mt-5 font-raleway font-medium text-4xl md:text-6xl leading-[0.95] tracking-tight text-white">
-              Have an idea<br />with real weight?
-            </h3>
+            <h2 class="mt-5 font-raleway font-semibold text-4xl sm:text-5xl md:text-7xl leading-[0.95] tracking-tight text-white">
+              LET'S CONNECT
+            </h2>
 
-            <a
-              href="mailto:hello@gravity.studio"
-              class="group mt-9 inline-flex items-center gap-4 pl-7 pr-2 py-2 rounded-full border border-white/15 bg-white/5 hover:bg-white/10 transition-colors duration-200"
-            >
-              <span class="font-raleway font-medium text-[16px] md:text-[18px] text-white">
-                hello@gravity.studio
-              </span>
-              <span class="w-10 h-10 rounded-full blue-orb flex items-center justify-center text-white">
-                <!-- Lucide arrow-up-right -->
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 transition-transform duration-300 group-hover:rotate-45">
-                  <path d="M7 7h10v10" />
-                  <path d="M7 17 17 7" />
-                </svg>
-              </span>
-            </a>
+            <p class="mt-6 max-w-lg font-raleway text-[16px] md:text-[18px] leading-[1.6] text-white/70">
+              Thank you for exploring my digital universe. Feel free to inspect my repositories on GitHub or bookmark my live portfolio hub for upcoming data science and security builds.
+            </p>
           </div>
 
-          <!-- Link Columns Right (7 Cols) -->
-          <div class="lg:col-span-7 grid grid-cols-2 sm:grid-cols-3 gap-8">
-            <!-- Studio -->
-            <div class="footer-col-reveal" style="--reveal-delay: 0s;">
-              <div class="font-mono text-[10px] tracking-[0.25em] uppercase text-white/40 mb-5">
-                Studio
+          <!-- Right 6 Cols: Two Prominent Glassmorphic Portal Cards -->
+          <div class="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <!-- Portal Card 1: SOURCE REPOSITORIES -> GitHub -->
+            <a
+              href="https://github.com/toha-biswas"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="footer-col-reveal group p-6 sm:p-7 rounded-[1.6rem] border border-white/15 bg-white/[0.04] hover:bg-white/[0.09] backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between"
+              style="--reveal-delay: 0.08s;"
+            >
+              <div class="flex items-center justify-between">
+                <span class="font-mono text-[10px] tracking-[0.22em] uppercase text-white/45">
+                  SOURCE REPOSITORIES
+                </span>
+                <span class="w-9 h-9 rounded-full blue-orb flex items-center justify-center text-white transition-transform duration-300 group-hover:scale-105">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 transition-transform duration-300 group-hover:rotate-45">
+                    <path d="M7 7h10v10" />
+                    <path d="M7 17 17 7" />
+                  </svg>
+                </span>
               </div>
-              <ul class="space-y-3">
-                <li>
-                  <a href="#physics" data-scroll-to="1" class="group inline-flex items-center gap-1.5 font-raleway text-[15px] text-white/75 hover:text-white transition-colors">
-                    <span>Works</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5 opacity-0 -translate-x-1 translate-y-1 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0">
-                      <path d="M7 7h10v10" /><path d="M7 17 17 7" />
-                    </svg>
-                  </a>
-                </li>
-                <li>
-                  <a href="#physics" data-scroll-to="1" class="group inline-flex items-center gap-1.5 font-raleway text-[15px] text-white/75 hover:text-white transition-colors">
-                    <span>Services</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5 opacity-0 -translate-x-1 translate-y-1 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0">
-                      <path d="M7 7h10v10" /><path d="M7 17 17 7" />
-                    </svg>
-                  </a>
-                </li>
-                <li>
-                  <a href="#form" data-scroll-to="2" class="group inline-flex items-center gap-1.5 font-raleway text-[15px] text-white/75 hover:text-white transition-colors">
-                    <span>Process</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5 opacity-0 -translate-x-1 translate-y-1 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0">
-                      <path d="M7 7h10v10" /><path d="M7 17 17 7" />
-                    </svg>
-                  </a>
-                </li>
-                <li>
-                  <a href="mailto:hello@gravity.studio" class="group inline-flex items-center gap-1.5 font-raleway text-[15px] text-white/75 hover:text-white transition-colors">
-                    <span>Careers</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5 opacity-0 -translate-x-1 translate-y-1 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0">
-                      <path d="M7 7h10v10" /><path d="M7 17 17 7" />
-                    </svg>
-                  </a>
-                </li>
-              </ul>
-            </div>
 
-            <!-- Company -->
-            <div class="footer-col-reveal" style="--reveal-delay: 0.08s;">
-              <div class="font-mono text-[10px] tracking-[0.25em] uppercase text-white/40 mb-5">
-                Company
+              <div class="mt-8">
+                <div class="font-raleway font-bold text-2xl text-white">GitHub</div>
+                <div class="mt-1.5 font-mono text-[12px] text-sky-300 group-hover:text-white transition-colors">
+                  github.com/toha-biswas ↗
+                </div>
               </div>
-              <ul class="space-y-3">
-                <li>
-                  <a href="#release" data-scroll-to="3" class="group inline-flex items-center gap-1.5 font-raleway text-[15px] text-white/75 hover:text-white transition-colors">
-                    <span>Story</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5 opacity-0 -translate-x-1 translate-y-1 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0">
-                      <path d="M7 7h10v10" /><path d="M7 17 17 7" />
-                    </svg>
-                  </a>
-                </li>
-                <li>
-                  <a href="#form" data-scroll-to="2" class="group inline-flex items-center gap-1.5 font-raleway text-[15px] text-white/75 hover:text-white transition-colors">
-                    <span>Team</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5 opacity-0 -translate-x-1 translate-y-1 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0">
-                      <path d="M7 7h10v10" /><path d="M7 17 17 7" />
-                    </svg>
-                  </a>
-                </li>
-                <li>
-                  <a href="#hero" data-scroll-to="0" class="group inline-flex items-center gap-1.5 font-raleway text-[15px] text-white/75 hover:text-white transition-colors">
-                    <span>Journal</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5 opacity-0 -translate-x-1 translate-y-1 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0">
-                      <path d="M7 7h10v10" /><path d="M7 17 17 7" />
-                    </svg>
-                  </a>
-                </li>
-                <li>
-                  <a href="mailto:hello@gravity.studio" class="group inline-flex items-center gap-1.5 font-raleway text-[15px] text-white/75 hover:text-white transition-colors">
-                    <span>Contact</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5 opacity-0 -translate-x-1 translate-y-1 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0">
-                      <path d="M7 7h10v10" /><path d="M7 17 17 7" />
-                    </svg>
-                  </a>
-                </li>
-              </ul>
-            </div>
+            </a>
 
-            <!-- Social -->
-            <div class="footer-col-reveal" style="--reveal-delay: 0.16s;">
-              <div class="font-mono text-[10px] tracking-[0.25em] uppercase text-white/40 mb-5">
-                Social
+            <!-- Portal Card 2: LIVE PORTAL -> Portfolio -->
+            <a
+              href="https://toha-biswas.github.io"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="footer-col-reveal group p-6 sm:p-7 rounded-[1.6rem] border border-white/15 bg-white/[0.04] hover:bg-white/[0.09] backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between"
+              style="--reveal-delay: 0.16s;"
+            >
+              <div class="flex items-center justify-between">
+                <span class="font-mono text-[10px] tracking-[0.22em] uppercase text-white/45">
+                  LIVE PORTAL
+                </span>
+                <span class="w-9 h-9 rounded-full blue-orb flex items-center justify-center text-white transition-transform duration-300 group-hover:scale-105">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 transition-transform duration-300 group-hover:rotate-45">
+                    <path d="M7 7h10v10" />
+                    <path d="M7 17 17 7" />
+                  </svg>
+                </span>
               </div>
-              <ul class="space-y-3">
-                <li>
-                  <a href="#footer" class="group inline-flex items-center gap-1.5 font-raleway text-[15px] text-white/75 hover:text-white transition-colors">
-                    <span>Twitter</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5 opacity-0 -translate-x-1 translate-y-1 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0">
-                      <path d="M7 7h10v10" /><path d="M7 17 17 7" />
-                    </svg>
-                  </a>
-                </li>
-                <li>
-                  <a href="#footer" class="group inline-flex items-center gap-1.5 font-raleway text-[15px] text-white/75 hover:text-white transition-colors">
-                    <span>Instagram</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5 opacity-0 -translate-x-1 translate-y-1 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0">
-                      <path d="M7 7h10v10" /><path d="M7 17 17 7" />
-                    </svg>
-                  </a>
-                </li>
-                <li>
-                  <a href="#footer" class="group inline-flex items-center gap-1.5 font-raleway text-[15px] text-white/75 hover:text-white transition-colors">
-                    <span>LinkedIn</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5 opacity-0 -translate-x-1 translate-y-1 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0">
-                      <path d="M7 7h10v10" /><path d="M7 17 17 7" />
-                    </svg>
-                  </a>
-                </li>
-                <li>
-                  <a href="#footer" class="group inline-flex items-center gap-1.5 font-raleway text-[15px] text-white/75 hover:text-white transition-colors">
-                    <span>Dribbble</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5 opacity-0 -translate-x-1 translate-y-1 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0">
-                      <path d="M7 7h10v10" /><path d="M7 17 17 7" />
-                    </svg>
-                  </a>
-                </li>
-              </ul>
-            </div>
+
+              <div class="mt-8">
+                <div class="font-raleway font-bold text-2xl text-white">Portfolio</div>
+                <div class="mt-1.5 font-mono text-[12px] text-lime-300 group-hover:text-white transition-colors">
+                  toha-biswas.github.io ↗
+                </div>
+              </div>
+            </a>
           </div>
         </div>
 
         <!-- Footer Bottom Bar -->
-        <div class="mt-20 md:mt-28 pt-7 border-t border-white/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-          <div class="flex flex-wrap items-center gap-3">
-            <span class="font-display font-black text-sm tracking-[0.22em] text-white">GRAVITY</span>
-            <span class="w-1.5 h-1.5 rounded-full bg-[#2f69ff]"></span>
-            <span class="font-mono text-[11px] text-white/40">
-              © 2026 Digital Studio — All rights reserved.
+        <div class="mt-20 md:mt-24 pt-7 border-t border-white/10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+          <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+            <span class="font-mono text-[11px] tracking-[0.14em] uppercase text-white/80">
+              © 2026 MD ABUTOHA BISWAS (TOHA). ALL RIGHTS RESERVED.
+            </span>
+            <span class="hidden sm:inline-block w-1.5 h-1.5 rounded-full bg-[#2f69ff]"></span>
+            <span class="font-mono text-[10.5px] tracking-[0.18em] uppercase text-white/45">
+              BCA — DATA SCIENCE // CRAFTED WITH PRECISION
             </span>
           </div>
 
           <div class="flex items-center gap-3">
-            <!-- Twitter -->
+            <!-- GitHub -->
             <a
-              href="#footer"
-              aria-label="Twitter"
-              class="w-10 h-10 rounded-full border border-white/15 flex items-center justify-center text-white/70 hover:text-white hover:border-white/30 transition-colors"
+              href="https://github.com/toha-biswas"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub"
+              class="w-10 h-10 rounded-full border border-white/15 flex items-center justify-center text-white/70 hover:text-white hover:border-white/35 transition-colors"
             >
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
-                <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" />
+                <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
+                <path d="M9 18c-4.51 2-5-2-7-2" />
               </svg>
             </a>
 
-            <!-- Instagram -->
+            <!-- Live Portal Globe -->
             <a
-              href="#footer"
-              aria-label="Instagram"
-              class="w-10 h-10 rounded-full border border-white/15 flex items-center justify-center text-white/70 hover:text-white hover:border-white/30 transition-colors"
+              href="https://toha-biswas.github.io"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Live Portfolio Portal"
+              class="w-10 h-10 rounded-full border border-white/15 flex items-center justify-center text-white/70 hover:text-white hover:border-white/35 transition-colors"
             >
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
-                <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
-                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
-                <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+                <circle cx="12" cy="12" r="10" />
+                <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
+                <path d="M2 12h20" />
               </svg>
             </a>
 
             <!-- LinkedIn -->
             <a
-              href="#footer"
+              href="https://github.com/toha-biswas"
+              target="_blank"
+              rel="noopener noreferrer"
               aria-label="LinkedIn"
-              class="w-10 h-10 rounded-full border border-white/15 flex items-center justify-center text-white/70 hover:text-white hover:border-white/30 transition-colors"
+              class="w-10 h-10 rounded-full border border-white/15 flex items-center justify-center text-white/70 hover:text-white hover:border-white/35 transition-colors"
             >
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
                 <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
@@ -1047,8 +1954,13 @@
     window.addEventListener(
       'wheel',
       (e) => {
-        // Do not hijack wheel inside open drawer
-        if (document.getElementById('controls-drawer').classList.contains('open')) return;
+        // Do not hijack wheel inside open drawer or open project modal
+        if (
+          document.getElementById('controls-drawer').classList.contains('open') ||
+          document.getElementById('project-modal-backdrop').classList.contains('open')
+        ) {
+          return;
+        }
         e.preventDefault();
         const maxScroll = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
         targetScrollY = Math.max(0, Math.min(maxScroll, targetScrollY + e.deltaY * WHEEL_MULTIPLIER));
@@ -1104,8 +2016,10 @@
     let scrollRafPending = false;
     const computeScrollProgress = () => {
       scrollRafPending = false;
-      const vh = window.innerHeight || 1;
-      const progress = window.scrollY / vh;
+      const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+      // Map total document scroll smoothly across the 0 -> 3.6 WebGL choreography
+      const normalized = window.scrollY / maxScroll;
+      const progress = normalized * 3.55;
       control.progress = progress;
 
       const stage = progress > 1.55 ? 2 : progress > 0.7 ? 1 : 0;
@@ -1820,8 +2734,9 @@
     closeControlsBtn.addEventListener('click', closeDrawer);
     controlsScrim.addEventListener('click', closeDrawer);
     window.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && controlsDrawer.classList.contains('open')) {
-        closeDrawer();
+      if (e.key === 'Escape') {
+        if (controlsDrawer.classList.contains('open')) closeDrawer();
+        if (projectModalBackdrop.classList.contains('open')) closeProjectModal();
       }
     });
 
@@ -1861,6 +2776,849 @@
     resetDefaultsBtn.addEventListener('click', () => {
       selectPaletteTheme('roseGold', '#2F69FF');
     });
+
+    // =========================================================================
+    // 8. PROJECTS DATA, INTERACTIVE MODAL PREVIEW & CLIENT-SIDE DOWNLOADS
+    // =========================================================================
+    const PROJECTS_DATA = [
+      {
+        id: 0,
+        meta: 'PROJECT 01 // EXCEL / SPREADSHEET ANALYTICS',
+        title: 'Student Performance Dashboard',
+        github: 'https://github.com/toha-biswas',
+        filename: 'Student_Performance_Dashboard_TOHA.csv',
+        mime: 'text/csv;charset=utf-8;',
+        downloadLabel: 'Download Workbook (.csv)',
+        previewHtml: `
+          <p class="font-raleway text-[15px] leading-relaxed text-neutral-700">
+            Structured spreadsheet workbook built for BCA academic tracking — aggregating subject marks, attendance percentages, conditional distinction flags, and cohort averages.
+          </p>
+          <div class="rounded-2xl border border-neutral-200 overflow-x-auto">
+            <table class="w-full text-left font-mono text-[11px]">
+              <thead class="bg-neutral-950 text-white">
+                <tr>
+                  <th class="px-3.5 py-2.5">Student ID</th>
+                  <th class="px-3.5 py-2.5">Data Struct</th>
+                  <th class="px-3.5 py-2.5">Python</th>
+                  <th class="px-3.5 py-2.5">Cyber Sec</th>
+                  <th class="px-3.5 py-2.5">Attendance</th>
+                  <th class="px-3.5 py-2.5">Mean</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-neutral-200 bg-white">
+                <tr><td class="px-3.5 py-2 font-bold">BCA-2026-01</td><td class="px-3.5 py-2">88</td><td class="px-3.5 py-2">94</td><td class="px-3.5 py-2">85</td><td class="px-3.5 py-2 text-emerald-700">95%</td><td class="px-3.5 py-2 font-bold">89.0%</td></tr>
+                <tr><td class="px-3.5 py-2 font-bold">BCA-2026-02</td><td class="px-3.5 py-2">82</td><td class="px-3.5 py-2">86</td><td class="px-3.5 py-2">84</td><td class="px-3.5 py-2 text-emerald-700">91%</td><td class="px-3.5 py-2 font-bold">84.0%</td></tr>
+                <tr><td class="px-3.5 py-2 font-bold">BCA-2026-03</td><td class="px-3.5 py-2">76</td><td class="px-3.5 py-2">81</td><td class="px-3.5 py-2">79</td><td class="px-3.5 py-2 text-amber-700">84%</td><td class="px-3.5 py-2 font-bold">78.7%</td></tr>
+              </tbody>
+            </table>
+          </div>
+        `,
+        fileContent: `Student_ID,Student_Name,Data_Structures,Python_Programming,Cybersecurity_Fundamentals,Attendance_Pct,Average_Score,Grade_Status\nBCA-2026-01,Md Abutoha Biswas,88,94,85,95.0,89.0,DISTINCTION (A)\nBCA-2026-02,Aarav Sharma,82,86,84,91.0,84.0,FIRST CLASS (B+)\nBCA-2026-03,Riya Sen,76,81,79,84.0,78.7,FIRST CLASS (B+)\nBCA-2026-04,Kabir Das,91,92,89,96.5,90.7,DISTINCTION (A)\n`
+      },
+      {
+        id: 1,
+        meta: 'PROJECT 02 // PYTHON / DATA ANALYSIS',
+        title: 'Student Performance Analytics',
+        github: 'https://github.com/toha-biswas',
+        filename: 'student_performance_analytics.py',
+        mime: 'text/x-python;charset=utf-8;',
+        downloadLabel: 'Download Script (.py)',
+        previewHtml: `
+          <p class="font-raleway text-[15px] leading-relaxed text-neutral-700">
+            Python data analysis pipeline with Pandas aggregation, subject-level grouping, CSV export, and automated unit tests verifying calculation accuracy.
+          </p>
+          <pre class="p-4 rounded-2xl bg-neutral-950 text-sky-300 font-mono text-[11.5px] leading-relaxed overflow-x-auto">import pandas as pd
+
+def analyze_performance(df: pd.DataFrame) -> pd.DataFrame:
+    """Compute subject-wise mean, max, and pass rate."""
+    summary = (
+        df.groupby('subject')['score']
+        .agg(mean_score='mean', top_score='max', count='count')
+        .round(2)
+        .reset_index()
+    )
+    return summary
+
+# Automated verification test
+def test_groupby_mean():
+    sample = pd.DataFrame({
+        'subject': ['Python', 'Python', 'C'],
+        'score': [90, 98, 86]
+    })
+    res = analyze_performance(sample)
+    assert float(res.loc[res['subject'] == 'Python', 'mean_score']) == 94.0</pre>
+        `,
+        fileContent: `"""
+Student Performance Analytics Pipeline
+Author: Md Abutoha Biswas (TOHA) — BCA Data Science
+"""
+
+import pandas as pd
+
+
+def load_sample_data() -> pd.DataFrame:
+    return pd.DataFrame([
+        {"student": "Toha", "subject": "Python", "score": 94, "attendance": 95},
+        {"student": "Toha", "subject": "Data Structures", "score": 88, "attendance": 95},
+        {"student": "Toha", "subject": "Cybersecurity", "score": 85, "attendance": 95},
+        {"student": "Aarav", "subject": "Python", "score": 86, "attendance": 91},
+        {"student": "Aarav", "subject": "Data Structures", "score": 82, "attendance": 91},
+        {"student": "Aarav", "subject": "Cybersecurity", "score": 84, "attendance": 91},
+    ])
+
+
+def summarize_by_subject(df: pd.DataFrame) -> pd.DataFrame:
+    return df.groupby("subject", as_index=False)["score"].mean().rename(columns={"score": "mean_score"})
+
+
+def test_summarize_by_subject() -> None:
+    df = load_sample_data()
+    summary = summarize_by_subject(df)
+    py_mean = float(summary.loc[summary["subject"] == "Python", "mean_score"].iloc[0])
+    assert py_mean == 90.0, f"Expected 90.0, got {py_mean}"
+
+
+if __name__ == "__main__":
+    test_summarize_by_subject()
+    dataset = load_sample_data()
+    report = summarize_by_subject(dataset)
+    print("=== SUBJECT PERFORMANCE SUMMARY ===")
+    print(report.to_string(index=False))
+    report.to_csv("subject_performance_summary.csv", index=False)
+`
+      },
+      {
+        id: 2,
+        meta: 'PROJECT 03 // C PROGRAMMING',
+        title: 'Inventory Management in C',
+        github: 'https://github.com/toha-biswas',
+        filename: 'inventory_management.c',
+        mime: 'text/x-csrc;charset=utf-8;',
+        downloadLabel: 'Download C Source (.c)',
+        previewHtml: `
+          <p class="font-raleway text-[15px] leading-relaxed text-neutral-700">
+            Menu-driven console application in ANSI C using fixed-size arrays of structs to add, display, and search product inventory records deterministically.
+          </p>
+          <pre class="p-4 rounded-2xl bg-neutral-950 text-amber-200 font-mono text-[11.5px] leading-relaxed overflow-x-auto">#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+#define MAX_ITEMS 100
+
+struct ProductRecord {
+    int id;
+    char label[32];
+    float amount;
+};
+
+void searchById(struct ProductRecord items[], int count, int targetId) {
+    for (int i = 0; i &lt; count; i++) {
+        if (items[i].id == targetId) {
+            printf("Found -> ID: %d | Label: %s | Amount: %.2f\\n",
+                   items[i].id, items[i].label, items[i].amount);
+            return;
+        }
+    }
+    printf("Record ID %d not found.\\n", targetId);
+}</pre>
+        `,
+        fileContent: `/*
+ * Inventory Management System in C
+ * Author: Md Abutoha Biswas (TOHA)
+ * Description: Menu-driven C program to add, view and search product records
+ *              using structures and arrays.
+ */
+
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_PRODUCTS 100
+
+struct ProductRecord {
+    int id;
+    char label[32];
+    float amount;
+};
+
+void addProduct(struct ProductRecord records[], int *count) {
+    if (*count >= MAX_PRODUCTS) {
+        printf("Inventory capacity reached.\\n");
+        return;
+    }
+    struct ProductRecord p;
+    printf("Enter Product ID: ");
+    scanf("%d", &p.id);
+    printf("Enter Product Label: ");
+    scanf(" %31[^\\n]", p.label);
+    printf("Enter Amount / Price: ");
+    scanf("%f", &p.amount);
+
+    records[*count] = p;
+    (*count)++;
+    printf("Product added successfully.\\n");
+}
+
+void viewProducts(const struct ProductRecord records[], int count) {
+    if (count == 0) {
+        printf("No product records available.\\n");
+        return;
+    }
+    printf("\\n--- INVENTORY RECORDS (%d) ---\\n", count);
+    for (int i = 0; i < count; i++) {
+        printf("ID: %-6d | Label: %-24s | Amount: %.2f\\n",
+               records[i].id, records[i].label, records[i].amount);
+    }
+}
+
+void searchProduct(const struct ProductRecord records[], int count) {
+    int targetId;
+    printf("Enter Product ID to search: ");
+    scanf("%d", &targetId);
+    for (int i = 0; i < count; i++) {
+        if (records[i].id == targetId) {
+            printf("Match Found -> ID: %d | Label: %s | Amount: %.2f\\n",
+                   records[i].id, records[i].label, records[i].amount);
+            return;
+        }
+    }
+    printf("Product ID %d not found.\\n", targetId);
+}
+
+int main(void) {
+    struct ProductRecord inventory[MAX_PRODUCTS];
+    int count = 0;
+    int choice = 0;
+
+    while (1) {
+        printf("\\n[1] Add Product  [2] View All  [3] Search ID  [4] Exit\\nChoice: ");
+        if (scanf("%d", &choice) != 1) break;
+        if (choice == 1) addProduct(inventory, &count);
+        else if (choice == 2) viewProducts(inventory, count);
+        else if (choice == 3) searchProduct(inventory, count);
+        else if (choice == 4) break;
+        else printf("Invalid option.\\n");
+    }
+    return 0;
+}
+`
+      },
+      {
+        id: 3,
+        meta: 'PROJECT 04 // C PROGRAMMING',
+        title: 'Personal Expense Tracker in C',
+        github: 'https://github.com/toha-biswas',
+        filename: 'personal_expense_tracker.c',
+        mime: 'text/x-csrc;charset=utf-8;',
+        downloadLabel: 'Download C Source (.c)',
+        previewHtml: `
+          <p class="font-raleway text-[15px] leading-relaxed text-neutral-700">
+            Lightweight C command-line utility for logging daily student expenses, inspecting itemized entries, and computing running totals cleanly.
+          </p>
+          <pre class="p-4 rounded-2xl bg-neutral-950 text-rose-200 font-mono text-[11.5px] leading-relaxed overflow-x-auto">#include &lt;stdio.h&gt;
+
+struct ExpenseEntry {
+    int id;
+    char label[32];
+    float amount;
+};
+
+float computeTotal(const struct ExpenseEntry list[], int n) {
+    float sum = 0.0f;
+    for (int i = 0; i &lt; n; i++) {
+        sum += list[i].amount;
+    }
+    return sum;
+}</pre>
+        `,
+        fileContent: `/*
+ * Personal Expense Tracker in C
+ * Author: Md Abutoha Biswas (TOHA)
+ * Description: Beginner-friendly C project for recording and managing personal expenses.
+ */
+
+#include <stdio.h>
+
+#define MAX_ENTRIES 100
+
+struct ExpenseEntry {
+    int id;
+    char label[32];
+    float amount;
+};
+
+void addExpense(struct ExpenseEntry entries[], int *count) {
+    if (*count >= MAX_ENTRIES) {
+        printf("Expense log is full.\\n");
+        return;
+    }
+    struct ExpenseEntry e;
+    e.id = *count + 1;
+    printf("Expense Label (e.g., Books, Transit): ");
+    scanf(" %31[^\\n]", e.label);
+    printf("Amount: ");
+    scanf("%f", &e.amount);
+
+    entries[*count] = e;
+    (*count)++;
+    printf("Recorded Entry #%d.\\n", e.id);
+}
+
+void listExpenses(const struct ExpenseEntry entries[], int count) {
+    float total = 0.0f;
+    printf("\\n--- PERSONAL EXPENSE LEDGER ---\\n");
+    for (int i = 0; i < count; i++) {
+        printf("#%-3d | %-26s | %.2f\\n", entries[i].id, entries[i].label, entries[i].amount);
+        total += entries[i].amount;
+    }
+    printf("-------------------------------\\nTOTAL SPENT: %.2f\\n", total);
+}
+
+int main(void) {
+    struct ExpenseEntry entries[MAX_ENTRIES];
+    int count = 0;
+    int choice = 0;
+
+    while (1) {
+        printf("\\n[1] Add Expense  [2] View Ledger & Total  [3] Exit\\nSelect: ");
+        if (scanf("%d", &choice) != 1) break;
+        if (choice == 1) addExpense(entries, &count);
+        else if (choice == 2) listExpenses(entries, count);
+        else if (choice == 3) break;
+        else printf("Invalid selection.\\n");
+    }
+    return 0;
+}
+`
+      },
+      {
+        id: 4,
+        meta: 'PROJECT 05 // FUTURE EXPERIMENTS',
+        title: 'More Projects Soon',
+        github: 'https://github.com/toha-biswas',
+        filename: 'TOHA_2026_Build_Roadmap.md',
+        mime: 'text/markdown;charset=utf-8;',
+        downloadLabel: 'Download Roadmap (.md)',
+        previewHtml: `
+          <p class="font-raleway text-[15px] leading-relaxed text-neutral-700">
+            Active research and build roadmap for 2026–2027 across relational databases, exploratory data science, and defensive cybersecurity fundamentals.
+          </p>
+          <div class="space-y-2.5 font-mono text-[11.5px]">
+            <div class="p-3.5 rounded-xl bg-neutral-950 text-sky-300">01 // SQL Academic Warehouse — Normalized schema + analytical queries</div>
+            <div class="p-3.5 rounded-xl bg-neutral-950 text-lime-300">02 // Auth Log Anomaly Scanner — Python parser for SSH/HTTP logs</div>
+            <div class="p-3.5 rounded-xl bg-neutral-950 text-rose-300">03 // C File-Backed Database — Binary persistence with B-tree indexing</div>
+          </div>
+        `,
+        fileContent: `# MD ABUTOHA BISWAS (TOHA) — 2026 R&D Roadmap\n\n## Focus Areas (BCA — Data Science & Cybersecurity)\n1. **SQL Academic Warehouse**: Normalized relational schema, indexing benchmarks, and analytical views.\n2. **Auth Log Anomaly Scanner (Python)**: CLI tool to detect brute-force patterns and anomalous IP bursts in server logs.\n3. **Persistent Record Engine in C**: Extending struct-based storage with binary file I/O and checksum integrity.\n\nGitHub: https://github.com/toha-biswas\nPortal: https://toha-biswas.github.io\n`
+      }
+    ];
+
+    const projectModalBackdrop = document.getElementById('project-modal-backdrop');
+    const modalProjectMeta = document.getElementById('modal-project-meta');
+    const modalProjectTitle = document.getElementById('modal-project-title');
+    const modalProjectBody = document.getElementById('modal-project-body');
+    const modalGithubLink = document.getElementById('modal-github-link');
+    const modalDownloadBtn = document.getElementById('modal-download-btn');
+    const modalDownloadLabel = document.getElementById('modal-download-label');
+    const closeModalBtn = document.getElementById('close-modal-btn');
+    const downloadToast = document.getElementById('download-toast');
+    const downloadToastText = document.getElementById('download-toast-text');
+
+    let activeModalProjectIdx = 0;
+    let toastTimeout = null;
+
+    const triggerProjectDownload = (idx) => {
+      const proj = PROJECTS_DATA[idx];
+      if (!proj) return;
+
+      const blob = new Blob([proj.fileContent], { type: proj.mime });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = proj.filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+
+      downloadToastText.textContent = `Downloaded ${proj.filename}`;
+      downloadToast.classList.remove('translate-y-20', 'opacity-0');
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        downloadToast.classList.add('translate-y-20', 'opacity-0');
+      }, 3000);
+    };
+
+    const openProjectModal = (idx) => {
+      const proj = PROJECTS_DATA[idx];
+      if (!proj) return;
+      activeModalProjectIdx = idx;
+      modalProjectMeta.textContent = proj.meta;
+      modalProjectTitle.textContent = proj.title;
+      modalProjectBody.innerHTML = proj.previewHtml;
+      modalGithubLink.href = proj.github;
+      modalDownloadLabel.textContent = proj.downloadLabel;
+      projectModalBackdrop.classList.add('open');
+    };
+
+    const closeProjectModal = () => {
+      projectModalBackdrop.classList.remove('open');
+    };
+
+    document.querySelectorAll('[data-preview-project]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        openProjectModal(Number(btn.dataset.previewProject));
+      });
+    });
+
+    document.querySelectorAll('[data-download-project]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        triggerProjectDownload(Number(btn.dataset.downloadProject));
+      });
+    });
+
+    modalDownloadBtn.addEventListener('click', () => {
+      triggerProjectDownload(activeModalProjectIdx);
+    });
+
+    closeModalBtn.addEventListener('click', closeProjectModal);
+    projectModalBackdrop.addEventListener('click', (e) => {
+      if (e.target === projectModalBackdrop) closeProjectModal();
+    });
+
+    // =========================================================================
+    // 9. MY SKILLS UNIVERSE (INTERACTIVE ORBITAL NODE EXPLORER)
+    // =========================================================================
+    const SKILLS_DATA = [
+      {
+        id: 'python',
+        category: 'DATA & SCRIPTING',
+        name: 'Python',
+        badge: 'CORE LANGUAGE',
+        description: 'Used for data cleaning, statistical analysis, student performance analytics dashboards, CSV pipelines, and automated unit tests.',
+        tags: ['Pandas', 'NumPy', 'CSV Pipelines', 'Pytest', 'Data Visualization'],
+        ring: 88,
+        angle: -35,
+      },
+      {
+        id: 'c',
+        category: 'SYSTEMS & LOGIC',
+        name: 'C Programming',
+        badge: 'FIRST PRINCIPLES',
+        description: 'Manual memory structures, fixed-size arrays, struct modeling, file handling, menu-driven CLI utilities, and sorting algorithms.',
+        tags: ['Structs & Pointers', 'Arrays', 'CLI Utilities', 'Sorting Logic', 'ANSI C'],
+        ring: 88,
+        angle: 145,
+      },
+      {
+        id: 'excel',
+        category: 'SPREADSHEET ANALYTICS',
+        name: 'Microsoft Excel',
+        badge: 'WORKBOOK MODELING',
+        description: 'Structured student performance workbooks, dynamic conditional formulas, pivot tables, attendance auditing, and visual summary charts.',
+        tags: ['Pivot Tables', 'Conditional Logic', 'Cohort Dashboards', 'Data Validation'],
+        ring: 142,
+        angle: 20,
+      },
+      {
+        id: 'datascience',
+        category: 'ANALYTICS & INSIGHTS',
+        name: 'Data Science',
+        badge: 'ANALYTICAL CORE',
+        description: 'Exploratory data analysis, mean/variance aggregation, feature normalization, and transforming raw academic records into clear insights.',
+        tags: ['EDA', 'Statistical Summary', 'Data Cleaning', 'Insight Reporting'],
+        ring: 142,
+        angle: 110,
+      },
+      {
+        id: 'cybersecurity',
+        category: 'DEFENSIVE SECURITY',
+        name: 'Cybersecurity Fundamentals',
+        badge: 'SECURITY MINDSET',
+        description: 'Network hygiene, Linux shell diagnostics, log inspection, threat modeling, password hashing fundamentals, and vulnerability awareness.',
+        tags: ['Linux CLI', 'Log Auditing', 'Network Basics', 'Threat Modeling'],
+        ring: 142,
+        angle: 225,
+      },
+      {
+        id: 'html',
+        category: 'WEB ARCHITECTURE',
+        name: 'HTML',
+        badge: 'SEMANTIC STRUCTURE',
+        description: 'Clean, accessible semantic markup for interactive portfolios, structured data views, and lightweight web interfaces.',
+        tags: ['Semantic DOM', 'Accessibility', 'SEO Structure', 'Forms'],
+        ring: 192,
+        angle: -70,
+      },
+      {
+        id: 'css',
+        category: 'INTERFACE DESIGN',
+        name: 'CSS',
+        badge: 'VISUAL SYSTEMS',
+        description: 'Responsive CSS Grid and Flexbox layouts, glassmorphic surfaces, fluid typography, and purposeful micro-interactions.',
+        tags: ['Tailwind CSS', 'Glassmorphism', 'Responsive Grid', 'Motion'],
+        ring: 192,
+        angle: 65,
+      },
+      {
+        id: 'javascript',
+        category: 'INTERACTIVE LOGIC',
+        name: 'JavaScript',
+        badge: 'CLIENT RUNTIME',
+        description: 'Interactive browser sandboxes, reactive formula calculators, HTML5 Canvas simulations, and modular ES6+ application logic.',
+        tags: ['ES6+ Modules', 'DOM & Events', 'HTML5 Canvas', 'Reactive State'],
+        ring: 192,
+        angle: 175,
+      },
+      {
+        id: 'git',
+        category: 'VERSION CONTROL',
+        name: 'Git & GitHub',
+        badge: 'COLLABORATION',
+        description: 'Versioned repository workflows, clean commit history, open-source documentation, and live static portal deployment.',
+        tags: ['Git CLI', 'GitHub Pages', 'Branching', 'Documentation'],
+        ring: 192,
+        angle: 260,
+      },
+    ];
+
+    const orbitalSvgNodes = document.getElementById('orbital-svg-nodes');
+    const skillsNodePills = document.getElementById('skills-node-pills');
+    const skillCategoryEl = document.getElementById('skill-inspector-category');
+    const skillBadgeEl = document.getElementById('skill-inspector-badge');
+    const skillTitleEl = document.getElementById('skill-inspector-title');
+    const skillDescEl = document.getElementById('skill-inspector-desc');
+    const skillTagsEl = document.getElementById('skill-inspector-tags');
+
+    let activeSkillId = 'python';
+
+    const renderSkillsUI = () => {
+      orbitalSvgNodes.innerHTML = '';
+      skillsNodePills.innerHTML = '';
+
+      SKILLS_DATA.forEach((skill) => {
+        const isActive = skill.id === activeSkillId;
+        const rad = (skill.angle * Math.PI) / 180;
+        const cx = 210 + Math.cos(rad) * skill.ring;
+        const cy = 210 + Math.sin(rad) * skill.ring;
+
+        // SVG Orbital Node Group
+        const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+        g.setAttribute('class', 'cursor-pointer');
+        g.addEventListener('click', () => {
+          activeSkillId = skill.id;
+          renderSkillsUI();
+        });
+
+        if (isActive) {
+          const pulseRing = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+          pulseRing.setAttribute('cx', cx);
+          pulseRing.setAttribute('cy', cy);
+          pulseRing.setAttribute('r', '18');
+          pulseRing.setAttribute('fill', 'rgba(14, 42, 197, 0.16)');
+          pulseRing.setAttribute('stroke', '#0E2AC5');
+          pulseRing.setAttribute('stroke-width', '1.2');
+          g.appendChild(pulseRing);
+        }
+
+        const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        dot.setAttribute('cx', cx);
+        dot.setAttribute('cy', cy);
+        dot.setAttribute('r', isActive ? '8' : '5.5');
+        dot.setAttribute('fill', isActive ? '#0E2AC5' : '#0A0A0A');
+        dot.setAttribute('stroke', '#FFFFFF');
+        dot.setAttribute('stroke-width', '2');
+        g.appendChild(dot);
+
+        const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        label.setAttribute('x', cx);
+        label.setAttribute('y', cy - 13);
+        label.setAttribute('text-anchor', 'middle');
+        label.setAttribute('fill', isActive ? '#0E2AC5' : '#1A1A1A');
+        label.setAttribute('font-family', 'JetBrains Mono');
+        label.setAttribute('font-size', isActive ? '9.5' : '8.5');
+        label.setAttribute('font-weight', isActive ? '700' : '500');
+        label.textContent = skill.name;
+        g.appendChild(label);
+
+        orbitalSvgNodes.appendChild(g);
+
+        // Pill Button below diagram
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = isActive
+          ? 'text-left px-3.5 py-2.5 rounded-2xl bg-neutral-950 text-white shadow-md transition-all duration-200 cursor-pointer'
+          : 'text-left px-3.5 py-2.5 rounded-2xl bg-white/45 hover:bg-white/75 border border-white/75 text-neutral-900 transition-all duration-200 cursor-pointer';
+        btn.innerHTML = `
+          <div class="font-mono text-[8.5px] tracking-[0.16em] uppercase ${isActive ? 'text-sky-300' : 'text-neutral-500'} truncate">${skill.category}</div>
+          <div class="font-raleway font-bold text-[13px] mt-0.5 truncate">${skill.name}</div>
+        `;
+        btn.addEventListener('click', () => {
+          activeSkillId = skill.id;
+          renderSkillsUI();
+        });
+        skillsNodePills.appendChild(btn);
+
+        // Inspector Update
+        if (isActive) {
+          skillCategoryEl.textContent = skill.category;
+          skillBadgeEl.textContent = skill.badge;
+          skillTitleEl.textContent = skill.name;
+          skillDescEl.textContent = skill.description;
+          skillTagsEl.innerHTML = skill.tags
+            .map(
+              (t) =>
+                `<span class="font-mono text-[10.5px] px-3 py-1 rounded-full bg-white/80 border border-white text-neutral-800">${t}</span>`
+            )
+            .join('');
+        }
+      });
+    };
+    renderSkillsUI();
+
+    // =========================================================================
+    // 10. EXPERIMENTAL SANDBOX // 05 — FOUR INTERACTIVE LABS
+    // =========================================================================
+
+    // --- LAB 01: Cybersecurity Matrix Terminal ---
+    const termOutput = document.getElementById('term-output');
+    const termForm = document.getElementById('term-form');
+    const termInput = document.getElementById('term-input');
+
+    const TERM_RESPONSES = {
+      help: 'Available commands: <span class="text-emerald-300">whoami</span>, <span class="text-emerald-300">scan</span>, <span class="text-emerald-300">skills</span>, <span class="text-emerald-300">projects</span>, <span class="text-emerald-300">clear</span>',
+      whoami: 'md_abutoha_biswas (toha) // First-Year BCA Student — Data Science & Cybersecurity',
+      scan: '[SCANNING LOCALHOST] 22/tcp SSH (FILTERED) | 443/tcp HTTPS (TLS 1.3 OK) | Firewall: ACTIVE | 0 critical anomalies found.',
+      skills: 'CORE STACK: Python (Pandas/Pytest), C (Structs/Memory), Excel Analytics, HTML/CSS/JS, Linux & Defensive Security.',
+      projects: '[01] Student Performance Dashboard (.xlsx) | [02] Analytics Pipeline (.py) | [03] Inventory (.c) | [04] Expense Tracker (.c)',
+    };
+
+    const runTerminalCommand = (rawCmd) => {
+      const cmd = rawCmd.trim().toLowerCase();
+      if (!cmd) return;
+
+      if (cmd === 'clear') {
+        termOutput.innerHTML = '<div class="text-emerald-400">TOHA-SEC OS [Version 1.0.4] — Type help, whoami, scan, or skills.</div>';
+        return;
+      }
+
+      const cmdLine = document.createElement('div');
+      cmdLine.innerHTML = `<span class="text-emerald-400">toha@sec:~$</span> <span class="text-white">${cmd.replace(/</g, '&lt;')}</span>`;
+      termOutput.appendChild(cmdLine);
+
+      const outLine = document.createElement('div');
+      outLine.className = 'text-neutral-300 pl-2';
+      outLine.innerHTML =
+        TERM_RESPONSES[cmd] ||
+        `Command not recognized: "${cmd.replace(/</g, '&lt;')}". Type <span class="text-emerald-300">help</span> for commands.`;
+      termOutput.appendChild(outLine);
+      termOutput.scrollTop = termOutput.scrollHeight;
+    };
+
+    termForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      runTerminalCommand(termInput.value);
+      termInput.value = '';
+    });
+
+    document.querySelectorAll('[data-term-cmd]').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        runTerminalCommand(chip.dataset.termCmd);
+      });
+    });
+
+    // --- LAB 02: Spreadsheet Analytics Engine ---
+    const scoreInputs = [
+      { num: document.getElementById('score-ds'), slider: document.getElementById('slider-ds'), bar: document.getElementById('bar-ds') },
+      { num: document.getElementById('score-py'), slider: document.getElementById('slider-py'), bar: document.getElementById('bar-py') },
+      { num: document.getElementById('score-cs'), slider: document.getElementById('slider-cs'), bar: document.getElementById('bar-cs') },
+    ];
+    const computedAvgEl = document.getElementById('computed-avg');
+    const computedStatusEl = document.getElementById('computed-status');
+
+    const updateSpreadsheetEngine = () => {
+      let sum = 0;
+      scoreInputs.forEach(({ num, slider, bar }) => {
+        const val = Math.max(0, Math.min(100, Number(num.value) || 0));
+        num.value = val;
+        slider.value = val;
+        bar.style.width = `${val}%`;
+        sum += val;
+      });
+      const avg = sum / scoreInputs.length;
+      computedAvgEl.textContent = `${avg.toFixed(1)}%`;
+
+      if (avg >= 85) {
+        computedStatusEl.textContent = 'DISTINCTION (A)';
+        computedStatusEl.className = 'inline-block mt-0.5 px-3 py-1 rounded-full bg-neutral-950 text-[#E1FC03] font-mono text-[10.5px] font-bold tracking-[0.14em]';
+      } else if (avg >= 70) {
+        computedStatusEl.textContent = 'FIRST CLASS (B+)';
+        computedStatusEl.className = 'inline-block mt-0.5 px-3 py-1 rounded-full bg-[#0E2AC5] text-white font-mono text-[10.5px] font-bold tracking-[0.14em]';
+      } else if (avg >= 50) {
+        computedStatusEl.textContent = 'PASS (B)';
+        computedStatusEl.className = 'inline-block mt-0.5 px-3 py-1 rounded-full bg-neutral-800 text-sky-300 font-mono text-[10.5px] font-bold tracking-[0.14em]';
+      } else {
+        computedStatusEl.textContent = 'NEEDS REVIEW';
+        computedStatusEl.className = 'inline-block mt-0.5 px-3 py-1 rounded-full bg-rose-950 text-rose-300 font-mono text-[10.5px] font-bold tracking-[0.14em]';
+      }
+    };
+
+    scoreInputs.forEach(({ num, slider }) => {
+      num.addEventListener('input', updateSpreadsheetEngine);
+      slider.addEventListener('input', () => {
+        num.value = slider.value;
+        updateSpreadsheetEngine();
+      });
+    });
+
+    // --- LAB 03: Algorithmic Logic (18-Element C Array Sort) ---
+    const sortContainer = document.getElementById('sort-bars-container');
+    const sortStateLabel = document.getElementById('sort-state-label');
+    const sortArrayBtn = document.getElementById('sort-array-btn');
+    const shuffleArrayBtn = document.getElementById('shuffle-array-btn');
+
+    let arrayValues = [68, 24, 92, 41, 85, 19, 74, 53, 96, 33, 61, 14, 79, 47, 88, 29, 70, 56];
+    let isSorting = false;
+
+    const renderArrayBars = (activeIndices = [], sortedFrom = 99) => {
+      sortContainer.innerHTML = '';
+      arrayValues.forEach((val, idx) => {
+        const bar = document.createElement('div');
+        bar.style.height = `${val}%`;
+        let colorClass = 'bg-sky-400/85';
+        if (activeIndices.includes(idx)) colorClass = 'bg-[#E1FC03]';
+        else if (idx >= sortedFrom) colorClass = 'bg-emerald-400';
+        bar.className = `flex-1 rounded-t-md transition-all duration-75 ${colorClass}`;
+        sortContainer.appendChild(bar);
+      });
+    };
+    renderArrayBars();
+
+    shuffleArrayBtn.addEventListener('click', () => {
+      if (isSorting) return;
+      arrayValues = Array.from({ length: 18 }, () => Math.floor(14 + Math.random() * 84));
+      sortStateLabel.textContent = 'ARRAY STATE: UNSORTED [18 ELEMENTS]';
+      renderArrayBars();
+    });
+
+    sortArrayBtn.addEventListener('click', async () => {
+      if (isSorting) return;
+      isSorting = true;
+      sortStateLabel.textContent = 'SORTING IN PROGRESS...';
+      const n = arrayValues.length;
+      for (let i = 0; i < n - 1; i++) {
+        for (let j = 0; j < n - i - 1; j++) {
+          renderArrayBars([j, j + 1], n - i);
+          await new Promise((r) => setTimeout(r, 28));
+          if (arrayValues[j] > arrayValues[j + 1]) {
+            const tmp = arrayValues[j];
+            arrayValues[j] = arrayValues[j + 1];
+            arrayValues[j + 1] = tmp;
+          }
+        }
+      }
+      renderArrayBars([], 0);
+      sortStateLabel.textContent = 'ARRAY STATE: SORTED [18 ELEMENTS]';
+      isSorting = false;
+    });
+
+    // --- LAB 04: Relational Node Graph (24 Connected Entities) ---
+    const relCanvas = document.getElementById('relational-canvas');
+    const relWrap = document.getElementById('graph-canvas-wrap');
+    const relCtx = relCanvas.getContext('2d');
+
+    const NODE_COUNT = 24;
+    const relNodes = [];
+    const relPointer = { x: -999, y: -999 };
+
+    const initRelationalGraph = () => {
+      const w = relWrap.clientWidth || 400;
+      const h = relWrap.clientHeight || 176;
+      relCanvas.width = w * Math.min(window.devicePixelRatio || 1, 2);
+      relCanvas.height = h * Math.min(window.devicePixelRatio || 1, 2);
+      relCtx.setTransform(Math.min(window.devicePixelRatio || 1, 2), 0, 0, Math.min(window.devicePixelRatio || 1, 2), 0, 0);
+
+      if (relNodes.length === 0) {
+        for (let i = 0; i < NODE_COUNT; i++) {
+          const homeX = 28 + Math.random() * (w - 56);
+          const homeY = 32 + Math.random() * (h - 64);
+          relNodes.push({
+            x: homeX,
+            y: homeY,
+            homeX,
+            homeY,
+            vx: (Math.random() - 0.5) * 0.5,
+            vy: (Math.random() - 0.5) * 0.5,
+          });
+        }
+      }
+    };
+    initRelationalGraph();
+    window.addEventListener('resize', initRelationalGraph);
+
+    relCanvas.addEventListener('pointermove', (e) => {
+      const rect = relCanvas.getBoundingClientRect();
+      relPointer.x = e.clientX - rect.left;
+      relPointer.y = e.clientY - rect.top;
+    });
+    relCanvas.addEventListener('pointerleave', () => {
+      relPointer.x = -999;
+      relPointer.y = -999;
+    });
+
+    const animateRelationalGraph = () => {
+      const w = relWrap.clientWidth || 400;
+      const h = relWrap.clientHeight || 176;
+      relCtx.clearRect(0, 0, w, h);
+
+      // Update positions with spring back to home & cursor repulsion
+      for (let i = 0; i < relNodes.length; i++) {
+        const node = relNodes[i];
+        const dxHome = node.homeX - node.x;
+        const dyHome = node.homeY - node.y;
+        node.vx += dxHome * 0.015;
+        node.vy += dyHome * 0.015;
+
+        const dxMouse = node.x - relPointer.x;
+        const dyMouse = node.y - relPointer.y;
+        const distMouse = Math.hypot(dxMouse, dyMouse);
+        if (distMouse < 75 && distMouse > 0.1) {
+          const force = (1 - distMouse / 75) * 2.4;
+          node.vx += (dxMouse / distMouse) * force;
+          node.vy += (dyMouse / distMouse) * force;
+        }
+
+        node.vx *= 0.92;
+        node.vy *= 0.92;
+        node.x += node.vx;
+        node.y += node.vy;
+      }
+
+      // Draw relational edges
+      for (let i = 0; i < relNodes.length; i++) {
+        for (let j = i + 1; j < relNodes.length; j++) {
+          const d = Math.hypot(relNodes[i].x - relNodes[j].x, relNodes[i].y - relNodes[j].y);
+          if (d < 85) {
+            relCtx.strokeStyle = `rgba(147, 197, 253, ${(1 - d / 85) * 0.42})`;
+            relCtx.lineWidth = 1;
+            relCtx.beginPath();
+            relCtx.moveTo(relNodes[i].x, relNodes[i].y);
+            relCtx.lineTo(relNodes[j].x, relNodes[j].y);
+            relCtx.stroke();
+          }
+        }
+      }
+
+      // Draw entity nodes
+      for (let i = 0; i < relNodes.length; i++) {
+        const n = relNodes[i];
+        relCtx.fillStyle = i % 5 === 0 ? '#E1FC03' : '#60A5FA';
+        relCtx.beginPath();
+        relCtx.arc(n.x, n.y, i % 5 === 0 ? 3.5 : 2.5, 0, Math.PI * 2);
+        relCtx.fill();
+      }
+
+      requestAnimationFrame(animateRelationalGraph);
+    };
+    requestAnimationFrame(animateRelationalGraph);
   </script>
 </body>
 </html>
